@@ -15,7 +15,7 @@ local Commodities = require 'Commodities'
 local radius = 20
 local N = 0
 local commodities = nil
-local include_illegal, changed = false, false
+local include_illegal, changed = false, true
 
 
 -- Create class to document our commodity
@@ -169,6 +169,9 @@ local scan_systems = function(dist)
 	local commodities = {}
 
 	-- for each system
+
+	local stations = pairs(nearby_systems)
+
 	for idx, sys in pairs(nearby_systems) do
 		-- for each commodity
 		for key, comm in pairs(Commodities) do
@@ -179,11 +182,13 @@ local scan_systems = function(dist)
 
 			-- TODO: also include negative products, right?
 			-- if comm.price > 0 then
+                print("Getting New ", key)
 
 				local name = comm:GetName()
 				local price = getprice(comm, sys)
 
 				if not commodities[name] then
+
 					commodities[name] = Commodity:new(name, comm.price)
 					print(name, comm.price)
 				end

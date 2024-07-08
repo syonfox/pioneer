@@ -17,6 +17,7 @@
 #include "lua/Lua.h"
 #include "lua/LuaManager.h"
 #include "scenegraph/Model.h"
+#include "syon/syonTool.h"
 
 #include <fmt/core.h>
 #include <imgui/imgui.h>
@@ -25,7 +26,6 @@
 #include <fstream>
 #include <functional>
 #include <sstream>
-
 #ifdef _WIN32
 #include <windows.h>
 // order of header includes matters, thanks Windows.h!
@@ -40,6 +40,9 @@ struct PerfInfo::ImGuiState {
 	bool updatePause = false;
 	bool metricsWindowOpen = false;
 	bool stackToolOpen = false;
+	bool demoToolOpen = false;
+	bool syonToolOpen = false;
+
 	uint32_t playerModelDebugFlags = 0;
 
 	bool textureCacheViewerOpen = false;
@@ -210,6 +213,19 @@ void PerfInfo::Draw()
 
 	if (m_state->stackToolOpen)
 		ImGui::ShowStackToolWindow(&m_state->stackToolOpen);
+
+	if (m_state->demoToolOpen) {
+
+		ImGui::ShowDemoWindow(&m_state->demoToolOpen);
+		ImGui::ShowDebugLogWindow(&m_state->demoToolOpen);
+	}
+
+	if (m_state->syonToolOpen) {
+		ShowSyonToolWindow(&m_state->syonToolOpen);
+
+		SayHelloWorld();
+	}
+
 }
 
 void PerfInfo::DrawPerfWindow()
@@ -477,6 +493,14 @@ void PerfInfo::DrawImGuiStats()
 
 	if (ImGui::Button("Toggle Stack Tool")) {
 		m_state->stackToolOpen = !m_state->stackToolOpen;
+	}
+
+	if (ImGui::Button("Toggle ImGUI Demo")) {
+		m_state->demoToolOpen = !m_state->demoToolOpen;
+	}
+
+	if (ImGui::Button("Toggle Syon Tool ")) {
+		m_state->syonToolOpen = !m_state->syonToolOpen;
 	}
 }
 

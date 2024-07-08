@@ -158,6 +158,8 @@ list(APPEND SRC_FOLDERS
 	src/sound
 	src/terrain
 	src/text
+	src/syon
+
 )
 
 macro(add_source_folders TARGET SRC_FOLDERS)
@@ -319,7 +321,9 @@ add_subdirectory(src/lua)
 if (WIN32)
 	string(TIMESTAMP BUILD_YEAR "%Y")
 	string(TIMESTAMP BUILD_DATE "%Y%m%d")
-	set(RESOURCES ${CMAKE_BINARY_DIR}/pioneer.rc)
+	set(RESOURCES ${CMAKE_BINARY_DIR}/pioneer.rc
+			src/syon/syonTool.cpp
+			src/syon/syonTool.h)
 	configure_file(pioneer.rc.cmakein ${RESOURCES} @ONLY)
 endif()
 

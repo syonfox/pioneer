@@ -64,6 +64,10 @@ questions are welcome anytime.
     libsdl2-dev
     libsdl2-image-dev
 
+
+   sudo apt install libfreeimage-dev libglew-dev libfreetype6-dev libsigc++-2.0-dev libvorbis-dev libassimp-dev libsdl2-dev libsdl2-image-dev
+
+
    If your platform doesn't have assimp 5, you'll need to build it from
    source. It's available in pioneer-thirdparty, see below.
 
@@ -222,7 +226,7 @@ To get it, clone git://github.com/pioneerspacesim/pioneer-thirdparty.git.
    repository and 'cd' into it.
 
 2. Run 'autoconf' to generate configuration files, then run './configure' to
-   configure the build.
+   configure the build. // in what folder? cd pioneer-thirdparty ; # i guess
 
 3. Run make <package> to compile and prepare the named package for use with
    Pioneer, or just run make without a target to build everything.

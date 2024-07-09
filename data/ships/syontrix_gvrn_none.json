@@ -1,0 +1,53 @@
+{
+	"model": "syontrix",
+	"name": "Syontrix GVRN None",
+	"cockpit": "coronatrix_cockpit",
+	"manufacturer": "foxi",
+	"ship_class": "medium_fighter",
+	"min_crew": 1,
+	"max_crew": 2,
+	"price":255420,
+
+	"hull_mass": 55,
+	"atmospheric_pressure_limit": 3.2,
+	"capacity": 550,
+	"slots": {
+		"engine": 1,
+		"cabin": 1,
+		"laser_front": 1,
+		"missile": 48,
+		"shield": 10,
+		"cargo": 180
+	},
+	"roles": ["mercenary", "merchant", "pirate"],
+	"effective_exhaust_velocity": 18420000,
+	"thruster_fuel_use": -1.0,
+	"fuel_tank_mass": 320,
+	"hyperdrive_class": 3,
+
+	"forward_thrust": 24000000,
+	"forward_acceleration_cap": 42.96,
+	"reverse_thrust": 24000000,
+	"reverse_acceleration_cap": 42.96,
+	"up_thrust": 24000000,
+	"up_acceleration_cap": 42.62,
+	"down_thrust": 24000000,
+	"down_acceleration_cap": 42.62,
+	"left_thrust": 24000000,
+	"left_acceleration_cap": 42.62,
+	"right_thrust": 24000000,
+	"right_acceleration_cap": 42.62,
+
+	"angular_thrust": 13500000.0,
+
+	"front_cross_section": 16.2,
+	"side_cross_section": 39,
+	"top_cross_section": 125,
+
+	"front_drag_coeff": 0.27,
+	"side_drag_coeff": 0.45,
+	"top_drag_coeff": 0.96,
+
+	"lift_coeff": 0.15,
+	"aero_stability": 0.35
+}

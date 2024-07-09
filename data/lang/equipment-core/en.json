@@ -211,6 +211,10 @@
     "description": "",
     "message": "Used to blast-mine mineral rich asteroids."
   },
+  "SYONCANNON_5MW": {
+    "description": "",
+    "message": "5MW rapid-mining cannon developer by foxicorp"
+  },
   "MININGCANNON_5MW": {
     "description": "",
     "message": "5MW blast-mining cannon"

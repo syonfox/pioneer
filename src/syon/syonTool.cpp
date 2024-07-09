@@ -4,17 +4,28 @@
 
 
 #include "syonTool.h"
+#include "Frame.h"
 
-void ShowSyonToolWindow(bool* p_open) {
+#include "Game.h"
+#include "Space.h"
+#include "SectorView.h"
+
+#include "Pi.h"
+#include "Player.h"
+
+
+
+void Syon::ShowSyonToolWindow(bool* p_open) {
 	// Create a window called "Syon Tool"
-	ImGui::Begin("Syon Tool", p_open);
+	ImGui::Begin("Syon Foxi Co Tool", p_open);
 
 	// Add some buttons
-	if (ImGui::Button("Button 1")) {
+	if (ImGui::Button("FOXI CO BLUF")) {
 		// Action for Button 1
-		ImGui::Text("Button 1 Pressed");
+		ImGui::Text("We have been asked to facilatate trade between the solar federation and Commonwealth.  We have also been asked to reduces their strength when provoked.");
+
 	}
-	if (ImGui::Button("Button 2")) {
+	if (ImGui::Button("Find Target")) {
 		// Action for Button 2
 		ImGui::Text("Button 2 Pressed");
 	}
@@ -51,18 +62,96 @@ void ShowSyonToolWindow(bool* p_open) {
 
 
 
-void SayHelloWorld() {
+void Syon::SayHelloWorld() {
 	//char* str, char str2[] , char** strRef,  char* &strRef2
 
 	ImGui::Begin("Syon Tool");
-
-
+	// m_stats.shield_mass_left
+	// m_stats.hull_mass_left
 	ImGui::Text("Hello World");
 
+	// Syon::DrawWorldViewStats();
 
 	ImGui::End();
 }
 
+
+void Syon::DrawWorldViewStats()
+{
+	vector3d pos = Pi::player->GetPosition();
+	vector3d abs_pos = Pi::player->GetPositionRelTo(Pi::game->GetSpace()->GetRootFrame());
+
+	const FrameId playerFrame = Pi::player->GetFrame();
+
+	ImGui::TextUnformatted(fmt::format("Player Position: {:.5}, {:.5}, {:.5}", pos.x, pos.y, pos.z).c_str());
+	ImGui::TextUnformatted(fmt::format("Absolute Position: {:.5}, {:.5}, {:.5}", abs_pos.x, abs_pos.y, abs_pos.z).c_str());
+
+	const Frame *frame = Frame::GetFrame(playerFrame);
+	const SystemPath &path(frame->GetSystemBody()->GetPath());
+
+	std::string tempStr;
+	tempStr = fmt::format("Relative to frame: {} [{}, {}, {}, {}, {}]",
+		frame->GetLabel(), path.sectorX, path.sectorY, path.sectorZ, path.systemIndex, path.bodyIndex);
+
+	ImGui::TextUnformatted(tempStr.c_str());
+
+	tempStr = fmt::format("Distance from frame: {:.2f} km, rotating: {}, has rotation: {}",
+		pos.Length() / 1000.0, frame->IsRotFrame(), frame->HasRotFrame());
+
+	ImGui::TextUnformatted(tempStr.c_str());
+
+	ImGui::Spacing();
+
+	//Calculate lat/lon for ship position
+	const vector3d dir = pos.NormalizedSafe();
+	const float lat = RAD2DEG(asin(dir.y));
+	const float lon = RAD2DEG(atan2(dir.x, dir.z));
+
+	ImGui::TextUnformatted(fmt::format("Lat / Lon: {:.8} / {:.8}", lat, lon).c_str());
+
+	char aibuf[256];
+	Pi::player->AIGetStatusText(aibuf);
+
+	ImGui::TextUnformatted(aibuf);
+
+	ImGui::Spacing();
+	ImGui::TextUnformatted("Player Model ShowFlags:");
+
+	// using Flags = SceneGraph::Model::DebugFlags;
+
+	// bool showColl = m_state->playerModelDebugFlags & Flags::DEBUG_COLLMESH;
+	// bool showBBox = m_state->playerModelDebugFlags & Flags::DEBUG_BBOX;
+	// bool showTags = m_state->playerModelDebugFlags & Flags::DEBUG_TAGS;
+	//
+	// bool changed = ImGui::Checkbox("Show Collision Mesh", &showColl);
+	// changed |= ImGui::Checkbox("Show Bounding Box", &showBBox);
+	// changed |= ImGui::Checkbox("Show Tag Locations", &showTags);
+
+	/* clang-format off */
+	// if (changed) {
+	// 	m_state->playerModelDebugFlags = (showColl ? Flags::DEBUG_COLLMESH : 0)
+	// 		| (showBBox ? Flags::DEBUG_BBOX : 0)
+	// 		| (showTags ? Flags::DEBUG_TAGS : 0);
+	// 	Pi::player->GetModel()->SetDebugFlags(m_state->playerModelDebugFlags);
+	// }
+	/* clang-format on */
+
+	if (Pi::player->GetNavTarget() && Pi::player->GetNavTarget()->GetSystemBody()) {
+		const auto *sbody = Pi::player->GetNavTarget()->GetSystemBody();
+		ImGui::TextUnformatted(fmt::format("Name: {}, Population: {}", sbody->GetName(), sbody->GetPopulation() * 1e9).c_str());
+	}
+
+	if (Pi::GetView() == Pi::game->GetSectorView()) {
+		if (ImGui::Button("Dump Selected System")) {
+			SystemPath path = Pi::game->GetSectorView()->GetSelected();
+			RefCountedPtr<StarSystem> system = Pi::game->GetGalaxy()->GetStarSystem(path);
+
+			if (system)
+				system->Dump(Log::GetLog()->GetLogFileHandle());
+		}
+	}
+
+}
 
 /*
 // Main application code

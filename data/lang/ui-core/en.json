@@ -2187,6 +2187,14 @@
     "description": "",
     "message": "This is an easy start from Cydonia on Mars in the Sol system."
   },
+  "START_AT_SYON": {
+    "description": "",
+    "message": "Start on Syon"
+  },
+  "START_AT_SYON_DESC": {
+    "description": "",
+    "message": "Congratulations on being accepted to foxi corp. Here is your ship you are responsible for any damages."
+  },
   "START_AT_NEW_HOPE": {
     "description": "New Hope is an in game location",
     "message": "Start at New Hope"
@@ -2211,6 +2219,11 @@
     "description": "First custom log message when starting a new game, giving backstory to the character. Here explaining why there's no hyperdrive in the ship, and what to do about it.",
     "message": "After a long bureaucratic process, I finally got my ship back from the impound, but they had stripped her down to the bare metal, to pay 'the debt' they claimed I had. Not only did they take my favourite coffee brewer, but those bastards also ripped out the hyper drive, so I'm stuck for now in this system, unless I sell whatever is left in the ship, to finance a new drive. But as they say: when life gives you lemons - make lemonade; so even if I'm back at square one, I will think of this as an opportunity instead of as a setback, a second chance. Without coffee. By letting go of what I am, I will become what I might be. The world will turn aside, and let me pass, as it does for those who know where they are going, and I am heading to the stars."
   },
+  "START_LOG_ENTRY_4": {
+    "description": "First log message as a new recruit joining the corporate fleet, detailing initial challenges and aspirations.",
+    "message": "After a long and challenging journey, I've finally received my assignment to the corporate fleet. It wasn't easy; starting with no money and barely a ship to call my own, but here I am, ready to embark on this new chapter. The ship I've been assigned is a relic, barely space-worthy, missing essential components including a functioning hyperdrive. It seems my predecessors left quite a legacy, or rather, a lack thereof. But despite the setbacks, I see opportunity where others might see defeat. I have a job, a ship, and the determination to carve out a path among the stars. They say adversity builds character; well, I plan to forge mine among the constellations. As I navigate these uncharted waters, I'll remember that every obstacle is a chance to prove my mettle. With perseverance as my fuel, I'll chart a course towards a brighter future, one star at a time."
+  },
+
   "STAR_FIELD_DENSITY": {
     "description": "",
     "message": "Density of Star field"

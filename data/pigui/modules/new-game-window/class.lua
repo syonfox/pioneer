@@ -89,6 +89,30 @@ StartVariants.register({
 	colors     = { Color('E17F00'), Color('FFFFFF'), Color('FF7F00') }
 })
 
+
+StartVariants.register({
+	name       = lui.START_AT_SYON,
+	desc           = lui.START_AT_SYON_DESC,
+	location       = SystemPath.New(4, 2, 5, 0, 3),
+	logmsg         = lui.START_LOG_ENTRY_4,
+	shipType       = 'syontrix',
+	money          = 25,
+	hyperdrive     = true,
+	equipment      = {
+  		{ laser.syoncannon_5mw,      1 },
+-- 		{misc.atmospheric_shielding,1},
+-- 		{misc.autopilot,1},
+-- 		{misc.radar,1}
+	},
+	cargo          = {
+		{ Commodities.hydrogen, 10 }
+	},
+	pattern    = 2,
+-- 	colors     = { Color('000000'), Color('000000'), Color('000000') }
+
+    colors = { Color('FF7F00'), Color('E0E0E0'), Color('0000FF') }
+})
+
 -- synchronize parameter views with updated values
 local function updateParams()
 	for _, tab in ipairs(Layout.Tabs) do

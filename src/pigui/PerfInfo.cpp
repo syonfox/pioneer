@@ -17,6 +17,7 @@
 #include "lua/Lua.h"
 #include "lua/LuaManager.h"
 #include "scenegraph/Model.h"
+
 #include "syon/syonTool.h"
 
 #include <fmt/core.h>
@@ -221,9 +222,9 @@ void PerfInfo::Draw()
 	}
 
 	if (m_state->syonToolOpen) {
-		ShowSyonToolWindow(&m_state->syonToolOpen);
+		Syon::ShowSyonToolWindow(&m_state->syonToolOpen);
 
-		SayHelloWorld();
+		Syon::SayHelloWorld();
 	}
 
 }

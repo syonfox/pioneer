@@ -391,6 +391,14 @@ laser.pulsecannon_20mw = LaserType.New({
 	}, purchasable=true, tech_level="MILITARY",
 	icon_name="equip_pulsecannon"
 })
+laser.syoncannon_5mw = LaserType.New({
+	l10n_key="SYONCANNON_5MW", price=7000, capabilities={mass=5},
+	slots = {"laser_front", "laser_rear"}, laser_stats = {
+		lifespan=10, speed=2000, damage=5000, rechargeTime=0.75, length=200,
+		width=30, beam=0, dual=0, mining=1, rgba_r = 42, rgba_g = 255, rgba_b = 42, rgba_a = 255
+	}, purchasable=true, tech_level=7,
+	icon_name="equip_mining_laser"
+})
 laser.miningcannon_5mw = LaserType.New({
 	l10n_key="MININGCANNON_5MW", price=3700, capabilities={mass=6},
 	slots = {"laser_front", "laser_rear"}, laser_stats = {

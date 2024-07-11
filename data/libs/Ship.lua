@@ -598,6 +598,7 @@ end
 --
 --   item - a commodity type object (e.g., Commodity.radioactives)
 --          specifying the type of item to jettison.
+--   burnIt - a boolean option to not spawn a cargo. (jettison thecargo and blast it with your engin atomising it ;)
 --
 -- Result:
 --
@@ -613,7 +614,7 @@ end
 --   experimental
 --
 ---@param cargoType CommodityType
-function Ship:Jettison(cargoType)
+function Ship:Jettison(cargoType, burnIt)
 	if self.flightState ~= "FLYING" and self.flightState ~= "DOCKED" and self.flightState ~= "LANDED" then
 		return false
 	end
@@ -625,7 +626,9 @@ function Ship:Jettison(cargoType)
 	end
 
 	if self.flightState == "FLYING" then
-		self:SpawnCargo(cargoType)
+	    if(not burnIt) then
+		    self:SpawnCargo(cargoType)
+		end
 		Event.Queue("onJettison", self, cargoType)
 	elseif self.flightState == "DOCKED" then
 		Event.Queue("onCargoUnload", self:GetDockedWith(), cargoType)

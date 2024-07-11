@@ -279,7 +279,7 @@ end
 --   experimental
 --
 function Player:ClearCrimeRecordHistory (faction)
-	local forFaction = (faction and faction.id) or Game.system.faction.id
+        local forFaction = (faction and faction.id) or Game.system.faction.id
 	self.record_old[forFaction] = nil
 end
 

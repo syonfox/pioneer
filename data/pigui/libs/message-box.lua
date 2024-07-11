@@ -44,7 +44,7 @@ msgbox.OK = function(msg)
 	end, msgButtonWidth)
 end
 
-msgbox.OK_CANCEL = function(msg, callback)
+msgbox.OK_CANCEL = function(msg, callback, oncancel)
 	createBoxModal(msg, function(self)
 		if ui.button(lui.OK, Vector2(msgButtonWidth, 0)) then
 			if callback then
@@ -54,6 +54,9 @@ msgbox.OK_CANCEL = function(msg, callback)
 		end
 		ui.sameLine()
 		if ui.button(lui.CANCEL, Vector2(msgButtonWidth, 0)) then
+		    if oncancel then
+				oncancel()
+			end
 			self:close()
 		end
 	end, msgButtonWidth * 2 + ui.getItemSpacing().x)

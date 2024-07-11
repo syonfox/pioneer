@@ -43,7 +43,7 @@ struct ShipType {
 	bool isGlobalColorDefined; // If globalThrusterColor is filled with... a color :)
 	Color directionThrusterColor[THRUSTER_MAX];
 	bool isDirectionColorDefined[THRUSTER_MAX];
-	double thrusterUpgrades[4];
+	double thrusterUpgrades[4]; //
 	double atmosphericPressureLimit;
 	int capacity; // tonnes
 	int hullMass;

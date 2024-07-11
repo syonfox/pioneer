@@ -8,6 +8,7 @@ local debugView = {
 	modules = {}
 }
 
+--  why like this
 function debugView.registerModule(name, module)
 	if type(module) == "table" then
 		module = function(...) return module:draw(...) end
@@ -18,6 +19,7 @@ function debugView.registerModule(name, module)
 	debugView.modules[name] = index
 end
 
+-- clena code but
 function debugView.registerTab(name, tab)
 	if type(tab) == "table" then
 		tab = function(...) return tab:draw(...) end
@@ -28,17 +30,20 @@ function debugView.registerTab(name, tab)
 	debugView.tabs[name] = index
 end
 
+--
 function debugView.render(delta)
 	for i, f in ipairs(debugView.modules) do
 		f(delta)
 	end
 end
 
+--
 function debugView.drawTabs(delta)
 	for i, f in ipairs(debugView.tabs) do
 		f(delta)
 	end
 end
+
 
 ui.registerHandler('debug', debugView.render)
 ui.registerHandler('debug-tabs', debugView.drawTabs)

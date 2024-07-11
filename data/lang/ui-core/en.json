@@ -1275,6 +1275,14 @@
     "description": "",
     "message": "Jettison Mode"
   },
+  "BURN_UP": {
+    "description": "",
+    "message": "Burn Up"
+  },
+  "BURN_UP_MODE": {
+    "description": "",
+    "message": "Burn Up Mode"
+  },
   "JUMPING": {
     "description": "Flight State",
     "message": "Jumping"

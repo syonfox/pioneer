@@ -4,7 +4,7 @@ project(pioneer LANGUAGES CXX)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 17)
 
-set(PROJECT_VERSION "20240314"
+set(PROJECT_VERSION "20240710"
 	CACHE STRING "Version identifier for current compiled build")
 
 set(PROJECT_VERSION_INFO ""
@@ -17,6 +17,7 @@ if(POLICY CMP0072)
 	cmake_policy(SET CMP0072 NEW)
 endif()
 
+include(cmake/TargetArchitecture.cmake)
 include(cmake/InstallPioneer.cmake)
 
 if (MINGW)
@@ -58,11 +59,11 @@ if (APPLE)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-gnu")
 endif(APPLE)
 
-option(USE_SSE42 "Compile for SSE4.2 compatible microarchitectures (enables optimizations)" ON)
+option(USE_SSE42 "Compile for SSE4.2 compatible microarchitectures (enables optimizations)" ${PIONEER_TARGET_INTEL})
 
 if (USE_SSE42)
 	if (NOT MSVC)
-		add_compile_options("-msse4.2" "-mlzcnt" "-mpopcnt")
+		add_compile_options("-msse4.2" "-mpopcnt")
 	endif()
 endif (USE_SSE42)
 
@@ -72,7 +73,7 @@ if (USE_AVX2)
 	if (MSVC)
 		add_compile_options("/arch:AVX2")
 	else()
-		add_compile_options("-mavx2")
+		add_compile_options("-mavx2" "-mlzcnt")
 	endif()
 endif(USE_AVX2)
 

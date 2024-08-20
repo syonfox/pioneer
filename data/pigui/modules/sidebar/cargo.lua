@@ -52,15 +52,11 @@ local function transfer_button(icon, tooltip, enabled)
 	end
 end
 
-local function transfer_buttons(amount, min, max, tooltip_reduce, tooltip_increase, tooltip_none, tooltip_all)
-
-    if tooltip_none then
-         if transfer_button(icons.time_backward_100x, tooltip_none, amount > min) then
-            amount = min
-        end
-        ui.sameLine(0, 2)
-    end
-
+local function transfer_buttons(amount, min, max, tooltip_reduce, tooltip_increase)
+	if transfer_button(icons.time_backward_10x, tooltip_reduce .. "##all", amount > min) then
+		amount = min
+	end
+	ui.sameLine(0, 2)
 	if transfer_button(icons.time_backward_1x, tooltip_reduce, amount > min) then
 		amount = amount - 1
 	end
@@ -68,13 +64,10 @@ local function transfer_buttons(amount, min, max, tooltip_reduce, tooltip_increa
 	if transfer_button(icons.time_forward_1x, tooltip_increase, amount < max) then
 		amount = amount + 1
 	end
-
-    if tooltip_all then
-        ui.sameLine(0, 2)
-        if transfer_button(icons.time_forward_100x, tooltip_all, amount < max) then
-            amount = max
-        end
-    end
+	ui.sameLine(0, 2)
+	if transfer_button(icons.time_forward_10x, tooltip_increase .. "##all", amount < max) then
+		amount = max
+	end
 	return amount
 end
 
@@ -94,7 +87,7 @@ table.insert(module.transferModes, {
 	id = "Jettison",
 	label = lui.JETTISON,
 	color = style.jettisonColor,
-	icon = icons.autopilot_undock,
+	icon = icons.cargo_crate_illegal,
 	tooltip = lui.JETTISON_MODE,
 	action = function(ship, manifest)
 		for k, v in pairs(manifest) do
@@ -105,26 +98,6 @@ table.insert(module.transferModes, {
 		end
 	end,
 	canDisplay = function(ship)
-		return ship.flightState == "FLYING"
-	end
-})
-
-table.insert(module.transferModes, {
-	id = "Burn Up",
-	label = lui.BURN_UP,
-	color = style.jettisonColor,
-	icon = icons.trashcan,
-	tooltip = lui.BURN_UP_MODE,
-	action = function(ship, manifest)
-		for k, v in pairs(manifest) do
-			local commodity = Commodities[k]
-			for i = 1, v do
-				ship:Jettison(commodity, true)
-			end
-		end
-	end,
-	canDisplay = function(ship)
-
 		return ship.flightState == "FLYING"
 	end
 })
@@ -255,7 +228,7 @@ function module:drawCargoRow(v, rowWidth, totalSpace)
 	if self.transferMode then
 		ui.withID(commodity.name, function()
 			local max = self.transferMode and v.count or 0
-			self.transfer[v.name] = transfer_buttons(transferAmt, 0, max, lui.DECREASE, lui.INCREASE, lui.NONE, lui.MAX)
+			self.transfer[v.name] = transfer_buttons(transferAmt, 0, max, lui.DECREASE, lui.INCREASE)
 		end)
 	end
 end

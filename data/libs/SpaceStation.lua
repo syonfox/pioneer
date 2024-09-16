@@ -901,6 +901,7 @@ end
 local function updateAdverts (station)
 	if not SpaceStation.adverts[station] then
 		logWarning("SpaceStation.lua: updateAdverts called for station that hasn't been visited")
+		Event.Queue("onCreateBB", station)
 	else
 		Event.Queue("onUpdateBB", station)
 	end

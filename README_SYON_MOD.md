@@ -60,3 +60,30 @@ CW -> SF
 SF -> CW
 
 ```
+
+
+
+## Quickstart:
+```sh
+
+echo "installing dependancies for pioneer"
+sudo apt install libsdl2-dev
+sudo apt install libsdl2-image-dev
+sudo apt install libassimp-dev
+sudo apt install libsigc++-2.0-dev
+sudo apt install libvorbis-dev
+sudo apt install libfreetype-dev
+sudo apt install git cmake
+
+# idk you might also need build-essentials or somthing like a c compiler. gpp todo test next clean install. 
+
+
+git clone https://github.com/syonfox/pioneer.git
+cd pioneer
+./bootstrap ; # this is like cmake . or somthing idk
+make -j 8 ; # for 8 core cpu
+./pioneer
+
+echo "consult COMPILING.txt"
+
+```

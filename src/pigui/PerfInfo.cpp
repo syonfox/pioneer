@@ -29,6 +29,7 @@
 #include <fstream>
 #include <functional>
 #include <sstream>
+
 #ifdef _WIN32
 #include <windows.h>
 // order of header includes matters, thanks Windows.h!

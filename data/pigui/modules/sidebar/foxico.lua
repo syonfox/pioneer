@@ -106,8 +106,42 @@ local FOXI = {
     display_ads = {
 
     }
-}
 
+}
+-- Function to dump an object in a readable way
+local function dumpObject(obj, indent)
+    indent = indent or 0  -- Set default indentation level
+
+    local spacing = string.rep("  ", indent)  -- Create indentation string
+
+    if type(obj) == "table" then
+        print(spacing .. "{")  -- Start table output
+
+        for k, v in pairs(obj) do
+            -- Print key with indentation
+            if type(k) == "string" then
+                print(spacing .. "  [" .. k .. "] = ")
+            else
+                print(spacing .. "  [" .. tostring(k) .. "] = ")
+            end
+
+            -- Recursively call dumpObject for nested tables
+            dumpObject(v, indent + 1)
+        end
+
+        print(spacing .. "}")  -- End table output
+    elseif type(obj) == "userdata" then
+        print(spacing .. tostring(obj) .. " (userdata)")
+    else
+        print(spacing .. tostring(obj))  -- Print other types directly
+    end
+end
+
+-- Example usage
+
+local function dumpFOXI()
+   dumpObject(FOXI.save_data, 2);
+end
 
 
 -------------------------------------------------------------------------------
@@ -174,11 +208,15 @@ local function onGameEnd()
 end
 
 local serialize = function()
+    print("foxico::serialize")
+    dumpFOXI()
     return FOXI.save_data
 end
 
 local unserialize = function(data)
     FOXI.save_data = data
+    print("foxico::unserialize")
+    dumpFOXI()
 end
 
 -- let state = {
@@ -237,9 +275,56 @@ local function onLeaveSystem(ship)
     -- add rewards to memory for when arives at payable location.
 end
 
+local function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
+
+local function logPlayerInfo(player)
+    --local player = Game.player
+    if player then
+        print("Player Label: " .. player:GetLabel())  -- Get the player's ship label/name
+        print("Player Type: " .. player.shipId)  -- Assuming shipId holds ship type
+	    local remainingFuel = player:GetRemainingDeltaV()
+
+        -- Position and velocity relative to the system
+        local pos = player:GetPosition()
+        local vel = player:GetVelocity()
+        print(string.format("Position: x=%.2f, y=%.2f, z=%.2f", pos.x, pos.y, pos.z))
+        print(string.format("Velocity: x=%.2f, y=%.2f, z=%.2f", vel.x, vel.y, vel.z))
+
+        -- Fuel level, shields, etc. (if applicable)
+        print("Fuel Mass: " .. remainingFuel)
+        --print("Shield Strength: " .. player.shieldStrength)
+
+        -- Log the current time
+        --print("Game Time: " .. Game.time)
+    else
+        print("Player object not available.")
+    end
+end
+
+
 
 local function uiopen()
     local ship = Game.player
+
+    print("foxico::uiopen.logPlayerInfo()")
+    logPlayerInfo(ship);
+
+
+    --dumpTable(ship, 2)
+
+
     -- ok idk what to do here but if needed lets put them in the same place
     -- this is called when the tab is switched back to flight view and the ui is opened
     -- OR when the user click the button to open the ui.  aka when first fram is done rendering?
@@ -366,6 +451,8 @@ local function update_display_ads()
     end
 end
 local function draw_display_ads()
+
+
 end
 
 ------------------------------------------------------------
@@ -544,9 +631,31 @@ end
 
 
 local bodyFrame = 0;
+
+local lastFrameTime = 0;  -- stores the initial game time
+local frameCount = 500
+
 function module:drawBody()
     bodyFrame=bodyFrame+1
-    print("foxico.lua.frame: "..tostring(bodyFrame))
+
+
+
+    local g = Game;
+
+    if bodyFrame % frameCount == 0 then
+
+        local currentTime = Game.time
+        local deltaTime = currentTime - lastFrameTime
+
+        -- log the stats
+        print("foxico.lua.frame: " .. tostring(bodyFrame))
+
+
+        print("Delta time for the last " .. 500 .. " frames: " .. deltaTime .. " game seconds")
+
+        -- reset the time for the next 500 frames
+        lastFrameTime = currentTime
+    end
 
     local cargoMgr = self.ship:GetComponent("CargoManager")
 
@@ -581,9 +690,13 @@ function module:drawBody()
         return monthsPassed
     end
 
-    local monthsJoined = math.floor(time_diff_in_months(FOXI.save_data.joined, Game.time))
+    local monthsJoinedFloat = time_diff_in_months(FOXI.save_data.joined, Game.time)
+
+    local monthsJoined = math.floor(monthsJoinedFloat)
+
     if isMember ~= false then
-        ui.textAlignedColored("Active member for " .. monthsJoined .. "months!  " .. tostring(FOXI.save_data.joined), 0.1, fg)
+        ui.textAlignedColored("Active member for " .. tostring(monthsJoinedFloat) .. " months!", 0.1, fg)
+        ui.textAlignedColored("Member Id: " .. tostring(FOXI.save_data.joined), 0.1, fg)
         ui.sameLine()
         if ui.button("Leave now") then
             FOXI.save_data.joined = false
@@ -606,6 +719,7 @@ function module:drawBody()
         print("Atempting to give player " .. name .. " lasers but gave " .. numAdded)
         return numAdded
     end
+
     local rewardMap = {
         join = {
             ad = "Offer: Join Syon Free Traders & Company to recieave 2 free farm machinary.",
@@ -697,8 +811,8 @@ function module:drawBody()
             thanks = "Cool We have loaded the equitment. Good luck out there."
         },             --
 
-        month60 = {},  -- 5 year reward come to syon to git afull load of foxi_missile
-        month120 = {}, -- 10 year reward syontrix gvrn none
+        --month60 = {},  -- 5 year reward come to syon to git afull load of foxi_missile
+        --month120 = {}, -- 10 year reward syontrix gvrn none
         repeat600 = {
             ad = "Offer: Congratulations on 50 years of service! Enjoy a free pub kit on us. Pick up any SFT&C System.",
             btn = "Tell Me More",
@@ -727,6 +841,8 @@ function module:drawBody()
         repeatIntervals = { 1, 12, 600 }
     }
 
+
+    local logDebugFrame = false;
     -- show the advtimsment and save the interval to save_data if user accepts rewards.
     local function advertise_reward(key, months, interval)
         -- this is called from draw  when a rewards is triggered.
@@ -737,11 +853,19 @@ function module:drawBody()
 
 
 
-        if FOXI.save_data.rewards_given[key] == nil then
-            print("displaying reward for first time key: " .. key)
+        local r = FOXI.save_data.rewards_given[key]
+        if r == nil then
+            --print("displaying reward for first time key: " .. key)
         else
-            --ensure that
-            print("Displaying rewoards for nths time" .. FOXI.save_data.rewards_given[key])
+
+            if(logDebugFrame) then
+                if (r == -1) then
+                    print("Debug reward["..key.."] save data set to -1; interval:"..interval.."mounths: " .. months)
+                else
+                --ensure that
+                    print("Displaying rewoards:" .. key .. ": for nths time" .. FOXI.save_data.rewards_given[key])
+                end
+            end
         end
 
 
@@ -751,7 +875,9 @@ function module:drawBody()
 
         if reward == nil then return nil end
 
-        print(key .. ".ad = " .. reward.ad)
+
+
+       -- print(key .. ".ad = " .. reward.ad)
         ui.textWrapped(reward.ad)
 
         if ui.button(reward.btn) then       -- here we are
@@ -777,6 +903,7 @@ function module:drawBody()
     -- these should only show if the user is docked at station.
     -- maybe they can use the mission interface
     --if not Game.player then return nil end
+
     if (not isMember) then
         advertise_reward("join", 0)
     else
@@ -803,11 +930,11 @@ function module:drawBody()
                     lastGiven = -1
                 end
 
-                print("interval: " ..
-                tostring(interval) .. "  isMember: " .. tostring(isMember) .. "  lastGiven: " .. tostring(lastGiven))
+                --print("interval: " ..
+                --tostring(interval) .. "  isMember: " .. tostring(isMember) .. "  lastGiven: " .. tostring(lastGiven))
                 if (interval == 0 or interval > 0 and not lastGiven == nil and lastGiven < interval) then
                     --we can advertirse this resowrd.
-                    advertise_reward(key, monthsJoined, interval)
+                    advertise_reward(key, monthsJoinedFloat, interval)
                 end
             end
 
@@ -942,7 +1069,6 @@ function module:refresh()
     -- the system menu
     --msgbox.OK("Mod Refresh")
     -- 	self.shipDef = ShipDef[self.ship.id]
-
     uiopen()
 
     --self:resetTransfer()

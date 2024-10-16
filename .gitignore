@@ -110,3 +110,7 @@ compile
 
 !data/modules/Debug
 *.lnk
+
+# dont commit the compiled version its to big
+pioneer
+editor

@@ -1,5 +1,5 @@
 {
-	"model": "syontrix",
+	"model": "coronatrix",
 	"name": "Syontrix",
 	"cockpit": "coronatrix_cockpit",
 	"manufacturer": "foxi",
@@ -19,7 +19,7 @@
 		"shield": 5,
 		"cargo": 200
 	},
-	"roles": ["mercenary", "merchant", "pirate"],
+	"roles": ["trader", "merchant", "pirate", "syon"],
 	"effective_exhaust_velocity": 18420000,
 	"thruster_fuel_use": -1.0,
 	"fuel_tank_mass": 320,

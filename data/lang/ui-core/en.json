@@ -2272,12 +2272,12 @@
     "message": "This is an easy start from Cydonia on Mars in the Sol system."
   },
   "START_AT_SYON": {
-    "description": "",
+    "description": "You have been hired by FOXI Co. To forge your path among the stars.",
     "message": "Start on Syon"
   },
   "START_AT_SYON_DESC": {
-    "description": "",
-    "message": "Congratulations on being accepted to foxi corp. Here is your ship you are responsible for any damages."
+    "description": "You have been hired by FOXI Co. To forge your path among the stars.",
+    "message": "Congratulations on being accepted to FOXI Co. Here is your ship you are responsible for any damages."
   },
   "START_AT_NEW_HOPE": {
     "description": "New Hope is an in game location",

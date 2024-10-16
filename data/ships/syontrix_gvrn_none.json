@@ -1,5 +1,5 @@
 {
-	"model": "syontrix",
+	"model": "coronatrix",
 	"name": "Syontrix GVRN None",
 	"cockpit": "coronatrix_cockpit",
 	"manufacturer": "foxi",
@@ -19,7 +19,7 @@
 		"shield": 10,
 		"cargo": 180
 	},
-	"roles": ["mercenary", "merchant", "pirate"],
+	"roles": ["trader", "merchant", "pirate", "syon"],
 	"effective_exhaust_velocity": 18420000,
 	"thruster_fuel_use": -1.0,
 	"fuel_tank_mass": 320,
@@ -48,6 +48,6 @@
 	"side_drag_coeff": 0.45,
 	"top_drag_coeff": 0.96,
 
-	"lift_coeff": 0.15,
+	"lift_coeff": 0.25,
 	"aero_stability": 0.35
 }

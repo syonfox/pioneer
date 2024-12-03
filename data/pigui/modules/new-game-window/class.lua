@@ -89,9 +89,8 @@ StartVariants.register({
 	colors     = { Color('E17F00'), Color('FFFFFF'), Color('FF7F00') }
 })
 
-
 StartVariants.register({
-	name       = lui.START_AT_SYON,
+	name           = lui.START_AT_SYON,
 	desc           = lui.START_AT_SYON_DESC,
 	location       = SystemPath.New(4, 2, 5, 0, 3),
 	logmsg         = lui.START_LOG_ENTRY_4,

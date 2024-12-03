@@ -1,12 +1,58 @@
+November 2024
+  * New Features
+    * Total overhaul of Ship Equipment - EquipSet v2 (#5734)
+    * Degrade scooped cargo requiring cargo life support (#5949)
+    * Improvement: Radar auto-zoom on cargo canisters (#5948)
+    * Add Buy and Sell prices to the Commodity Market (#5945)
+    * Natrix overhaul (#5963)
+    * Natrix patterns (#5975)
+    * feat(ui): add keybinding for target radial (#5962)
+    * feat(radar): add manual zoom mode to scanner (#5958)
+    * feat(radar): capture mouse wheel for zooming radar (#5978)
+    * Feat/radar improvements (e.g. intermediate zoom step, etc.) (#5984)
+
+  * Internal
+    * Fix builds which use "-DDEBUG" (#5946)
+    * Lua function GetEquipFree("cargo") is not behaving as expected (#3450)
+    * Build Cleanup (#5956)
+    * Optimize CityOnPlanet CPU-side rendering cost (#5943)
+    * Removing normal map from default cockpit materials (#5964)
+    * Fully expose InputBindings to Lua (#5965)
+    * Small fixes and improvements (#5968)
+    * Linux de-profile and msvc compilation fix (#5967)
+    * More default colours and cleanup copy-n-paste in GeoPatch (#5973)
+    * Cleanup Sound interfaces to allow plugging in alternative backend (#5959)
+    * Cleanup and unify Feat/view event and names (#5974)
+    * Allocate light data UBO from per-frame allocator, misc. fixes and cleanup (#5970)
+
+  * Fixes
+    * Fix $HOME/.pioneer randomly created on Linux (#5944)
+    * Ubuntu 24.04 & openSuSE Tumbleweed - Illegal instruction, core dumped (#5877)
+    * Preview information for modules in particular for hyperdrives and guns (#2820)
+    * New game may give you zero equipment (#4803)
+    * Weapon on sale not installed (#5567)
+    * Missiles buttons not showing up (#5887)
+    * Buying and selling ship equipment does not require confirmation (#5020)
+    * assertion failed in equipment-market.lua:91 (#5883)
+    * fix crash bugs in Passengers introduced by equip-v2 (#5957)
+    * Fix the ability to start from all start positions (#5971)
+    * Fix incorrect dV calculations in ship market (#5970)
+    * Fixing icons.svg after the radar updates (#5982)
+    * Fix(flightlog): fix crash when removing a flight log entry (#5988)
+    * Updating Vatakara to use the shild mesh of the Malabar (#5990)
+
 October 2024
   * New Features
     * NameGen - Spice up the station names (#5906)
     * Add interior lighting to stations (#5823)
     * Feat/reset view on hyperspace exit (#5922)
+    * Rework scout mission display and completion (#5932)
 
   * Internal
     * Improve narrow-phase collision physics performance (#5789)
     * CppCheck 2.15 performance cleanup (#5931)
+    * Misc. code improvements (#5937)
+    * refactor: run SaveGameStats in a job (#5934)
 
   * Fixes
     * Fix hyperspace route update bug across save/load cycle (#5924)
@@ -59,7 +105,7 @@ July 2024
   * Internal Changes
     * Fix debug commodities tab (#5861)
     * News Event: debug can also remove adverts (#5862)
-    * Improve Lua type checking for string enums (PR #5869
+    * Improve Lua type checking for string enums (#5869
 
 Pioneer 2024-07-10 Release
   * Fixes

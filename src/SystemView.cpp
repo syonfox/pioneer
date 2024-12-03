@@ -29,6 +29,7 @@
 #include "graphics/Types.h"
 
 #include "imgui/imgui.h"
+#include "profiler/Profiler.h"
 #include "SDL_keycode.h"
 
 using namespace Graphics;
@@ -63,7 +64,7 @@ namespace {
 // ─── System View ─────────────────────────────────────────────────────────────
 
 SystemView::SystemView(Game *game) :
-	PiGuiView("system-view"),
+	View("SystemView"),
 	m_game(game),
 	m_displayMode(Mode::Orrery),
 	m_systemSelectionMode(SystemSelectionMode::SELECTED_SYSTEM),
@@ -306,15 +307,15 @@ SystemMapViewport::SystemMapViewport(GuiApplication *app) :
 	m_app(app),
 	m_renderer(app->GetRenderer()),
 	m_displayMode(SystemView::Mode::Orrery),
+	m_atlasZoom(1.0f),
+	m_atlasZoomTo(1.0f),
+	m_atlasPos(vector2f()),
 	m_showGravpoints(false),
 	m_showL4L5(LAG_OFF),
 	m_shipDrawing(OFF),
 	m_gridDrawing(GridDrawing::OFF),
-	m_atlasPos(vector2f()),
-	m_atlasZoom(1.0f),
-	m_atlasZoomTo(1.0f),
-	m_rot_y(0),
 	m_rot_x(50),
+	m_rot_y(0),
 	m_zoom(1.0f / float(AU)),
 	m_trans(0.0),
 	m_transTo(0.0),

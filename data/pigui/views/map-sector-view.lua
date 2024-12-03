@@ -97,6 +97,11 @@ local onGameStart = function ()
 
 	-- allow hyperjump planner to register its events:
 	hyperJumpPlanner.onGameStart()
+
+	-- Reset hyperspace cache when ship equipment changes
+	Game.player:GetComponent('EquipSet'):AddListener(function (op, equip, slot)
+		hyperspaceDetailsCache = {}
+	end)
 end
 
 local function getHyperspaceDetails(path)
@@ -410,7 +415,7 @@ function Windows.factions.Show()
 	local factions = sectorView:GetMap():GetFactions()
 	for _,f in pairs(factions) do
 		local changed, value
-		ui.withStyleColors({ ["Text"] = Color(f.faction.colour.r, f.faction.colour.g, f.faction.colour.b) }, function()
+		ui.withStyleColors({ Text = Color(f.faction.colour.r, f.faction.colour.g, f.faction.colour.b) }, function()
 			changed, value = ui.checkbox(f.faction.name, f.visible)
 		end)
 		if changed then
@@ -452,7 +457,7 @@ end
 
 ui.registerModule("game", { id = 'map-sector-view', draw = function()
 	player = Game.player
-	if Game.CurrentView() == "sector" then
+	if Game.CurrentView() == "SectorView" then
 		sectorViewLayout:display()
 
 		if ui.isKeyReleased(ui.keys.tab) then
@@ -461,7 +466,7 @@ ui.registerModule("game", { id = 'map-sector-view', draw = function()
 		end
 
 		if ui.escapeKeyReleased() then
-			Game.SetView("world")
+			Game.SetView("WorldView")
 		end
 
 		if ui.ctrlHeld() and ui.isKeyReleased(ui.keys.delete) then
@@ -484,11 +489,6 @@ Event.Register("onGameEnd", function()
 	leftBarMode = "SEARCH"
 
 	hyperJumpPlanner.onGameEnd()
-end)
-
-Event.Register("onShipEquipmentChanged", function(ship, ...)
-	if ship:IsPlayer() then hyperspaceDetailsCache = {} end
-	hyperJumpPlanner.onShipEquipmentChanged(ship, ...)
 end)
 
 Event.Register("onShipTypeChanged", function(ship, ...)

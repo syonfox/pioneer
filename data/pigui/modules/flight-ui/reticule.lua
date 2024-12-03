@@ -43,7 +43,8 @@ local showNavigationalNumbers = true
 -- to interact with actions and axes in the input system
 local bindings = {
 	assistRadial = bindManager.registerAction('BindFlightAssistRadial'),
-	fixheadingRadial = bindManager.registerAction('BindFixheadingRadial')
+	fixheadingRadial = bindManager.registerAction('BindFixheadingRadial'),
+	targetRadial = bindManager.registerAction('BindTargetRadial'),
 }
 
 -- display the pitch indicator on the right inside of the reticule circle
@@ -321,8 +322,11 @@ local function displayDetailData(target, radius, colorLight, colorDark, tooltip,
 	local uiPos = ui.pointOnClock(center, radius, 2.46)
 	-- label of target
 	local nameSize = ui.addStyledText(uiPos, ui.anchor.left, ui.anchor.baseline, target.label, colorDark, pionillium.medium, tooltip, colors.lightBlackBackground)
-	if ui.isMouseHoveringRect(uiPos - Vector2(0, pionillium.medium.size), uiPos + nameSize - Vector2(0, pionillium.medium.size)) and ui.isMouseClicked(1) and ui.noModifierHeld() then
-		ui.openDefaultRadialMenu("game", target)
+	local isHovered = ui.isMouseHoveringRect(uiPos - Vector2(0, pionillium.medium.size), uiPos + nameSize - Vector2(0, pionillium.medium.size))
+	                  and ui.isMouseClicked(1) and ui.noModifierHeld()
+	if isHovered or bindings.targetRadial.action:IsJustActive() then
+		local action_binding = bindings.targetRadial.action:IsActive() and bindings.targetRadial.action
+		ui.openDefaultRadialMenu("game", target, uiPos, action_binding)
 	end
 	-- current distance, relative speed
 	uiPos = ui.pointOnClock(center, radius, 2.75)
@@ -462,24 +466,24 @@ local function displayManeuverData(radius)
 end
 
 local aicommand_info = {
-	["CMD_DOCK"] = { icon = icons.autopilot_dock, tooltip = lui.HUD_BUTTON_AUTOPILOT_DOCKING },
-	["CMD_FLYTO"] = { icon = icons.autopilot_fly_to, tooltip = lui.HUD_BUTTON_AUTOPILOT_FLYING_TO_TARGET },
-	["CMD_FORMATION"] = { icon = icons.autopilot_fly_to, tooltip = lui.HUD_BUTTON_AUTOPILOT_FLYING_TO_TARGET },
-	["CMD_FLYAROUND"] = { icon = icons.autopilot_medium_orbit, tooltip = lui.HUD_BUTTON_AUTOPILOT_ENTERING_ORBIT },
+	CMD_DOCK = { icon = icons.autopilot_dock, tooltip = lui.HUD_BUTTON_AUTOPILOT_DOCKING },
+	CMD_FLYTO = { icon = icons.autopilot_fly_to, tooltip = lui.HUD_BUTTON_AUTOPILOT_FLYING_TO_TARGET },
+	CMD_FORMATION = { icon = icons.autopilot_fly_to, tooltip = lui.HUD_BUTTON_AUTOPILOT_FLYING_TO_TARGET },
+	CMD_FLYAROUND = { icon = icons.autopilot_medium_orbit, tooltip = lui.HUD_BUTTON_AUTOPILOT_ENTERING_ORBIT },
 }
 
 local flightstate_info = {
-	["CONTROL_MANUAL"] = { icon = icons.empty, tooltip = lui.HUD_BUTTON_MANUAL_CONTROL },
+	CONTROL_MANUAL = { icon = icons.empty, tooltip = lui.HUD_BUTTON_MANUAL_CONTROL },
 	-- "CONTROL_AUTOPILOT" - depends on the current command
 	-- "CONTROL_FIXSPEED" - depends on the cruise mode
-	["CONTROL_FIXHEADING_FORWARD"] = { icon = icons.prograde_thin, tooltip = lui.HUD_BUTTON_FIX_PROGRADE },
-	["CONTROL_FIXHEADING_BACKWARD"] = { icon = icons.retrograde_thin , tooltip = lui.HUD_BUTTON_FIX_RETROGRADE },
-	["CONTROL_FIXHEADING_NORMAL"] = { icon = icons.normal_thin, tooltip = lui.HUD_BUTTON_FIX_NORMAL },
-	["CONTROL_FIXHEADING_ANTINORMAL"] = { icon = icons.antinormal_thin, tooltip = lui.HUD_BUTTON_FIX_ANTINORMAL },
-	["CONTROL_FIXHEADING_RADIALLY_INWARD"] = { icon = icons.radial_in_thin, tooltip = lui.HUD_BUTTON_FIX_RADIAL_IN },
-	["CONTROL_FIXHEADING_RADIALLY_OUTWARD"] = { icon = icons.radial_out_thin, tooltip = lui.HUD_BUTTON_FIX_RADIAL_OUT },
+	CONTROL_FIXHEADING_FORWARD = { icon = icons.prograde_thin, tooltip = lui.HUD_BUTTON_FIX_PROGRADE },
+	CONTROL_FIXHEADING_BACKWARD = { icon = icons.retrograde_thin , tooltip = lui.HUD_BUTTON_FIX_RETROGRADE },
+	CONTROL_FIXHEADING_NORMAL = { icon = icons.normal_thin, tooltip = lui.HUD_BUTTON_FIX_NORMAL },
+	CONTROL_FIXHEADING_ANTINORMAL = { icon = icons.antinormal_thin, tooltip = lui.HUD_BUTTON_FIX_ANTINORMAL },
+	CONTROL_FIXHEADING_RADIALLY_INWARD = { icon = icons.radial_in_thin, tooltip = lui.HUD_BUTTON_FIX_RADIAL_IN },
+	CONTROL_FIXHEADING_RADIALLY_OUTWARD = { icon = icons.radial_out_thin, tooltip = lui.HUD_BUTTON_FIX_RADIAL_OUT },
 	-- "CONTROL_FIXHEADING_KILLROT" uses the same icon as rotation damping on
-	["CONTROL_FIXHEADING_KILLROT"] = { icon = icons.rotation_damping_on , tooltip = lui.HUD_BUTTON_KILL_ROTATION }
+	CONTROL_FIXHEADING_KILLROT = { icon = icons.rotation_damping_on , tooltip = lui.HUD_BUTTON_KILL_ROTATION }
 }
 
 local radial_menu_actions_orbital = {

@@ -378,7 +378,7 @@ end
 --
 local object = {}
 
-object.meta = { __index = object, class="object", inherits = { ["object"] = true } }
+object.meta = { __index = object, class="object", inherits = { object = true } }
 
 --
 -- Function: New
@@ -510,6 +510,9 @@ local _proto = {}
 
 _proto.__clone = function(self) end
 
+---@generic T
+---@param self T
+---@return T
 function _proto:clone(mixin)
 	local new = { __index = self }
 	setmetatable(new, new)

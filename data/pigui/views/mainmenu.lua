@@ -18,8 +18,6 @@ local qlc = Lang.GetResource("quitconfirmation-core")
 
 local ui = require 'pigui'
 
-local hyperspace = Equipment.hyperspace
-
 local colors = ui.theme.colors
 local pionillium = ui.fonts.pionillium
 local orbiteer = ui.fonts.orbiteer
@@ -137,7 +135,7 @@ local function showMainMenu()
 	local winPos = Vector2(ui.screenWidth - mainButtonSize.x - 100, ui.screenHeight/2 - (buttons * mainButtonSize.y)/2 - (2*mainButtonSize.y)/2 - 8)
 
 	ui.setNextWindowPos(Vector2(110,65),'Always')
-	ui.withStyleColors({["WindowBg"]=colors.transparent}, function()
+	ui.withStyleColors({WindowBg=colors.transparent}, function()
 		ui.window("headingWindow", overlayWindowFlags, function()
 			ui.withFont(orbiteer.xlarge, function() ui.text("Pioneer") end)
 		end)
@@ -145,7 +143,7 @@ local function showMainMenu()
 	if Engine.IsIntroZooming() then
 		ui.setNextWindowPos(Vector2(0,0),'Always')
 		ui.setNextWindowSize(Vector2(ui.screenWidth, ui.screenHeight), 'Always')
-		ui.withStyleColors({["WindowBg"]=colors.transparent}, function()
+		ui.withStyleColors({WindowBg=colors.transparent}, function()
 			ui.window("shipinfoWindow", overlayWindowFlags, function()
 				local mn = Engine.GetIntroCurrentModelName()
 				if mn then
@@ -162,7 +160,7 @@ local function showMainMenu()
 	ui.withFont(orbiteer.medium,
 		function()
 			ui.setNextWindowPos(Vector2(ui.screenWidth - ui.calcTextSize(build_text).x * 1.2,ui.screenHeight - 50), 'Always')
-			ui.withStyleColors({["WindowBg"] = colors.transparent}, function()
+			ui.withStyleColors({WindowBg = colors.transparent}, function()
 				ui.window("buildLabel", overlayWindowFlags, function()
 					ui.text(build_text)
 				end)
@@ -171,7 +169,7 @@ local function showMainMenu()
 
 	ui.setNextWindowPos(winPos,'Always')
 	ui.setNextWindowSize(Vector2(0,0), 'Always')
-	ui.withStyleColors({["WindowBg"] = colors.lightBlackBackground}, function()
+	ui.withStyleColors({WindowBg = colors.lightBlackBackground}, function()
 		ui.window("MainMenuButtons", mainMenuFlags, function()
 			mainTextButton(lui.CONTINUE_GAME, nil, showContinue, continueGame)
 

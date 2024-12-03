@@ -2,14 +2,12 @@
 #include <lua.hpp>
 
 #include "LuaPiGui.h"
-#include "PiGui.h"
+#include "lua/Lua.h"
 
 #include "imgui/imgui.h"
 #include "lua/LuaUtils.h"
 
 #include "imgui/imgui_internal.h"
-
-#include <array>
 
 const char *s_meta_name = "PiGui.SavedImguiStackInfo";
 
@@ -151,7 +149,7 @@ void PiGui::Lua::RegisterSandbox()
 	pi_lua_split_table_path(L, "PiGui");
 	lua_gettable(L, -2);
 	luaL_setfuncs(L, l_stack_functions, 0);
-	lua_pop(L, 1);
+	lua_pop(L, 2);
 
 	LUA_DEBUG_END(L, 0);
 }

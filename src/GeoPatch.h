@@ -12,6 +12,7 @@
 #include "RefCounted.h"
 #include "matrix4x4.h"
 #include "vector3.h"
+#include "graphics/Frustum.h"
 #include <deque>
 #include <memory>
 
@@ -26,7 +27,6 @@ namespace Graphics {
 
 namespace Graphics {
 	class Renderer;
-	class Frustum;
 	class MeshObject;
 } // namespace Graphics
 
@@ -93,6 +93,8 @@ public:
 
 private:
 	static const int NUM_KIDS = 4;
+
+	bool IsOverHorizon(const vector3d &camPos);
 
 	RefCountedPtr<GeoPatchContext> m_ctx;
 	const vector3d m_v0, m_v1, m_v2, m_v3;

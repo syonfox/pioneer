@@ -323,7 +323,8 @@ theme.styles = rescaleUI {
 	SmallButtonSize = Vector2(30, 30),
 	IconButtonPadding = Vector2(3, 3),
 	InlineIconPadding = Vector2(2, 2),
-	MainButtonPadding = 3
+	MainButtonPadding = 3,
+	ItemCardRounding = 4
 }
 
 theme.icons = {
@@ -653,7 +654,7 @@ theme.icons = {
 	equip_autopilot = 302,
 	equip_hyperdrive = 303,
 
-	-- twentieth row
+	-- twentieth row : icons 304 to 319
 	plus = 304,
 	minus = 305,
 	cross = 306,
@@ -668,6 +669,13 @@ theme.icons = {
 	increase_1 = 315,
 	increase_2 = 316,
 	increase_max = 317,
+	radar_2d = 318,
+	radar_3d = 319,
+
+	-- twenty-first row : icons 320 to 335
+	radar_automatic = 320,
+	radar_manual = 321,
+	-- 322 - 335 : empty
 
 	shipmarket_compare_better = 38,
 	shipmarket_compare_worse = 40,
@@ -675,6 +683,9 @@ theme.icons = {
 	circle_lg = 6,
 	circle_md = 51,
 	circle_sm = 110,
+
+	chevron_up = 38,
+	chevron_down = 40,
 
 	-- TODO: manual / autopilot
 	-- dummy, until actually defined correctly

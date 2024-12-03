@@ -4,8 +4,10 @@
 local Lang = require 'Lang'
 local Game = require 'Game'
 local Format = require 'Format'
+local Passengers = require 'Passengers'
 
 local l = Lang.GetResource("ui-core")
+
 local ui = require 'pigui'
 local colors = ui.theme.colors
 local icons = ui.theme.icons
@@ -15,7 +17,7 @@ local TabView = require 'pigui.views.tab-view'
 local stationView
 
 if not stationView then
-	stationView = TabView.New("space_station")
+	stationView = TabView.New("StationView")
 	-- stationView.windowPadding = ui.rescaleUI(Vector2(18, 18))
 	stationView.style = ui.rescaleUI({
 		windowPadding = Vector2(18, 18),
@@ -54,16 +56,23 @@ if not stationView then
 					ui.sameLine()
 					local gaugePos = ui.getWindowPos() + ui.getCursorPos() + Vector2(0, ui.getTextLineHeight() / 2)
 					local gaugeWidth = ui.getContentRegion().x - self.style.inventoryPadding.x - self.style.itemSpacing.x
-					ui.gauge(gaugePos, player.usedCapacity, '', string.format('%%it %s / %it %s', l.USED, player.freeCapacity, l.FREE), 0, player.usedCapacity + player.freeCapacity, icons.market, colors.gaugeEquipmentMarket, '', gaugeWidth, ui.getTextLineHeight())
+
+					local fmt = "{} {} / {} {}" % {
+						ui.Format.Volume(player.equipVolume), l.USED,
+						ui.Format.Volume(player.totalVolume - player.equipVolume), l.FREE
+					}
+					ui.gauge(gaugePos, player.equipVolume, '', fmt, 0, player.totalVolume, icons.market, colors.gaugeEquipmentMarket, '', gaugeWidth, ui.getTextLineHeight())
 					ui.nextColumn()
 					ui.text(l.CABINS .. ': ')
 					ui.sameLine()
-					local cabins_total = Game.player:GetEquipCountOccupied("cabin")
-					local cabins_free = player.cabin_cap or 0
-					local cabins_used = cabins_total - cabins_free
+
+					local berths_free = Passengers.CountFreeBerths(player)
+					local berths_used = Passengers.CountOccupiedBerths(player)
+					local berths_total = berths_used + berths_free
+
 					gaugePos = ui.getWindowPos() + ui.getCursorPos() + Vector2(0, ui.getTextLineHeight() / 2)
 					gaugeWidth = ui.getContentRegion().x - self.style.inventoryPadding.x - self.style.itemSpacing.x
-					ui.gauge(gaugePos, cabins_used, '', string.format('%%i %s / %i %s', l.USED, cabins_free, l.FREE), 0, cabins_total, icons.personal, colors.gaugeEquipmentMarket, '', gaugeWidth, ui.getTextLineHeight())
+					ui.gauge(gaugePos, berths_used, '', string.format('%%i %s / %i %s', l.USED, berths_free, l.FREE), 0, berths_total, icons.personal, colors.gaugeEquipmentMarket, '', gaugeWidth, ui.getTextLineHeight())
 					ui.nextColumn()
 					ui.text(legalText)
 					ui.columns(1, '', false)
@@ -75,7 +84,7 @@ if not stationView then
 	ui.registerModule("game", function()
 		stationView:renderTabView()
 		if stationView.isActive and ui.escapeKeyReleased() then
-			Game.SetView("world")
+			Game.SetView("WorldView")
 		end
 	end)
 end

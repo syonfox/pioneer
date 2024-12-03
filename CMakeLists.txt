@@ -99,6 +99,16 @@ if (USE_TIME_TRACE)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftime-trace")
 endif()
 
+option(USE_ASAN "Use -fsanitize=address when compiling (requires Clang)" OFF)
+if (USE_ASAN)
+	add_compile_options(
+		-g
+		-fsanitize=address
+		-fno-omit-frame-pointer)
+	add_link_options(
+		-fsanitize=address)
+endif()
+
 include(CheckSymbolExists)
 check_symbol_exists(feclearexcept "fenv.h" HAS_FECLEAREXCEPT)
 check_symbol_exists(feenableexcept "fenv.h" HAS_FEENABLEEXCEPT)
@@ -152,7 +162,7 @@ list(APPEND SRC_FOLDERS
 	src/graphics
 	src/graphics/dummy
 	src/graphics/opengl
-	src/gui
+	src/math
 	src/pigui
 	src/scenegraph
 	src/ship

@@ -106,11 +106,11 @@ local function displayShipFunctionWindow()
 	assert(thrust_widget_size.y >= mainButtonSize.y)
 	local window_width = ui.getWindowPadding().x * 2 + (mainButtonSize.x + ui.getItemSpacing().x) * buttons + thrust_widget_size.x
 	local window_height = thrust_widget_size.y + ui.getWindowPadding().y * 2
-	local window_posx = ui.screenWidth/2 - ui.reticuleCircleRadius - window_width + 12 -- manual move a little closer to the center
+	local window_posx = ui.screenWidth/2 - ui.reticuleCircleRadius - window_width
 	local window_posy = ui.screenHeight - window_height
 	ui.setNextWindowPos(Vector2(window_posx, window_posy), "Always")
 	ui.window("ShipFunctions", windowFlags, function()
-		if current_view == "world" then
+		if current_view == "WorldView" then
 			local shift = Vector2(0.0, thrust_widget_size.y - mainButtonSize.y)
 			ui.addCursorPos(shift)
 			button_wheelstate()
@@ -124,10 +124,16 @@ local function displayShipFunctionWindow()
 			if ui.noModifierHeld() and ui.isKeyReleased(ui.keys.f8) then
 				show_thrust_slider = not show_thrust_slider
 			end
-		end -- current_view == "world"
+		end -- current_view == "WorldView"
 	end)
 end
 
-ui.registerModule("game", { id = "ship-internals-window", draw = displayShipFunctionWindow })
+ui.registerModule("game", {
+	id = "ship-internals-window",
+	draw = displayShipFunctionWindow,
+	debugReload = function()
+		package.reimport()
+	end,
+})
 
 return {}

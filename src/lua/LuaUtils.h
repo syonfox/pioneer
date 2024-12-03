@@ -5,6 +5,7 @@
 #define _LUAUTILS_H
 
 // to mask __attribute on MSVC
+#include "core/Log.h"
 #include "core/macros.h"
 #include "DateTime.h"
 
@@ -87,6 +88,8 @@ void pi_lua_warn(lua_State *l, const char *format, ...) __attribute((format(prin
 
 bool pi_lua_split_table_path(lua_State *l, const std::string &path);
 
+std::string pi_lua_get_caller_module(lua_State *l, int depth = 1);
+
 int secure_trampoline(lua_State *l);
 
 std::string pi_lua_traceback(lua_State *l, int top);
@@ -94,7 +97,7 @@ std::string pi_lua_dumpstack(lua_State *l, int top);
 void pi_lua_printvalue(lua_State *l, int idx);
 void pi_lua_stacktrace(lua_State *l);
 
-#ifdef DEBUG
+#ifndef NDEBUG
 #define LUA_DEBUG_START(luaptr) const int __luaStartStackDepth = lua_gettop(luaptr)
 #define LUA_DEBUG_END(luaptr, expectedStackDiff)                                                   \
 	do {                                                                                           \

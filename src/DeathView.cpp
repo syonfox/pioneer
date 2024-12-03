@@ -11,8 +11,10 @@
 #include "graphics/Graphics.h"
 #include "graphics/Renderer.h"
 
+#include "profiler/Profiler.h"
+
 DeathView::DeathView(Game *game) :
-	View(),
+	View("DeathView"),
 	m_game(game)
 {
 	float znear;

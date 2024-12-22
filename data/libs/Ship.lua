@@ -17,6 +17,8 @@ local Character = require 'Character'
 local Comms = require 'Comms'
 local EquipSet = require 'EquipSet'
 
+--local GunManager = require 'GunManager.meta'
+
 local l = Lang.GetResource("ui-core")
 
 --
@@ -48,6 +50,7 @@ end
 
 ---@private
 function Ship:UpdateWeaponSlots()
+
 	local equipSet = self:GetComponent('EquipSet')
 	local gunManager = self:GetComponent('GunManager')
 
@@ -57,6 +60,7 @@ function Ship:UpdateWeaponSlots()
 		end
 
 		local gimbal = Vector2(table.unpack(slot.gimbal or { 1, 1 }))
+
 		local ok = gunManager:AddWeaponMount(slot.id, slot.tag, gimbal)
 
 		if not ok then
@@ -412,7 +416,14 @@ function Ship:Jettison(cargoType, burnIt)
 	if self.flightState == "FLYING" then
 	    if(not burnIt) then
 		    self:SpawnCargo(cargoType)
+		else
+		    --TODO: dependant on material blast a plasma cloud backwards
+		    -- also rotate the ship 90deg and perfrom max thrust burn for a second.
+		    -- idk maybe this is a dumb idea but in theory you could use your main thruster as a weapon.
+		    -- https://chatgpt.com/share/6767a694-7c68-8007-a136-8f13340415a5
 		end
+
+
 		Event.Queue("onJettison", self, cargoType)
 	elseif self.flightState == "DOCKED" then
 		Event.Queue("onCargoUnload", self:GetDockedWith(), cargoType)

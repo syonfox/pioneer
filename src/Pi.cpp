@@ -1,4 +1,4 @@
-// Copyright © 2008-2024 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "buildopts.h"
@@ -783,6 +783,12 @@ void Pi::HandleKeyDown(SDL_Keysym *key)
 	case SDLK_F11: // Reload shaders
 		renderer->ReloadShaders();
 		break;
+
+	case SDLK_F8: // EXPLOSION!
+	{
+		SfxManager::AddExplosion(Pi::game->GetPlayer());
+		break;
+	}
 #endif /* DEVKEYS */
 
 #if WITH_OBJECTVIEWER

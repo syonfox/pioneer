@@ -1,4 +1,4 @@
-// Copyright © 2008-2024 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef _STATS_H
@@ -22,6 +22,8 @@ namespace Graphics {
 		enum StatType {
 			// renderer entries
 			STAT_DRAWCALL = 0,
+			STAT_DRAWCALLINSTANCES,
+			STAT_DRAWCALLSINSTANCED,
 			STAT_NUM_POINTS,
 			STAT_NUM_LINES,
 			STAT_NUM_TRIS,

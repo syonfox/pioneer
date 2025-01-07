@@ -1,4 +1,4 @@
-// Copyright © 2008-2024 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "RendererGL.h"
@@ -976,7 +976,8 @@ namespace Graphics {
 
 		inst->Release();
 		CheckRenderErrors(__FUNCTION__, __LINE__);
-		m_stats.AddToStatCount(Stats::STAT_DRAWCALL, 1);
+		m_stats.AddToStatCount(Stats::STAT_DRAWCALLINSTANCES, 1);
+		m_stats.AddToStatCount(Stats::STAT_DRAWCALLSINSTANCED, inst->GetInstanceCount());
 		stat_primitives(m_stats, type, numElems);
 		return true;
 	}

@@ -306,6 +306,11 @@ function Ship:FireMissileAt(missile, target)
 	-- FIXME: handle multiple-count missile mounts
 	equipSet:Remove(missile)
 
+	if not missile then
+        Comms.ImportantMessage("Your missile rack is as empty as a black hole's heart!")
+        return false
+    end
+
 	local missile_object = self:SpawnMissile(missile.missile_type)
 
 	if missile_object then

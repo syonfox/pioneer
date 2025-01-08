@@ -86,4 +86,20 @@ make -j 8 ; # for 8 core cpu
 
 echo "consult COMPILING.txt"
 
+
 ```
+
+
+# Dev
+
+https://wiki.pioneerspacesim.net/wiki/Getting_Started_with_Development
+
+```
+sudo apt install gdb
+
+gdb ./pioneer
+run
+```
+or
+    
+    gdb ./pioneer  --eval-command=run

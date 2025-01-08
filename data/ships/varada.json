@@ -11,13 +11,40 @@
 	"hull_mass": 4,
 	"atmospheric_pressure_limit": 4,
 	"capacity": 5,
-	"slots": {
-		"engine": 1,
-		"cabin": 0,
-		"scoop": 0,
-		"laser_front": 1,
-		"cargo": 5
+	"cargo": 5,
+	"equipment_slots": {
+		"shield_s1_1": {
+			"type": "shield",
+			"size": 1
+		},
+		"computer_s1_2": {
+			"type": "computer",
+			"size": 1
+		},
+		"computer_s1_1": {
+			"type": "computer",
+			"size": 1
+		},
+		"hyperdrive": {
+			"type": "hyperdrive",
+			"size": 1,
+			"size_min": 1
+		},
+		"thruster": {
+			"type": "thruster",
+			"size": 1,
+			"count": 8
+		},
+		"laser_front_s1": {
+			"type": "weapon",
+			"size": 1,
+			"size_min": 1,
+			"i18n_key": "HARDPOINT_WEAPON_FRONT",
+			"tag": "tag_gunmount_0",
+			"hardpoint": true
+		}
 	},
+
 	"roles": ["mercenary", "pirate", "courier"],
 	
 	"effective_exhaust_velocity": 8900000,
@@ -51,3 +78,7 @@
 	"lift_coeff": 0.2,
 	"aero_stability": 0.6
 }
+
+
+
+

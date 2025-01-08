@@ -17,17 +17,17 @@ local utils = require 'utils'
 ---@field clone fun(self, mixin):self
 local Slot = utils.proto("HullConfig.Slot")
 
-Slot.id = ""
-Slot.type = ""
-Slot.size = 1
-Slot.size_min = nil ---@type number?
-Slot.tag = nil ---@type string?
-Slot.default = nil ---@type string?
-Slot.hardpoint = false
-Slot.i18n_key = nil ---@type string?
-Slot.i18n_res = "equipment-core"
-Slot.count = nil ---@type integer?
-Slot.gimbal = nil ---@type table?
+Slot.id = ""        --- I guess incremented when registered
+Slot.type = ""      --- equip class/ catagory
+Slot.size = 1       --- ship scale size of slot
+Slot.size_min = nil ---@type number?            ie cant install hyperdirve less then 2 for this ship
+Slot.tag = nil ---@type string?                 the model tag for hardpoint mounting
+Slot.default = nil ---@type string?             ???
+Slot.hardpoint = false ---@type boolean?        mostly unused as present but indacates the slot should eventualy be displayed as a modal atached to the tag
+Slot.i18n_key = nil ---@type string?            the key in the language file
+Slot.i18n_res = "equipment-core" ---@type string  the language file to search for the key in
+Slot.count = nil ---@type integer?              ???
+Slot.gimbal = nil ---@type table?               ???
 
 -- Class: HullConfig
 --

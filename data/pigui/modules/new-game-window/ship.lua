@@ -564,9 +564,12 @@ function ShipEquip:setDefaultHyperdrive()
 	else
 		local driveID = "hyperdrive_" .. drive_class
 		local index = utils.indexOf(self.lists.hyperspace, driveID)
+        print("hyperdrve_class: " .. drive_class)
+       -- print("drive_idx:" .. index )
+		--local default = index.default || index.size_min || index.size;
 		-- FIXME: convert to new equipment API
 		--assert(index, "unknown drive ID: " .. tostring(driveID))
-		self.value.engine = driveID
+		--self.value.engine = index
 	end
 	self:update()
 end

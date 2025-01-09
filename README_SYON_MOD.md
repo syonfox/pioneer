@@ -103,3 +103,16 @@ run
 or
     
     gdb ./pioneer  --eval-command=run
+
+
+### How to write a mod. 
+
+Place files in `~/.pioneer/mods/$MOD_NAME/`
+
+All files in this directory will be merged with the games `data` folder
+
+For language json files you can patch for example `<mod>/lang/ui-core/en.json.patch`   https://github.com/pioneerspacesim/pioneer/issues/5996#issuecomment-2571479349
+
+
+
+

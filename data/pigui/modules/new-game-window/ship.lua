@@ -569,7 +569,7 @@ function ShipEquip:setDefaultHyperdrive()
 		--local default = index.default || index.size_min || index.size;
 		-- FIXME: convert to new equipment API
 		--assert(index, "unknown drive ID: " .. tostring(driveID))
-		--self.value.engine = index
+		self.value.engine = driveID
 	end
 	self:update()
 end

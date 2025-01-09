@@ -17,8 +17,6 @@ local Character = require 'Character'
 local Comms = require 'Comms'
 local EquipSet = require 'EquipSet'
 
---local GunManager = require 'GunManager.meta'
-
 local l = Lang.GetResource("ui-core")
 
 --

@@ -9,7 +9,7 @@
 //#include "imgui.h"
 #include "../pigui/PiGui.h"
 // Function to show the Syon Tool window
-
+#include "galaxy/SystemPath.h"
 
 
 // Class
@@ -42,10 +42,18 @@ namespace Syon {
 	void Shutdown();
 	void SayHelloWorld();
 	void TestStateIntrospection();
-
+	void DrawInternalSectorTool();
 	void DrawWorldViewStats();
 	// Game-related pointers
 	extern GameData* g_GameData;
+
+
+   // SystemPath* m_path = nullptr;
+
+
+
+  // Static SystemPath pointer in the namespace
+    inline SystemPath* m_path = nullptr;
 
 } // namespace Syon
 

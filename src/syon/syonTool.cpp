@@ -13,6 +13,28 @@
 #include "Pi.h"
 #include "Player.h"
 
+#include "../galaxy/SystemPath.h"
+#include "SyonDraw.h"
+
+
+void Syon::Initialize() {
+	if (!Syon::m_path) {
+		// Get the hyperspace source from Pi::game
+		if (Pi::game) {
+			fmt::print("Syon::m_path init to Pi::game->GetHyperspaceSource();\n");
+			const SystemPath& hyperspaceSource = Pi::game->GetHyperspaceSource();
+			Syon::m_path = new SystemPath(hyperspaceSource);
+		} else {
+			fmt::print("Pi::game is not initialized!\n");
+		}
+	}
+}
+
+void Syon::Shutdown() {
+	// Clean up m_path
+	delete Syon::m_path;
+	Syon::m_path = nullptr;
+}
 
 
 void Syon::ShowSyonToolWindow(bool* p_open) {
@@ -51,6 +73,9 @@ void Syon::ShowSyonToolWindow(bool* p_open) {
 			}
 		}
 		ImGui::EndTable();
+
+
+		//m//_path = Pi.game.
 	}
 
 	// Range slider
@@ -62,14 +87,130 @@ void Syon::ShowSyonToolWindow(bool* p_open) {
 
 
 
+
+// This function has been taken from the editor ui
+void Syon::DrawInternalSectorTool()
+{
+
+
+	if (Syon::Draw::LayoutHorizontal("Sector", 3, ImGui::GetFontSize())) {
+		bool changed = false;
+		changed |= ImGui::InputInt("X", &Syon::m_path->sectorX, 1, 0);
+		changed |= ImGui::InputInt("Y", &Syon::m_path->sectorY, 1, 0);
+		changed |= ImGui::InputInt("Z", &Syon::m_path->sectorZ, 1, 0);
+
+		if (changed)
+			Syon::m_path->systemIndex = 0;
+
+		Syon::Draw::EndLayout();
+	}
+
+	ImGui::Separator();
+
+	RefCountedPtr<const Sector> sec = Pi::game->GetGalaxy()->GetSector(Syon::m_path->SectorOnly());
+	ImGui::BeginGroup();
+	if (ImGui::BeginChild("Systems", ImVec2(ImGui::GetContentRegionAvail().x * 0.33, -ImGui::GetFrameHeightWithSpacing()))) {
+
+		for (const Sector::System &system : sec->m_systems) {
+
+			const vector3f& position = system.GetPosition();
+
+			// Display in ImGui
+			//ImGui::Text("Position: (%.2f, %.2f, %.2f)", position.x, position.y, position.z);
+
+			// Convert to string for logging
+			std::string positionStr = fmt::format("({:.2f}, {:.2f}, {:.2f})", position.x, position.y, position.z);
+			//fmt::print("Position logged: {}\n", positionStr);
+
+			std::string label = fmt::format("{} {} \uF023{}", system.GetName(), positionStr ,system.GetNumStars());
+
+			if (ImGui::Selectable(label.c_str(), system.idx == Syon::m_path->systemIndex))
+				Syon::m_path->systemIndex = system.idx;
+
+			if (ImGui::IsItemClicked() && ImGui::IsMouseDoubleClicked(0)) {
+				//Pi::game->LoadSystem(system.GetPath());
+				ImGui::CloseCurrentPopup();
+			}
+
+		}
+
+	}
+	ImGui::EndChild();
+
+	if (ImGui::Button("New System")) {
+		// Ensure we generate a valid system index
+		SystemPath newPath = Syon::m_path->SectorOnly();
+		newPath.systemIndex = sec->m_systems.size();
+
+		//Pi::game->NewSystem(newPath);
+		ImGui::CloseCurrentPopup();
+	}
+
+	ImGui::SetItemTooltip("Create a new empty system in this sector.");
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Edit Selected")) {
+		//Pi::game->LoadSystem(Syon::m_path->SystemOnly());
+		ImGui::CloseCurrentPopup();
+	}
+
+	ImGui::SetItemTooltip("Load the selected system as a template.");
+
+	ImGui::EndGroup();
+
+	ImGui::SameLine();
+	ImGui::BeginGroup();
+
+	if (Syon::m_path->systemIndex < sec->m_systems.size()) {
+		const Sector::System &system = sec->m_systems[Syon::m_path->systemIndex];
+
+		//ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium", 16));
+
+		ImGui::AlignTextToFramePadding();
+		ImGui::TextUnformatted(system.GetName().c_str());
+
+		//ImGui::PopFont();
+
+		ImGui::Spacing();
+
+		ImGui::TextUnformatted("Is Custom:");
+		ImGui::SameLine(ImGui::CalcItemWidth());
+		ImGui::TextUnformatted(system.GetCustomSystem() ? "yes" : "no");
+
+		ImGui::TextUnformatted("Is Explored:");
+		ImGui::SameLine(ImGui::CalcItemWidth());
+		ImGui::TextUnformatted(system.GetExplored() == StarSystem::eEXPLORED_AT_START ? "yes" : "no");
+
+		ImGui::TextUnformatted("Faction:");
+		ImGui::SameLine(ImGui::CalcItemWidth());
+		ImGui::TextUnformatted(system.GetFaction() ? system.GetFaction()->name.c_str() : "<none>");
+
+		ImGui::TextUnformatted("Other Names:");
+		ImGui::SameLine(ImGui::CalcItemWidth());
+
+		ImGui::BeginGroup();
+		for (auto &name : system.GetOtherNames())
+			ImGui::TextUnformatted(name.c_str());
+		ImGui::EndGroup();
+	}
+	ImGui::EndGroup();
+}
+
+
 void Syon::SayHelloWorld() {
 	//char* str, char str2[] , char** strRef,  char* &strRef2
+
+	//Syon::m_path = SystemPath:Parse("4,1,1")
 
 	ImGui::Begin("Syon Tool");
 	// m_stats.shield_mass_left
 	// m_stats.hull_mass_left
 	ImGui::Text("Hello World");
 
+	Syon::Initialize();
+
+	Syon::DrawInternalSectorTool();
 	// Syon::DrawWorldViewStats();
 
 	ImGui::End();
@@ -140,6 +281,15 @@ void Syon::DrawWorldViewStats()
 		const auto *sbody = Pi::player->GetNavTarget()->GetSystemBody();
 		ImGui::TextUnformatted(fmt::format("Name: {}, Population: {}", sbody->GetName(), sbody->GetPopulation() * 1e9).c_str());
 	}
+
+
+
+
+	const SystemPath& path22 = SystemPath::Parse("(4,1,1)");
+
+	RefCountedPtr<Sector> sec = Pi::game->GetGalaxy()->GetMutableSector(path22);
+
+
 
 	if (Pi::GetView() == Pi::game->GetSectorView()) {
 		if (ImGui::Button("Dump Selected System")) {

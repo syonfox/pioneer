@@ -46,7 +46,8 @@ local settings =
 	draw_vertical_lines=false,
 	draw_out_range_labels=false,
 	draw_uninhabited_labels=true,
-	automatic_system_selection=true
+	automatic_system_selection=true,
+	show_sector_position=true,
 }
 
 local loaded_data = nil
@@ -159,10 +160,19 @@ function Windows.systemInfo:Show()
 	if not systempath then return end
 	local starsystem = systempath:GetStarSystem()
 	local clicked = false
+
+	local exported = starsystem:ExportToLua()
+
 	ui.withID(label, function()
 		-- selected system label
 		textIcon(icons.info)
 		ui.text(ui.Format.SystemPath(systempath))
+		--ui.withFont(smallfont, function()
+		--    print(exported)
+        --
+		--    ui.text("System Sector Pos: ")
+		--end)
+
 		if not sectorView:GetMap():IsCenteredOn(systempath) then
 			-- add button to center on the object
 			ui.sameLine()

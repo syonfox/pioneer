@@ -381,7 +381,14 @@ ui.Format = {
 			return lui.UNKNOWN_LOCATION_IN_SECTOR_X:interp{ sector = sectorString }
 		end
 		return path:GetStarSystem().name.." "..sectorString
-	end
+	end,
+	SystemPos = function(path)
+    		local sectorString = "("..path.posX..", "..path.posY..", "..path.posZ..")"
+    		if path:IsSectorPath() then
+    			return lui.UNKNOWN_LOCATION_IN_SECTOR_X:interp{ sector = sectorString }
+    		end
+    		return "System Sector Pos: "..sectorString
+    end
 }
 
 ui.addFancyText = function(position, anchor_horizontal, anchor_vertical, data, bg_color)

@@ -333,6 +333,12 @@ if (WIN32)
 	string(TIMESTAMP BUILD_YEAR "%Y")
 	string(TIMESTAMP BUILD_DATE "%Y%m%d")
 	set(RESOURCES ${CMAKE_BINARY_DIR}/pioneer.rc
+			src/syon/EditorIcons.h
+			src/syon/UndoStepType.h
+			src/syon/UndoSystem.cpp
+			src/syon/UndoSystem.h
+			src/syon/SyonDraw.cpp
+			src/syon/SyonDraw.h
 			src/syon/syonTool.cpp
 			src/syon/syonTool.h)
 	configure_file(pioneer.rc.cmakein ${RESOURCES} @ONLY)

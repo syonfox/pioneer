@@ -18,7 +18,7 @@ local CargoManager = utils.class('CargoManager')
 
 -- Constructor
 --
--- Creates and initializes a CargoManager object for the given ship
+-- Creates and initializes a CargoManager object for the given ship note player extends ship
 function CargoManager:Constructor(ship)
 	self.ship = ship
 

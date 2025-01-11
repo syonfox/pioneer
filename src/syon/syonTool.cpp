@@ -17,6 +17,7 @@
 #include "SyonDraw.h"
 
 #include "enum_table.h" 			// For maping types to names for display.
+#include "EditorIcons.h"
 
 // for mod memory
 void Syon::Initialize() {

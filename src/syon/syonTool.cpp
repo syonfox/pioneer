@@ -16,7 +16,9 @@
 #include "../galaxy/SystemPath.h"
 #include "SyonDraw.h"
 
+#include "enum_table.h" 			// For maping types to names for display.
 
+// for mod memory
 void Syon::Initialize() {
 	if (!Syon::m_path) {
 		// Get the hyperspace source from Pi::game
@@ -30,6 +32,7 @@ void Syon::Initialize() {
 	}
 }
 
+// clen up  idk
 void Syon::Shutdown() {
 	// Clean up m_path
 	delete Syon::m_path;
@@ -124,9 +127,9 @@ void Syon::DrawInternalSectorTool()
 
 			std::string label = fmt::format("{} {} \uF023{}", system.GetName(), positionStr ,system.GetNumStars());
 
-			if (ImGui::Selectable(label.c_str(), system.idx == Syon::m_path->systemIndex))
-				Syon::m_path->systemIndex = system.idx;
-
+			if (ImGui::Selectable(label.c_str(), system.idx == Syon::m_path->systemIndex)) {
+				Syon::m_path->systemIndex = system.idx; // herfe we are updating the sector system idx for out path.
+			}
 			if (ImGui::IsItemClicked() && ImGui::IsMouseDoubleClicked(0)) {
 				//Pi::game->LoadSystem(system.GetPath());
 				ImGui::CloseCurrentPopup();
@@ -160,44 +163,212 @@ void Syon::DrawInternalSectorTool()
 	ImGui::EndGroup();
 
 	ImGui::SameLine();
+	// This is the main sector system dump code.
+	// Note how above
+
 	ImGui::BeginGroup();
 
 	if (Syon::m_path->systemIndex < sec->m_systems.size()) {
-		const Sector::System &system = sec->m_systems[Syon::m_path->systemIndex];
+		const Sector::System &system = sec->m_systems[Syon::m_path->systemIndex];	// SectorSystem is some info exposed for sector agragations.
 
-		//ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium", 16));
+		const vector3f& position = system.GetPosition();	// this is the system position within a sector
+
+		const SystemPath &systemPath = system.GetPath(); 	// A system path represence the index of a body in the galexy.
+
+		// Dive into the star systems
+		RefCountedPtr<Galaxy> galaxy = Pi::game->GetGalaxy();	// From the galacy we can lookup a system by the system path.
+		RefCountedPtr<StarSystem> starSystem = galaxy->GetStarSystem(systemPath);
+
+
+
+		//RefCountedPtr<StarSystem> pop = galaxy->GetStarSystem(systemPath);
 
 		ImGui::AlignTextToFramePadding();
+
 		ImGui::TextUnformatted(system.GetName().c_str());
 
-		//ImGui::PopFont();
+
+		// Display in ImGui
+		ImGui::Text("Position Sector f: (%f, %f, %f)", position.x/8, position.y/8, position.z/8);
+		ImGui::Text("Position ly (X, Y, Z): (%.2f, %.2f, %.2f)", position.x, position.y, position.z);
 
 		ImGui::Spacing();
 
-		ImGui::TextUnformatted("Is Custom:");
-		ImGui::SameLine(ImGui::CalcItemWidth());
-		ImGui::TextUnformatted(system.GetCustomSystem() ? "yes" : "no");
+		/*if (ImGui::BeginTable("SystemInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable)) {
+			ImGui::TableNextColumn();
+			ImGui::TextUnformatted("Is Custom:");
+			ImGui::TableNextColumn();
+			ImGui::TextUnformatted(system.GetCustomSystem() ? "yes" : "no");
 
-		ImGui::TextUnformatted("Is Explored:");
-		ImGui::SameLine(ImGui::CalcItemWidth());
-		ImGui::TextUnformatted(system.GetExplored() == StarSystem::eEXPLORED_AT_START ? "yes" : "no");
+			ImGui::TableNextColumn();
+			ImGui::TextUnformatted("Is Explored:");
+			ImGui::TableNextColumn();
+			ImGui::TextUnformatted(system.GetExplored() == StarSystem::eEXPLORED_AT_START ? "yes" : "no");
 
-		ImGui::TextUnformatted("Faction:");
-		ImGui::SameLine(ImGui::CalcItemWidth());
-		ImGui::TextUnformatted(system.GetFaction() ? system.GetFaction()->name.c_str() : "<none>");
+			ImGui::TableNextColumn();
+			ImGui::TextUnformatted("Faction:");
+			ImGui::TableNextColumn();
+			ImGui::TextUnformatted(system.GetFaction() ? system.GetFaction()->name.c_str() : "<none>");
+			ImGui::EndTable();
 
-		ImGui::TextUnformatted("Other Names:");
-		ImGui::SameLine(ImGui::CalcItemWidth());
 
-		ImGui::BeginGroup();
-		for (auto &name : system.GetOtherNames())
-			ImGui::TextUnformatted(name.c_str());
-		ImGui::EndGroup();
+		}*/
+
+			ImGui::Spacing();
+
+
+		// Start the table
+		if (ImGui::BeginTable("SectorSystemDetails", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable)) {
+		    // System Name
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Name:");
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted(system.GetName().c_str());
+
+			//Star Paths
+			ImGui::TableNextColumn();
+			ImGui::TextUnformatted("System Path:");
+			ImGui::TableNextColumn();
+			ImGui::Text("(%d, %d, %d, %d)", system.sx, system.sy, system.sz, system.idx);
+
+
+		    // Position
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Position (Sector):");
+		    ImGui::TableNextColumn();
+		    ImGui::Text("(%d, %d, %d)", system.sx, system.sy, system.sz);
+
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Position (Local):");
+		    ImGui::TableNextColumn();
+		    const vector3f &position = system.GetPosition();
+		    ImGui::Text("(%.2f, %.2f, %.2f)", position.x, position.y, position.z);
+
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Position (Full):");
+		    ImGui::TableNextColumn();
+		    vector3f fullPosition = system.GetFullPosition();
+		    ImGui::Text("(%.2f, %.2f, %.2f)", fullPosition.x, fullPosition.y, fullPosition.z);
+
+		    // Number of Stars
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Number of Stars:");
+		    ImGui::TableNextColumn();
+		    ImGui::Text("%u", system.GetNumStars());
+
+		    //Star Types
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Star Types:");
+		    ImGui::TableNextColumn();
+		    for (unsigned i = 0; i < system.GetNumStars(); ++i) {
+		    	const SystemBody::BodyType &bodyType = system.GetStarType(i);
+		        ImGui::TextUnformatted(ENUM_BodyType[bodyType].name);
+		    }
+
+		    // Seed
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Seed:");
+		    ImGui::TableNextColumn();
+		    ImGui::Text("%u", system.GetSeed());
+
+
+		    // Faction
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Faction:");
+		    ImGui::TableNextColumn();
+		    const Faction *faction = system.GetFaction();
+		    ImGui::TextUnformatted(faction ? faction->name.c_str() : "<None>");
+
+	    	// Pop
+			fixed totalPop = starSystem->GetTotalPop();
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Population:");
+		    ImGui::TableNextColumn();
+		    ImGui::Text("%.3f billion", totalPop.ToFloat());
+		    // Exploration Status
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Exploration Status:");
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted(system.IsExplored() ? "Explored" : "Unexplored");
+
+		    // Exploration Time
+		    if (system.IsExplored()) {
+		        ImGui::TableNextColumn();
+		        ImGui::TextUnformatted("Exploration Time:");
+		        ImGui::TableNextColumn();
+		        ImGui::Text("%.2f", system.GetExploredTime());
+		    }
+
+		    // Other Names
+		    ImGui::TableNextColumn();
+		    ImGui::TextUnformatted("Other Names:");
+		    ImGui::TableNextColumn();
+		    ImGui::BeginGroup();
+		    for (const auto &name : system.GetOtherNames()) {
+		        ImGui::TextUnformatted(name.c_str());
+		    }
+
+
+   			ImGui::EndGroup();
+
+		    ImGui::EndTable();
+
+
+			if (starSystem) {
+				// Get descriptions
+				const std::string &shortDesc = starSystem->GetShortDescription();
+				const std::string &longDesc = starSystem->GetLongDescription();
+
+				// Display in ImGui
+				ImGui::TextUnformatted("Short Description:");
+				ImGui::Spacing();
+				ImGui::TextWrapped("%s", shortDesc.c_str());
+
+				ImGui::Spacing();
+				ImGui::TextUnformatted("Long Description:");
+				ImGui::Spacing();
+				ImGui::TextWrapped("%s", longDesc.c_str());
+			} else {
+				ImGui::TextUnformatted("Error: Could not load StarSystem.");
+			}
+			//const StarSystem star_system = Galaxy.GetStarSystem(systemPath);
+			//for (unsigned i = 0; i < system.GetNumStars(); ++i) {
+			//ImGui::TextUnformatted(ENUM_BodyType[bodyType].name);
+			//}
+
+
+		}
+
+
+
+		//SystemPath GetPath() const { return SystemPath(sx, sy, sz, idx); }
+
+
+		//for (std::vector<Sector::System>::iterator i = ps->m_systems.begin(); i != ps->m_systems.end(); ++i, ++sysIdx) {
+
+		//}
+
+
 	}
 	ImGui::EndGroup();
 }
+/*
+void ProcessSectorSystem(const Sector::System &system)
+{
+	RefCountedPtr<Galaxy> galaxy = Pi::game->GetGalaxy();
+	RefCountedPtr<StarSystem> starsystem = galaxy->GetStarSystem(system.GetPath());
+	for (const auto &b : starsystem->GetBodies()) {
+		auto children = b->GetChildren();
+		if (std::find_if(children.cbegin(), children.cend(), [](const SystemBody *kid) {
+				return kid->GetType() == SystemBody::TYPE_STARPORT_SURFACE;
+			}) != children.cend())
+			// the radius and the mass of the planet is returned in the radii and the mass of the earth
+				// therefore the result is obtained in g
+					//Planets.emplace_back(b->GetName(), system.GetName(), b->GetMassAsFixed().ToDouble() / b->GetRadiusAsFixed().ToDouble() / b->GetRadiusAsFixed().ToDouble(), b->GetPath());
+	}
+}
 
-
+*/
 void Syon::SayHelloWorld() {
 	//char* str, char str2[] , char** strRef,  char* &strRef2
 

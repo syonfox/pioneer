@@ -369,7 +369,7 @@ void Syon::SayHelloWorld() {
 
 
 
-	if(if (Pi::game) {)
+	if (Pi::game) {
 		Syon::Initialize();
 		Syon::DrawInternalSectorTool();
 	// Syon::DrawWorldViewStats();

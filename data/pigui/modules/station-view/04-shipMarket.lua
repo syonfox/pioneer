@@ -151,10 +151,36 @@ local function buyShip (mkt, sos)
 	if sos.pattern then player.model:SetPattern(sos.pattern) end
 	player:SetLabel(sos.label)
 
-	-- TODO: ships on sale should have their own pre-installed set of equipment
-	-- items instead of being completely empty
+	-- TODO: ship ads should support an explicit list of (pre-owned) equipment as well as / instead of factory-default items
+	-- FIXME: ship advertisements don't include the cost of default items
 
-	if def.hyperdriveClass > 0 then
+	local equipSet = player:GetComponent('EquipSet')
+
+	for _, slot in pairs(equipSet.config.slots) do
+
+		if slot.default then
+
+			local newEquip = Equipment.Get(slot.default)
+
+			if newEquip then
+				if newEquip.SpecializeForShip then
+					newEquip:SpecializeForShip(equipSet.config)
+				end
+
+				if EquipSet.CompatibleWithSlot(newEquip, slot) then
+					equipSet:Install(newEquip, equipSet:GetSlotHandle(slot.id))
+				else
+					logWarning("Default equipment item {} for ship slot {}.{} is not compatible with slot." % { slot.default, player.shipId, slot.id })
+				end
+
+			end
+
+		end
+
+	end
+
+	-- NOTE: fallback pass. Hyperdrives should be specified as a default item on the hyperdrive slot
+	if def.hyperdriveClass > 0 and not player:GetInstalledHyperdrive() then
 		local slot = player:GetComponent('EquipSet'):GetAllSlotsOfType('hyperdrive')[1]
 
 		-- Install the best-fitting non-military hyperdrive we can

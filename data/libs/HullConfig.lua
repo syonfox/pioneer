@@ -23,6 +23,7 @@ Slot.size = 1       --- ship scale size of slot
 Slot.size_min = nil ---@type number?            ie cant install hyperdirve less then 2 for this ship
 Slot.tag = nil ---@type string?                 the model tag for hardpoint mounting
 Slot.default = nil ---@type string?             ???
+Slot.required = false ---@type boolean
 Slot.hardpoint = false ---@type boolean?        mostly unused as present but indacates the slot should eventualy be displayed as a modal atached to the tag
 Slot.i18n_key = nil ---@type string?            the key in the language file
 Slot.i18n_res = "equipment-core" ---@type string  the language file to search for the key in
@@ -41,6 +42,7 @@ Slot.gimbal = nil ---@type table?               ???
 local HullConfig = utils.proto("HullConfig")
 
 HullConfig.id = ""
+HullConfig.path = ""
 HullConfig.equipCapacity = 0
 
 -- Default slot config for a new shipdef
@@ -71,6 +73,7 @@ local function CreateShipConfig(def)
 	Serializer:RegisterPersistent("ShipDef." .. def.id, newShip)
 
 	newShip.id = def.id
+	newShip.path = def.path
 	newShip.equipCapacity = def.equipCapacity
 
 	table.merge(newShip.slots, def.raw.equipment_slots or {}, function(name, slotDef)

@@ -97,6 +97,7 @@ void Syon::DrawInternalSectorTool()
 {
 
 
+	// here we bind the selector to m_path
 	if (Syon::Draw::LayoutHorizontal("Sector", 3, ImGui::GetFontSize())) {
 		bool changed = false;
 		changed |= ImGui::InputInt("X", &Syon::m_path->sectorX, 1, 0);
@@ -141,6 +142,8 @@ void Syon::DrawInternalSectorTool()
 	}
 	ImGui::EndChild();
 
+
+
 	if (ImGui::Button("New System")) {
 		// Ensure we generate a valid system index
 		SystemPath newPath = Syon::m_path->SectorOnly();
@@ -156,7 +159,7 @@ void Syon::DrawInternalSectorTool()
 
 	if (ImGui::Button("Edit Selected")) {
 		//Pi::game->LoadSystem(Syon::m_path->SystemOnly());
-		ImGui::CloseCurrentPopup();
+		//ImGui::CloseCurrentPopup();
 	}
 
 	ImGui::SetItemTooltip("Load the selected system as a template.");
@@ -170,16 +173,25 @@ void Syon::DrawInternalSectorTool()
 	ImGui::BeginGroup();
 
 	if (Syon::m_path->systemIndex < sec->m_systems.size()) {
-		const Sector::System &system = sec->m_systems[Syon::m_path->systemIndex];	// SectorSystem is some info exposed for sector agragations.
 
-		const vector3f& position = system.GetPosition();	// this is the system position within a sector
+		//So we have the sector system whitch is a view?? of the StarSystem.
 
+		//lets get the star system
 		const SystemPath &systemPath = system.GetPath(); 	// A system path represence the index of a body in the galexy.
 
 		// Dive into the star systems
 		RefCountedPtr<Galaxy> galaxy = Pi::game->GetGalaxy();	// From the galacy we can lookup a system by the system path.
 		RefCountedPtr<StarSystem> starSystem = galaxy->GetStarSystem(systemPath);
 
+		const uint numBodies = starSystem->GetNumBodies();
+
+		const uint numStations  = starSystem->GetNumSpaceStations();
+
+
+		// back to sector system where we parse what we can. ... todo whay is the sector system not the star system
+		const vector3f& position = system.GetPosition();	// this is the system position within a sector
+
+		ImGui::Text("System has %d bodies, and %d stations", numBodies, numStations);
 
 
 		//RefCountedPtr<StarSystem> pop = galaxy->GetStarSystem(systemPath);
@@ -194,29 +206,6 @@ void Syon::DrawInternalSectorTool()
 		ImGui::Text("Position ly (X, Y, Z): (%.2f, %.2f, %.2f)", position.x, position.y, position.z);
 
 		ImGui::Spacing();
-
-		/*if (ImGui::BeginTable("SystemInfo", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable)) {
-			ImGui::TableNextColumn();
-			ImGui::TextUnformatted("Is Custom:");
-			ImGui::TableNextColumn();
-			ImGui::TextUnformatted(system.GetCustomSystem() ? "yes" : "no");
-
-			ImGui::TableNextColumn();
-			ImGui::TextUnformatted("Is Explored:");
-			ImGui::TableNextColumn();
-			ImGui::TextUnformatted(system.GetExplored() == StarSystem::eEXPLORED_AT_START ? "yes" : "no");
-
-			ImGui::TableNextColumn();
-			ImGui::TextUnformatted("Faction:");
-			ImGui::TableNextColumn();
-			ImGui::TextUnformatted(system.GetFaction() ? system.GetFaction()->name.c_str() : "<none>");
-			ImGui::EndTable();
-
-
-		}*/
-
-			ImGui::Spacing();
-
 
 		// Start the table
 		if (ImGui::BeginTable("SectorSystemDetails", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable)) {
@@ -354,10 +343,8 @@ void Syon::DrawInternalSectorTool()
 	ImGui::EndGroup();
 }
 /*
-void ProcessSectorSystem(const Sector::System &system)
+void ProcessStarSystem(const StarSystem &starsystem)
 {
-	RefCountedPtr<Galaxy> galaxy = Pi::game->GetGalaxy();
-	RefCountedPtr<StarSystem> starsystem = galaxy->GetStarSystem(system.GetPath());
 	for (const auto &b : starsystem->GetBodies()) {
 		auto children = b->GetChildren();
 		if (std::find_if(children.cbegin(), children.cend(), [](const SystemBody *kid) {
@@ -378,13 +365,17 @@ void Syon::SayHelloWorld() {
 	ImGui::Begin("Syon Tool");
 	// m_stats.shield_mass_left
 	// m_stats.hull_mass_left
-	ImGui::Text("Hello World");
+	ImGui::Text("Hello World, This tool provides a Star System Viewer to debug System customizations by mods");
 
-	Syon::Initialize();
 
-	Syon::DrawInternalSectorTool();
+
+	if(if (Pi::game) {)
+		Syon::Initialize();
+		Syon::DrawInternalSectorTool();
 	// Syon::DrawWorldViewStats();
-
+	} else {
+		ImGui::Text("Start the game please.");
+	}
 	ImGui::End();
 }
 

@@ -173,6 +173,7 @@ void Syon::DrawInternalSectorTool()
 	ImGui::BeginGroup();
 
 	if (Syon::m_path->systemIndex < sec->m_systems.size()) {
+		const Sector::System &system = sec->m_systems[Syon::m_path->systemIndex];	// SectorSystem is some info exposed for sector agragations.
 
 		//So we have the sector system whitch is a view?? of the StarSystem.
 
@@ -367,14 +368,12 @@ void Syon::SayHelloWorld() {
 	// m_stats.hull_mass_left
 	ImGui::Text("Hello World, This tool provides a Star System Viewer to debug System customizations by mods");
 
-
-
-	if (Pi::game) {
+	if(Pi::game) {
 		Syon::Initialize();
+
 		Syon::DrawInternalSectorTool();
-	// Syon::DrawWorldViewStats();
-	} else {
-		ImGui::Text("Start the game please.");
+		// Syon::DrawWorldViewStats();
+
 	}
 	ImGui::End();
 }

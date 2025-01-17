@@ -623,7 +623,18 @@ function ShipBuilder.MakePlan(template, shipConfig, threat)
 			local defaultEquip = Equipment.Get(slot.default)
 
 			if defaultEquip then
-				shipPlan:AddEquipToPlan(defaultEquip, slot)
+
+				local inst = defaultEquip:Instance()
+
+				if inst.SpecializeForShip then
+					inst:SpecializeForShip(shipPlan.config)
+				end
+
+				if slot.count then
+					inst:SetCount(slot.count)
+				end
+
+				shipPlan:AddEquipToPlan(inst, slot)
 			end
 		end
 

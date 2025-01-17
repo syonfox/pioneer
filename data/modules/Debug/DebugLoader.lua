@@ -149,6 +149,14 @@ end
 --=============================================================================
 
 Event.Register("onEnterMainMenu", function()
+	-- Reset messages on menu load so they don't accumulate after each new game
+	messageData = {
+		log = {},
+		bySource = utils.automagic()
+	}
+
+	messageCount = {}
+
 	scanForErrors()
 
 	local message_body = "{} errors, {} warnings generated. See the debug Loading Messages tab (Ctrl+I) for more information."
@@ -159,7 +167,7 @@ Event.Register("onEnterMainMenu", function()
 	if numErrors > 0 or numWarnings > 0 then
 		Notification.add(Notification.Type.Error, "Validation Issues Found",
 			message_body % { numErrors, numWarnings },
-			icons.repairs, true)
+			icons.repairs)
 	end
 end)
 

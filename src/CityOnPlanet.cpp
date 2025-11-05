@@ -751,7 +751,7 @@ void CityOnPlanet::Render(Graphics::Renderer *r, const CameraContext *camera, co
 	}
 
 	// Draw debug extents
-	/*
+
 	r->SetTransform(matrix4x4f(viewTransform));
 	Graphics::VertexArray va(Graphics::ATTRIB_POSITION | Graphics::ATTRIB_DIFFUSE);
 
@@ -772,7 +772,7 @@ void CityOnPlanet::Render(Graphics::Renderer *r, const CameraContext *camera, co
 	va.Add(origin, Color(0, 255, 0));
 
 	r->DrawBuffer(&va, s_debugMat.get());
-	*/
+
 
 	r->GetStats().AddToStatCount(Graphics::Stats::STAT_BUILDINGS, uCount);
 	r->GetStats().AddToStatCount(Graphics::Stats::STAT_CITIES, 1);

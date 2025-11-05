@@ -3,7 +3,7 @@
 		{
 			"agricultural": "f0/0",
 			"argOfPeriapsis": "f0/0",
-			"aspectRatio": "f1/606486659",
+			"aspectRatio": "f1/508875264",
 			"atmosColor": [
 				0,
 				0,
@@ -12,7 +12,7 @@
 			],
 			"atmosDensity": "f0/0",
 			"atmosOxidizing": "f0/0",
-			"averageTemp": 8729,
+			"averageTemp": 8529,
 			"axialTilt": "f0/0",
 			"children": [
 				1,
@@ -29,7 +29,7 @@
 			"orbitalOffset": "f0/0",
 			"orbitalPhase": "f0/0",
 			"population": "f0/0",
-			"radius": "f2/386547056",
+			"radius": "f5/386547056",
 			"rotationPeriod": "f0/0",
 			"rotationPhase": "f0/0",
 			"seed": 978943882,
@@ -47,7 +47,7 @@
 				255,
 				255,
 				255,
-				3
+				255
 			],
 			"atmosDensity": "f5/3930710188",
 			"atmosOxidizing": "f0/304286492",
@@ -562,7 +562,7 @@
 			"atmosDensity": "f0/0",
 			"atmosOxidizing": "f0/822123837",
 			"averageTemp": 81,
-			"axialTilt": "f0/105537776",
+			"axialTilt": "f0/3478786377",
 			"children": [
 				15
 			],
@@ -586,7 +586,7 @@
 			"type": "PLANET_TERRESTRIAL",
 			"volatileIces": "f0/0",
 			"volatileLiquid": "f0/0",
-			"volcanicity": "f0/29082309"
+			"volcanicity": "f0/248712096"
 		},
 		{
 			"agricultural": "f0/0",
@@ -627,8 +627,8 @@
 	],
 	"comment": "",
 	"explored": true,
-	"govType": "DISORDER",
 	"faction": "Independent",
+	"govType": "DISORDER",
 	"lawlessness": "f0/203838384",
 	"longDesc": "In the initial expansion of the Solar Federation a city was created on the main planet of Theta Gem. Since then the ability to project power this far out has deteriorated. Due to the strong economic output of the city and manufacturing base the system became independent relying on informal agreements with the nearby systems it maintains its independence since then although its reach only extends to the city limits. You will find all sorts at the distant shanty outpost but ensure you bring fuel and fly safe.",
 	"name": "Theta Geminorum",
@@ -648,7 +648,7 @@
 		4,
 		13
 	],
-	"seed": 70,
+	"seed": 0,
 	"shortDesc": "After the reduction of the Solar Federations expansion θ Gem became a safe haven for merchants and traders. A moto is written on the outpost wall \"Steloj nevicigitaj (Δθ!=0) estas perfekte en loko.\"",
 	"stars": [
 		"STAR_A"

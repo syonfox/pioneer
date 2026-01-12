@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #pragma once
@@ -50,6 +50,8 @@ public:
 	void NewSystem(SystemPath path);
 	bool LoadSystem(SystemPath path);
 	bool LoadSystemFromDisk(const std::string &absolutePath);
+
+	Json DumpSystemFromGalaxy(SystemPath path);
 
 	// Write the currently edited system out to disk as a JSON file
 	bool WriteSystem(const std::string &filepath);

@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 -- Convenience wrappers for the C++ UI functions and general functions
@@ -877,31 +877,6 @@ end
 --
 function ui.setNextWindowPosCenter(cond)
 	ui.setNextWindowPos(ui.screenSize() / 2, cond, Vector2(0.5, 0.5))
-end
-
---
--- Function: ui.sameLine
---
--- ui.sameLine(pos_x, spacing_w)
---
--- Draw the next command on the same line as the previous
---
--- Example:
---
--- >
---
--- Parameters:
---   pos_x     - (Optional) number, X position for next draw command, default 0
---   spacing_w - (Optional) number, draw with spacing relative to previous, default -1
---
--- Returns:
---
---   nil
---
-function ui.sameLine(pos_x, spacing_w)
-	local px = pos_x or 0.0
-	local sw = spacing_w or -1.0
-	pigui.SameLine(px, sw)
 end
 
 --

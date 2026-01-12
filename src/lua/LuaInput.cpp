@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "LuaInput.h"
@@ -694,14 +694,6 @@ static void setup_binding_table(lua_State *l, const char *id, const char *type)
  * >	},
  * >	-- ... more pages
  * > }
- *
- * Availability:
- *
- *   September 2018
- *
- * Status:
- *
- *   permanent
  */
 static int l_input_get_binding_pages(lua_State *l)
 {

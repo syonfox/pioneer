@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "PlayerShipController.h"
@@ -205,7 +205,7 @@ PlayerShipController::PlayerShipController() :
 
 	m_toggleSpeedLimiter = InputBindings.toggleSpeedLimiter->onPressed.connect(
 		[this]() {
-			this->SetSpeedLimiterActive(not this->IsSpeedLimiterActive());
+			this->SetSpeedLimiterActive(!this->IsSpeedLimiterActive());
 		});
 
 	m_selectTarget = InputBindings.targetObject->onPressed.connect (

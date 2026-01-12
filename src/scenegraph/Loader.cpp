@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Loader.h"
@@ -394,7 +394,7 @@ namespace SceneGraph {
 		// special features that are absolute-positioned (thrusters)
 		RefCountedPtr<Node> meshRoot(new Group(m_renderer));
 
-		ConvertNodes(scene, scene->mRootNode, static_cast<Group *>(meshRoot.Get()), matrix4x4f::Identity());
+		ConvertNodes(scene, scene->mRootNode, static_cast<Group *>(meshRoot.Get()), matrix4x4f::Identity);
 		ConvertAnimations(scene, animDefs, static_cast<Group *>(meshRoot.Get()));
 
 		return meshRoot;

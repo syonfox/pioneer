@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Intro.h"
@@ -139,7 +139,7 @@ void Intro::Draw(float deltaTime)
 	Graphics::Renderer::StateTicket ticket(m_renderer);
 
 	m_renderer->SetPerspectiveProjection(75, m_aspectRatio, 1.f, 10000.f);
-	m_renderer->SetTransform(matrix4x4f::Identity());
+	m_renderer->SetTransform(matrix4x4f::Identity);
 
 	m_renderer->SetAmbientColor(m_ambientColor);
 
@@ -160,5 +160,6 @@ void Intro::Draw(float deltaTime)
 		matrix4x4f::Translation(0, 0, m_dist) *
 		matrix4x4f::RotateXMatrix(DEG2RAD(-15.0f)) *
 		matrix4x4f::RotateYMatrix(duration);
+	m_model->SetRenderTime(duration);
 	m_model->Render(trans);
 }

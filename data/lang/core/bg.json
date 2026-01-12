@@ -357,7 +357,7 @@
   },
   "DOWNGRADING_ALERT_STATUS": {
     "description": "",
-    "message": "В последните 60 секунди не е открит огън, степента за предупреждения е понижена."
+    "message": "В последните 60 секунди не е открит огън, нивото за предупреждения е понижено."
   },
   "DRAW_OUT_RANGE_LABELS": {
     "description": "",
@@ -511,9 +511,25 @@
     "description": "like wheat or barley",
     "message": "Жито"
   },
+  "GRID_DISPLAY_MODE": {
+    "description": "Label for grid display modes",
+    "message": "Изглед на решетката"
+  },
+  "GRID_DISPLAY_MODE_GRID_AND_LEGS": {
+    "description": "Combobox option for Grid with Legs",
+    "message": "Решетка с етапи"
+  },
+  "GRID_DISPLAY_MODE_GRID_ONLY": {
+    "description": "Combobox option for Grid Only",
+    "message": "Решетка"
+  },
+  "GRID_DISPLAY_MODE_OFF": {
+    "description": "Combobox option for Grid display off.",
+    "message": "Изключен"
+  },
   "GRID_DISPLAY_MODE_TOGGLE": {
-    "description": "Switch show no grid",
-    "message": "Координатна мрежа"
+    "description": "Tooltip for toggle grid display button.",
+    "message": "Видимост на решетката."
   },
   "HAND_WEAPONS": {
     "description": "",
@@ -585,15 +601,35 @@
   },
   "HYPERSPACE_ARRIVAL_CLOUD": {
     "description": "",
-    "message": "Хиперпространствен облак на пристигане"
+    "message": "Хиперпространствен облак от пристигане"
   },
   "HYPERSPACE_ARRIVAL_CLOUD_REMNANT": {
     "description": "",
-    "message": "Останки от хиперпространствен облак на пристигане"
+    "message": "Останки на хиперпространствен облак от пристигане"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE": {
+    "description": "Label for hyperspace cloud display modes.",
+    "message": "Изглед на хиперпространствените облаци"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_ALL": {
+    "description": "Combobox option for all hyperspace clouds.",
+    "message": "Всички хиперпространствени облаци"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_ARRIVAL_ONLY": {
+    "description": "Combobox option for arrival hyperspace clouds.",
+    "message": "Хиперпространствени облаци от пристигане"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_DEPARTURE_ONLY": {
+    "description": "Combobox option for departure hyperspace clouds.",
+    "message": "Хиперпространствени облаци от тръгване"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for the button which toggles the display mode of hyperspace clouds.",
+    "message": "Видимост на хиперпространствените облаци"
   },
   "HYPERSPACE_DEPARTURE_CLOUD": {
     "description": "",
-    "message": "Хиперпространствен облак на тръгване"
+    "message": "Хиперпространствен облак от тръгване"
   },
   "HYPERSPACE_JUMP_ABORT": {
     "description": "Mouse over text for hyperdrive button on ship control panel",
@@ -683,9 +719,25 @@
     "description": "",
     "message": "Управление с джойстик"
   },
+  "L4L5_DISPLAY_MODE": {
+    "description": "Label for the lagrange point display modes.",
+    "message": "Изглед на точките на Лагранж"
+  },
+  "L4L5_DISPLAY_MODE_ICONS_AND_TEXT": {
+    "description": "Combobox option for lagrange point display as icons only.",
+    "message": "Икони и наименования"
+  },
+  "L4L5_DISPLAY_MODE_ICONS_ONLY": {
+    "description": "Combobox option for lagrange point display as icons only.",
+    "message": "Икони"
+  },
+  "L4L5_DISPLAY_MODE_OFF": {
+    "description": "Combobox option for lagrange point display off.",
+    "message": "Изключено"
+  },
   "L4L5_DISPLAY_MODE_TOGGLE": {
-    "description": "Either show L4/L5 points or don't",
-    "message": "Точки на Лагранж – L4/L5"
+    "description": "Tooltip for the L4/L5 Lagrange points toggle button.",
+    "message": "Видимост на точките на Лагранж L4 и L5."
   },
   "LANDED": {
     "description": "",
@@ -1387,9 +1439,21 @@
     "description": "",
     "message": "Кораб"
   },
+  "SHIPS_DISPLAY_MODE": {
+    "description": "Label for ship display modes.",
+    "message": "Изглед на корабите"
+  },
+  "SHIPS_DISPLAY_MODE_SHIPS_ONLY": {
+    "description": "Combobox option for ships only.",
+    "message": "Кораби"
+  },
+  "SHIPS_DISPLAY_MODE_SHIPS_ORBITS": {
+    "description": "Combobox option for ships with orbits.",
+    "message": "Кораби с орбити"
+  },
   "SHIPS_DISPLAY_MODE_TOGGLE": {
-    "description": "Either show no ships, show ships, or show ships + their orbits",
-    "message": "Космически кораби"
+    "description": "Tooltip for ship display toggle button.",
+    "message": "Видимост на корабите."
   },
   "SHIP_DETECTED_NEARBY": {
     "description": "",
@@ -1602,6 +1666,10 @@
   "SURFACE_GRAVITY": {
     "description": "",
     "message": "Повърхностна гравитация"
+  },
+  "SURFACE_PRESSURE": {
+    "description": "",
+    "message": "Повърхностно налягане"
   },
   "SURFACE_TEMPERATURE": {
     "description": "",
@@ -1850,6 +1918,18 @@
   "UNIT_SQUARE_METERS": {
     "description": "Area unit: square meter (m²)",
     "message": "м²"
+  },
+  "UNIT_TEMPERATURE_CELSIUS": {
+    "description": "Temperature unit: degrees Celsius (°C)",
+    "message": "°C"
+  },
+  "UNIT_TEMPERATURE_FAHRENHEIT": {
+    "description": "Temperature unit: Fahrenheit (°F)",
+    "message": "°F"
+  },
+  "UNIT_TEMPERATURE_KELVIN": {
+    "description": "Temperature unit: degrees Kelvin (K)",
+    "message": "K"
   },
   "UNIT_TERATONNES": {
     "description": "Mass unit: one teratonne",

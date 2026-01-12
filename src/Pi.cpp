@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "buildopts.h"
@@ -1027,7 +1027,7 @@ void GameLoop::Update(float deltaTime)
 		}
 	}
 
-	Pi::renderer->SetTransform(matrix4x4f::Identity());
+	Pi::renderer->SetTransform(matrix4x4f::Identity);
 
 	/* Calculate position for this rendered frame (interpolated between two physics ticks */
 	// XXX should this be here? what is this anyway?

@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local theme = {}
@@ -696,7 +696,10 @@ theme.icons = {
 	map_checkmark = 322,
 	about_questionmark = 323,
 	map_selectsystem = 324,
-	-- 325 - 335 : empty
+	gavel = 325,
+	gavel_horizontal = 326, -- unused
+	towel = 327,
+	-- 328 - 335 : empty
 
 	shipmarket_compare_better = 38,
 	shipmarket_compare_worse = 40,

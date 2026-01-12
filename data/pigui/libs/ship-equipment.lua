@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Game = require 'Game'
@@ -18,6 +18,7 @@ local Outfitter = require 'pigui.libs.equipment-outfitter'
 local Lang = require 'Lang'
 local l = Lang.GetResource("ui-core")
 local le = Lang.GetResource("equipment-core")
+local ls = Lang.GetResource("ships")
 
 local ui = require 'pigui'
 local colors = ui.theme.colors
@@ -521,11 +522,11 @@ function EquipmentWidget:drawShipSpinner()
 	ui.group(function ()
 
 		ui.withFont(ui.fonts.orbiteer.large, function()
-
+			shipname = ls[shipDef.i18n_key]
 			if self.showShipNameEdit then
 
 				ui.alignTextToFramePadding()
-				ui.text(shipDef.name)
+				ui.text(shipname)
 				ui.sameLine()
 
 				ui.pushItemWidth(-1.0)
@@ -537,7 +538,7 @@ function EquipmentWidget:drawShipSpinner()
 				end
 
 			else
-				ui.text(shipDef.name)
+				ui.text(shipname)
 			end
 
 		end)

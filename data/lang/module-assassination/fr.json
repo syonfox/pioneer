@@ -356,15 +356,15 @@
     "message": "Où puis-je trouver la cible ?"
   },
   "X_WILL_BE_LEAVING": {
-    "description": "",
-    "message": "{target} quittera {spaceport} dans le système {system} ({sectorX}, {sectorY}, {sectorZ}), distant de {dist} al., à la date du {date}. Le nom du vaisseau est {shipname} et son immatriculation est {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} quittera {spaceport}, situé dans le système {system} ({sectorX}, {sectorY}, {sectorZ}), à une distance de {dist} al., en date du {date}. Le vaisseau est un {ship_indef} et est immatriculé {shipregid}."
   },
   "X_WILL_BE_LEAVING_FEMALE": {
-    "description": "",
-    "message": "{target} quittera {spaceport} dans le système {system} ({sectorX}, {sectorY}, {sectorZ}), distant de {dist} al., à la date du {date}. Le nom de son vaisseau est {shipname} et son immatriculation est {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} quittera {spaceport}, situé dans le système {system} ({sectorX}, {sectorY}, {sectorZ}), à une distance de {dist} al., le {date}. Son vaisseau est un {ship_indef} et est immatriculé {shipregid}."
   },
   "X_WILL_BE_LEAVING_MALE": {
-    "description": "",
-    "message": "{target} quittera {spaceport} dans le système {system} ({sectorX}, {sectorY}, {sectorZ}), distant de {dist} al., à la date du {date}. Le nom de son vaisseau est {shipname} et son immatriculation est {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} quittera {spaceport}, situé dans le système {system} ({sectorX}, {sectorY}, {sectorZ}), à une distance de {dist} al., le {date}. Son vaisseau est un {ship_indef} et est immatriculé {shipregid}."
   }
 }

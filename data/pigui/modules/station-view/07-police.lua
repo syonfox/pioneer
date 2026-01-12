@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Game = require "Game"
@@ -218,7 +218,7 @@ local policeTabs = {
 
 			-- Build a list of illegal goods in this system
 			local illegal = utils.map_array(utils.build_array(pairs(Commodities)), function(comm)
-				return not Game.system:IsCommodityLegal(comm.name) and comm:GetName() or nil
+				return not Game.system:IsCommodityLegal(comm.name) and comm:GetProperName() or nil
 			end)
 
 			-- Sort the list lexicographically

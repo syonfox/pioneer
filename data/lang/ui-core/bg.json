@@ -1,7 +1,7 @@
 {
   "ABOUT": {
     "description": "main menu button (implied 'about' the game)",
-    "message": "About"
+    "message": "Относно"
   },
   "ABOVE_AVERAGE": {
     "description": "",
@@ -69,7 +69,7 @@
   },
   "AUTOMATED_MESSAGE": {
     "description": "For comm messages from bots",
-    "message": "AUTOMATED MESSAGE"
+    "message": "АВТОМАТИЧНО СЪОБЩЕНИЕ"
   },
   "AUTO_ROUTE": {
     "description": "Automatically find shortest jump route (measured in time) in star map",
@@ -1913,7 +1913,7 @@
   },
   "OUTLAW": {
     "description": "Legal status of player",
-    "message": "Разбойник"
+    "message": "Престъпник"
   },
   "OUTSTANDING_FINES": {
     "description": "Unpaid fines for crimes committed",
@@ -2539,9 +2539,41 @@
     "description": "Message when restoring savegame",
     "message": "Индексът на тялото е извън обхвата"
   },
+  "SYSTEM_FACTION": {
+    "description": "Tooltip indicating the faction controlling this system",
+    "message": "Контролираща групировка"
+  },
   "SYSTEM_INFORMATION": {
     "description": "Tooltip / label indicating information about a selected star system",
     "message": "Информация за системата"
+  },
+  "SYSTEM_NUM_STARS": {
+    "description": "Tooltip indicating the system stellar arrangement",
+    "message": "Звезди в системата"
+  },
+  "SYSTEM_SECURITY_1": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Не представлява опасност"
+  },
+  "SYSTEM_SECURITY_2": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Не представлява голяма опасност"
+  },
+  "SYSTEM_SECURITY_3": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Представлява опасност"
+  },
+  "SYSTEM_SECURITY_4": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Представлява голяма опасност"
+  },
+  "SYSTEM_SECURITY_5": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Представлява смъртоносна опасност"
+  },
+  "SYSTEM_SECURITY_TOOLTIP": {
+    "description": "Tooltip introducing the system security rating",
+    "message": "Ниво на опасност в системата"
   },
   "TECH_CERTIFIED": {
     "description": "Lobby screen shows the tech level (an integer number) of the station",
@@ -2663,6 +2695,10 @@
     "description": "Label indicating the ability to transfer fuel between equipment tanks",
     "message": "Прехвърляне"
   },
+  "TRANSLATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to translate the camera view with mouse",
+    "message": "Превеждане на изгледа"
+  },
   "TRUSTWORTHY": {
     "description": "For player reputation",
     "message": "Достоен"
@@ -2754,6 +2790,10 @@
   "VIDEO_RESOLUTION_DESC": {
     "description": "Tooltip for video mode/resultion setting",
     "message": "По-голямата резолюция позволява показването повече информация с по-малък размер, но може да намали производителността."
+  },
+  "VIEW_DESTINATION": {
+    "description": "Tooltip indicating the button will change the current view to the destination of a route.",
+    "message": "Преглед на дестинацията"
   },
   "VISIT_PAINTSHOP": {
     "description": "Ship Repair tab button.",

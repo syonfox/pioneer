@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Projectile.h"
@@ -313,7 +313,7 @@ void Projectile::Render(Graphics::Renderer *renderer, const Camera *camera, cons
 	vector3f dir = vector3f(_dir).Normalized();
 
 	vector3f v1, v2;
-	matrix4x4f m = matrix4x4f::Identity();
+	matrix4x4f m = matrix4x4f::Identity;
 	v1.x = dir.y;
 	v1.y = dir.z;
 	v1.z = dir.x;

@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Engine = require 'Engine'
@@ -171,7 +171,7 @@ local placeAdvert = function (station, ad)
 	local ref = station:AddAdvert({
 		title       = l["ADTITLE_" .. Engine.rand:Integer(1, getNumberOfFlavours("ADTITLE"))],
 		description = desc,
-		icon        = "default",
+		icon        = ad.flavour.taxi and "taxi" or "delivery",
 		due         = ad.due,
 		reward      = ad.reward,
 		location    = ad.location,
@@ -222,7 +222,7 @@ local makeAdvert = function (station)
 end
 
 local onCreateBB = function (station)
-	local num = Engine.rand:Integer(0, math.ceil(Game.system.population) / 2)
+	local num = Engine.rand:Integer(math.ceil(Game.system.population / 6))
 	for _ = 1, num do
 		makeAdvert(station)
 	end

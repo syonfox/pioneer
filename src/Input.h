@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef INPUT_H
@@ -69,6 +69,9 @@ namespace Input {
 
 		Action *AddAction(const std::string &id);
 		Axis *AddAxis(const std::string &id);
+
+		Action *AddAction(Action *action);
+		Axis *AddAxis(Axis *axis);
 	};
 
 	struct JoystickInfo {

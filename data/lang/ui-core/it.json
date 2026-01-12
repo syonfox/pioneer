@@ -1889,7 +1889,7 @@
   },
   "OPEN_USER_FOLDER": {
     "description": "",
-    "message": "Cartella Utente"
+    "message": "Dir. Utente"
   },
   "OPTIONS": {
     "description": "",
@@ -1937,11 +1937,11 @@
   },
   "PAINTSHOP": {
     "description": "Station tab title",
-    "message": "Carrozziere"
+    "message": "Officina"
   },
   "PAINTSHOP_NOT_AVAILABLE": {
     "description": "",
-    "message": "In questo porto spaziale non è disponibile un carrozziere."
+    "message": "In questo spazioporto non è disponibile un'officina."
   },
   "PAINTSHOP_WELCOME_0": {
     "description": "Welcome message to the paintshop.",
@@ -2157,7 +2157,7 @@
   },
   "REFUEL_FULL": {
     "description": "",
-    "message": "Rifornimento completo"
+    "message": "100% pieno"
   },
   "REGISTRATION_NUMBER": {
     "description": "",
@@ -2409,7 +2409,7 @@
   },
   "SHIP_REPAIRS": {
     "description": "Station tab name",
-    "message": "Carrozziere di Astronavi"
+    "message": "Officina di Astronavi"
   },
   "SHIP_TYPE": {
     "description": "",
@@ -2539,9 +2539,41 @@
     "description": "Message when restoring savegame",
     "message": "La posizione del corpo celeste è fuori portata"
   },
+  "SYSTEM_FACTION": {
+    "description": "Tooltip indicating the faction controlling this system",
+    "message": "Giurisdizione della fazione controllante"
+  },
   "SYSTEM_INFORMATION": {
     "description": "Tooltip / label indicating information about a selected star system",
     "message": "Informazioni sul Sistema"
+  },
+  "SYSTEM_NUM_STARS": {
+    "description": "Tooltip indicating the system stellar arrangement",
+    "message": "Numero di stelle nel sistema"
+  },
+  "SYSTEM_SECURITY_1": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Sicuro"
+  },
+  "SYSTEM_SECURITY_2": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Praticamente innocuo"
+  },
+  "SYSTEM_SECURITY_3": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Pericoloso"
+  },
+  "SYSTEM_SECURITY_4": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Molto pericoloso"
+  },
+  "SYSTEM_SECURITY_5": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Letale"
+  },
+  "SYSTEM_SECURITY_TOOLTIP": {
+    "description": "Tooltip introducing the system security rating",
+    "message": "Livello di pericolosità del sistema"
   },
   "TECH_CERTIFIED": {
     "description": "Lobby screen shows the tech level (an integer number) of the station",
@@ -2663,6 +2695,10 @@
     "description": "Label indicating the ability to transfer fuel between equipment tanks",
     "message": "Trasferimento Carburante"
   },
+  "TRANSLATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to translate the camera view with mouse",
+    "message": "Tieni premuto per Traslare la visuale"
+  },
   "TRUSTWORTHY": {
     "description": "For player reputation",
     "message": "Fidato"
@@ -2755,9 +2791,13 @@
     "description": "Tooltip for video mode/resultion setting",
     "message": "Risoluzioni più elevate possono mostrare più informazioni di piccole dimensioni e ridurre le prestazioni."
   },
+  "VIEW_DESTINATION": {
+    "description": "Tooltip indicating the button will change the current view to the destination of a route.",
+    "message": "Mostra destinazione"
+  },
   "VISIT_PAINTSHOP": {
     "description": "Ship Repair tab button.",
-    "message": "Visita la Carrozzeria"
+    "message": "Visita l'officina"
   },
   "VISIT_REPAIR_SERVICES": {
     "description": "Ship Repair tab button.",

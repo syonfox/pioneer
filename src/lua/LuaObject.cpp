@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "LuaObject.h"
@@ -49,14 +49,6 @@
  *
  * > if not ship:exists() then return
  *
- * Availability:
- *
- *   alpha 10
- *
- * Status:
- *
- *   stable
- *
  *
  * Method: isa
  *
@@ -82,14 +74,6 @@
  * > if body:isa("Ship") then
  * >     body:AIKill(Game.player)
  * > end
- *
- * Availability:
- *
- *   alpha 10
- *
- * Status:
- *
- *   stable
  */
 
 static std::map<std::string, std::map<std::string, PromotionTest>> promotions;

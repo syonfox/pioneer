@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #pragma once
@@ -290,6 +290,7 @@ public:
 	void SetCurrentSystem(RefCountedPtr<StarSystem> system);
 
 	void AccelerateTime(float step);
+	bool IsRealTime() const { return m_realtime; }
 	void SetRealTime();
 	void SetReferenceTime(double time) { m_refTime = time; }
 	double GetTime() { return m_time; }

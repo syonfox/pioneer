@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Input.h"
@@ -167,7 +167,7 @@ int PiGui::pushOnScreenPositionDirection(lua_State *l, vector3d position)
 	const int width = Pi::renderer->GetWindowWidth();
 	const int height = Pi::renderer->GetWindowHeight();
 	vector3d direction = (position - vector3d(width / 2.0, height / 2.0, 0)).Normalized();
-	if (vector3d(0, 0, 0) == position || position.x < 0 || position.y < 0 || position.x > width || position.y > height || position.z > 0) {
+	if (vector3d::Zero == position || position.x < 0 || position.y < 0 || position.x > width || position.y > height || position.z > 0) {
 		LuaPush<bool>(l, false);
 		LuaPush<vector2d>(l, vector2d(position.x, position.y));
 		LuaPush<vector3d>(l, direction * (position.z > 0 ? -1 : 1)); // reverse direction if behind camera
@@ -602,14 +602,6 @@ static int l_pigui_lineOnClock(lua_State *l)
 /* ****************************** Lua imgui functions ****************************** */
 /*
  * Function: begin
- *
- * Availability:
- *
- *   2017-04
- *
- * Status:
- *
- *   stable
  */
 static int l_pigui_begin(lua_State *l)
 {
@@ -630,14 +622,6 @@ static int l_pigui_begin(lua_State *l)
  * blocked by a modal window rendering underneath it. To render a window on top
  * of a modal, it must be submitted within that modal's begin()/end() block.
  * (See data/pigui/libs/modal-win.lua).
- *
- * Availability:
- *
- *   2024-07
- *
- * Status:
- *
- *   experimental
  */
 static int l_pigui_bring_window_to_display_front(lua_State *l)
 {
@@ -652,10 +636,6 @@ static int l_pigui_bring_window_to_display_front(lua_State *l)
  * Gets imgui internal time
  *
  * > local currentTime = ui.getTime()
- *
- * Status:
- *
- *   stable
  */
 static int l_pigui_get_time(lua_State *l)
 {
@@ -1868,8 +1848,8 @@ static int l_pigui_add_rect_faded(lua_State *l)
  */
 static int l_pigui_same_line(lua_State *l)
 {
-	float pos_x = LuaPull<float>(l, 1);
-	float spacing_w = LuaPull<float>(l, 2);
+	float pos_x = LuaPull<float>(l, 1, 0.f);
+	float spacing_w = LuaPull<float>(l, 2, -1.f);
 
 	if (pos_x < 0.0) {
 		ImGuiWindow *window = ImGui::GetCurrentWindow();
@@ -2352,7 +2332,7 @@ PiGui::TScreenSpace lua_world_space_to_screen_space(const Body *body)
 	const int width = Pi::renderer->GetWindowWidth();
 	const int height = Pi::renderer->GetWindowHeight();
 	const vector3d direction = (p - vector3d(width / 2.0, height / 2.0, 0)).Normalized();
-	if (vector3d(0, 0, 0) == p || p.x < 0 || p.y < 0 || p.x > width || p.y > height || p.z > 0) {
+	if (vector3d::Zero == p || p.x < 0 || p.y < 0 || p.x > width || p.y > height || p.z > 0) {
 		return PiGui::TScreenSpace(false, vector2d(0, 0), direction * (p.z > 0 ? -1 : 1));
 	} else {
 		return PiGui::TScreenSpace(true, vector2d(p.x, p.y), direction);
@@ -2470,14 +2450,6 @@ bool PiGui::first_body_is_more_important_than(Body *body, Body *other)
  *   hasFollowTarget - true if group contains the follow target
  *   multiple - true if group consists of more than one body
  *   bodies - array of all <Body> objects in the group, sorted by importance
- *
- * Availability:
- *
- *   2019-12
- *
- * Status:
- *
- *   stable
  */
 static int l_pigui_get_projected_bodies_grouped(lua_State *l)
 {

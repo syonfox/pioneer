@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Input.h"
@@ -301,6 +301,20 @@ InputBindings::Axis *InputFrame::AddAxis(const std::string &id)
 	if (!axis)
 		throw std::runtime_error("Adding unknown axis binding to an InputFrame, id: " + id);
 
+	axes.push_back(axis);
+	return axis;
+}
+
+InputBindings::Action *InputFrame::AddAction(Action *action)
+{
+	assert(action && "Cannot register a null InputAction");
+	actions.push_back(action);
+	return action;
+}
+
+InputBindings::Axis *InputFrame::AddAxis(Axis *axis)
+{
+	assert(axis && "Cannot register a null InputAxis");
 	axes.push_back(axis);
 	return axis;
 }

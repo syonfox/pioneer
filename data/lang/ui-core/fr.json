@@ -623,6 +623,10 @@
     "description": "",
     "message": "Équipement"
   },
+  "EQUIPMENT_ALREADY_INSTALLED_HERE": {
+    "description": "Message indicating this equipment item is already installed.",
+    "message": "Cet équipement est déjà installé ici."
+  },
   "EQUIPMENT_CAPACITY": {
     "description": "The equipment capacity of a ship",
     "message": "Capacité de l'équipement"

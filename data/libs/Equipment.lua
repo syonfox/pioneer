@@ -9,6 +9,7 @@ local Equipment = {}
 ---@type table<string, EquipType>
 Equipment.new = {}
 
+-- Get an new instance of an registered equipment
 function Equipment.Get(id)
 	return Equipment.new[id]
 end

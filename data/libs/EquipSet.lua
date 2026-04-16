@@ -274,7 +274,7 @@ end
 --
 -- Return true if the ship has at least one slot which is compatible with the
 -- equipment item regardless of whether the ship currently has the space to
--- fit the equipemnt.
+-- fit the equipment.
 --
 -- Parameters:
 --

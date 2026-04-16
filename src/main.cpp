@@ -34,7 +34,7 @@ extern "C" int main(int argc, char **argv)
 
 	/* SDL2 does not enable Wayland by default, but we want to prefer it
 	 * when available, over X11 */
-	SDL_setenv("SDL_VIDEODRIVER", "windows,wayland,x11", 0);
+	//SDL_setenv("SDL_VIDEODRIVER", "windows,wayland,x11", 0);
 
 	OS::SetDPIAware();
 

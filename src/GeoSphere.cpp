@@ -609,6 +609,7 @@ void GeoSphere::InitCityRegions(const SystemBody *sb)
 	// step through the planet's sbody's children and set up regions for surface starports
 	for (std::vector<SystemBody *>::const_iterator i = sb->GetChildren().begin(); i != sb->GetChildren().end(); i++) {
 		if ((*i)->GetType() == SystemBody::TYPE_STARPORT_SURFACE) {
+
 			// calculate position of starport
 			const vector3d pos = ((*i)->GetOrbit().GetPlane() * vector3d(0, 1, 0));
 
@@ -616,25 +617,66 @@ void GeoSphere::InitCityRegions(const SystemBody *sb)
 			Region rt;
 			rt.position = pos;
 
-			// height in planet radii
-			rt.height = GetHeight(pos);
+			// sample points (center + 4 offsets)
+			vector3d points[5] = {
+				pos,
+				vector3d(pos.x + delta, pos.y, pos.z),
+				vector3d(pos.x - delta, pos.y, pos.z),
+				vector3d(pos.x, pos.y, pos.z + delta),
+				vector3d(pos.x, pos.y, pos.z - delta)
+			};
 
-			// Calculate average variation of four points about star port
-			// points do not need to be on the planet surface
-			double avgVariation = fabs(GetHeight(vector3d(pos.x + delta, pos.y, pos.z)) - rt.height);
-			avgVariation += fabs(GetHeight(vector3d(pos.x - delta, pos.y, pos.z)) - rt.height);
-			avgVariation += fabs(GetHeight(vector3d(pos.x, pos.y, pos.z + delta)) - rt.height);
-			avgVariation += fabs(GetHeight(vector3d(pos.x, pos.y, pos.z - delta)) - rt.height);
-			avgVariation *= (1 / 4.0);
+			double heights[5];
+
+			// correct API usage
+			m_terrain->GetHeights(points, heights, 5);
+
+			// height in planet radii
+			rt.height = heights[0];
+
+			// Calculate average variation
+			double avgVariation = 0.0;
+			avgVariation += fabs(heights[1] - heights[0]);
+			avgVariation += fabs(heights[2] - heights[0]);
+			avgVariation += fabs(heights[3] - heights[0]);
+			avgVariation += fabs(heights[4] - heights[0]);
+			avgVariation *= 0.25;
+
 			rt.heightVariation = (1.0 / planetRadius) + 0.625 * avgVariation;
 
-			// angle between city center/boundary = 2pi*city size/(perimeter great circle = 2pi r)
-			// city center pos and current point will be dotted, and compared against size
+			// angle between city center/boundary
 			const double size = fabs(cos(std::min(citySize_m, 0.2 * sb->GetRadius()) / (sb->GetRadius())));
 			rt.outer = size;
 			rt.inner = (1.0 - size) * 0.5 + size;
 
 			m_regions.emplace_back(rt);
+			// // calculate position of starport
+			// const vector3d pos = ((*i)->GetOrbit().GetPlane() * vector3d(0, 1, 0));
+			//
+			// // set up regions which contain the details for region implementation
+			// Region rt;
+			//
+			// rt.position = pos;
+			//
+			// // height in planet radii
+			// rt.height = GetHeights(pos);
+			//
+			// // Calculate average variation of four points about star port
+			// // points do not need to be on the planet surface
+			// double avgVariation = fabs(GetHeights(vector3d(pos.x + delta, pos.y, pos.z)) - rt.height);
+			// avgVariation += fabs(GetHeights(vector3d(pos.x - delta, pos.y, pos.z)) - rt.height);
+			// avgVariation += fabs(GetHeights(vector3d(pos.x, pos.y, pos.z + delta)) - rt.height);
+			// avgVariation += fabs(GetHeights(vector3d(pos.x, pos.y, pos.z - delta)) - rt.height);
+			// avgVariation *= (1 / 4.0);
+			// rt.heightVariation = (1.0 / planetRadius) + 0.625 * avgVariation;
+			//
+			// // angle between city center/boundary = 2pi*city size/(perimeter great circle = 2pi r)
+			// // city center pos and current point will be dotted, and compared against size
+			// const double size = fabs(cos(std::min(citySize_m, 0.2 * sb->GetRadius()) / (sb->GetRadius())));
+			// rt.outer = size;
+			// rt.inner = (1.0 - size) * 0.5 + size;
+			//
+			// m_regions.emplace_back(rt);
 		}
 	}
 
@@ -642,7 +684,7 @@ void GeoSphere::InitCityRegions(const SystemBody *sb)
 	m_regions.resize(m_regions.size());
 }
 
-/*void GeoSphere::ApplySimpleHeightRegions(double &h, const vector3d &p) const
+void GeoSphere::ApplySimpleHeightRegions(double &h, const vector3d &p) const
 {
 	for (size_t i = 0; i < m_regions.size(); i++) {
 		const Region &rt = m_regions[i];
@@ -678,7 +720,7 @@ void GeoSphere::InitCityRegions(const SystemBody *sb)
 			break;
 		}
 	}
-}*/
+}
 #pragma optimize("", off)
 const Region* GeoSphere::FindNearestRegion(const vector3d &p, double &posDotPOut) const
 {

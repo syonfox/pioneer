@@ -52,10 +52,13 @@ public:
 
 		// handle any region modifications to the height
 		double posDotPOut = -1.0;
-		const Region *region = FindNearestRegion(p, posDotPOut);
-		if (region) {
-			ApplyHeightRegion(h, posDotPOut, region);
-		}
+		ApplySimpleHeightRegions(h, p);
+		// const Region *region = FindNearestRegion(p, posDotPOut);
+		// if (region) {
+		// 	Output("ApplyHeightRegion\n");
+		//
+		// 	ApplyHeightRegion(h, posDotPOut, region);
+		// }
 #ifndef NDEBUG
 		// XXX don't remove this. Fix your fractals instead
 		// Fractals absolutely MUST return heights >= 0.0 (one planet radius)
@@ -112,7 +115,7 @@ private:
 	void CreateAtmosphereMaterial();
 
 	void InitCityRegions(const SystemBody *sb);
-	//void ApplySimpleHeightRegions(double &h, const vector3d &p) const;
+	void ApplySimpleHeightRegions(double &h, const vector3d &p) const;
 	const Region* FindNearestRegion(const vector3d &p, double &posDotPOut) const;
 	void InitPatchRegions() const;
 	void ApplyHeightRegion(double &h, const double posDotP, const Region *region) const;
@@ -154,7 +157,7 @@ private:
 
 	Sint32 m_maxDepth;
 
-	// used for region based terrain e.g. cities
+	// used for regioen based terrain e.g. cities
 	std::vector<Region> m_regions;
 	double m_dynamicRangeHeight;
 };

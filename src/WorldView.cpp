@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "WorldView.h"
@@ -13,7 +13,7 @@
 #include "Json.h"
 #include "Pi.h"
 #include "Player.h"
-#include "SDL_keycode.h"
+#include <SDL_keycode.h>
 #include "SectorView.h"
 #include "Sensors.h"
 #include "SpeedLines.h"
@@ -185,7 +185,7 @@ void WorldView::Draw3D()
 	// setup orthographic projection the indicator coordinate system expects
 	// (could also draw this using ImGui methods in DrawPiGui, but this is a quick patch for release)
 	m_renderer->SetProjection(matrix4x4f::OrthoFrustum(0, m_renderer->GetWindowWidth(), m_renderer->GetWindowHeight(), 0, 0, 1));
-	m_renderer->SetTransform(matrix4x4f::Identity());
+	m_renderer->SetTransform(matrix4x4f::Identity);
 
 	// combat target indicator
 	DrawCombatTargetIndicator(m_combatTargetIndicator, m_targetLeadIndicator, red);
@@ -222,26 +222,22 @@ void WorldView::Update()
 	FrameId playerFrameId = Pi::player->GetFrame();
 	FrameId camFrameId = m_cameraContext->GetTempFrame();
 
-	//speedlines and contact trails need camFrame for transform, so they
-	//must be updated here
-	if (Pi::AreSpeedLinesDisplayed()) {
+	//speedlines and contact trails need camFrame for transform, so they must be updated here
+	if (m_speedLines.get() && Pi::AreSpeedLinesDisplayed()) {
 		m_speedLines->Update(m_game->GetTimeStep());
 
 		matrix4x4d trans;
 		Frame::GetFrameTransform(playerFrameId, camFrameId, trans);
-
-		if (m_speedLines.get() && Pi::AreSpeedLinesDisplayed()) {
-			m_speedLines->Update(m_game->GetTimeStep());
-
-			trans[12] = trans[13] = trans[14] = 0.0;
-			trans[15] = 1.0;
-			m_speedLines->SetTransform(trans);
-		}
+		trans[12] = trans[13] = trans[14] = 0.0;
+		trans[15] = 1.0;
+		m_speedLines->SetTransform(trans);
 	}
 
 	if (Pi::AreHudTrailsDisplayed()) {
 		matrix4x4d trans;
-		Frame::GetFrameTransform(playerFrameId, camFrameId, trans);
+		// HudTrail stores its points in the non-rotating frame, so the display transform must be built from that same frame.
+		FrameId nonRotFrameId = Frame::GetFrame(playerFrameId)->GetNonRotFrame();
+		Frame::GetFrameTransform(nonRotFrameId, camFrameId, trans);
 
 		for (auto it = Pi::player->GetSensors()->GetContacts().begin(); it != Pi::player->GetSensors()->GetContacts().end(); ++it)
 			it->trail->SetTransform(trans);
@@ -287,7 +283,7 @@ void WorldView::UpdateProjectedObjects()
 	matrix3x3d cam_rot = cam_frame->GetOrient().Inverse() * Pi::player->GetOrient();
 
 	// later we might want non-ship enemies (e.g., for assaults on military bases)
-	assert(!Pi::player->GetCombatTarget() || Pi::player->GetCombatTarget()->IsType(ObjectType::SHIP));
+	assert(!Pi::player->GetCombatTarget() || Pi::player->GetCombatTarget()->IsType(ObjectType::SHIP) || Pi::player->GetCombatTarget()->IsType(ObjectType::MISSILE));
 
 	// update combat HUD
 	Ship *enemy = static_cast<Ship *>(Pi::player->GetCombatTarget());
@@ -575,7 +571,7 @@ static vector3d projectToScreenSpace(const vector3d &pos, RefCountedPtr<CameraCo
 vector3d WorldView::WorldSpaceToScreenSpace(const Body *body) const
 {
 	if (body->IsType(ObjectType::PLAYER) && !shipView->IsExteriorView())
-		return vector3d(0, 0, 0);
+		return vector3d::Zero;
 
 	vector3d pos = body->GetInterpPositionRelTo(m_cameraContext->GetCameraFrame());
 	return WorldSpaceToScreenSpace(pos);
@@ -604,7 +600,7 @@ vector3d WorldView::CameraSpaceToScreenSpace(const vector3d &pos) const
 vector3d WorldView::GetTargetIndicatorScreenPosition(const Body *body) const
 {
 	if (body->IsType(ObjectType::PLAYER) && !shipView->IsExteriorView())
-		return vector3d(0, 0, 0);
+		return vector3d::Zero;
 
 	// get the target indicator position in body-local coordinates
 	vector3d pos = body->GetInterpPositionRelTo(m_cameraContext->GetCameraFrame());

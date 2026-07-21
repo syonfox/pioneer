@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Game = require 'Game'
@@ -18,6 +18,7 @@ local Outfitter = require 'pigui.libs.equipment-outfitter'
 local Lang = require 'Lang'
 local l = Lang.GetResource("ui-core")
 local le = Lang.GetResource("equipment-core")
+local ls = Lang.GetResource("ships")
 
 local ui = require 'pigui'
 local colors = ui.theme.colors
@@ -42,7 +43,7 @@ EquipmentWidget.Sections = {
 	{ name = le.SHIELDS, type = "shield" },
 	{ name = le.SENSORS, type = "sensor", },
 	{ name = le.COMPUTER_MODULES, type = "computer", },
-	{ name = le.CABINS, types = { "cabin" } },
+	{ name = le.HABITAT, types = { "cabin" } },
 	{ name = le.HULL_MOUNTS, types = { "hull", "utility", "fuel_scoop", "structure" } },
 }
 
@@ -193,8 +194,12 @@ function EquipmentWidget:onSelectSlot(slotData, children)
 
 		self.market.filterSlot = self.selectedSlot
 		self.market.replaceEquip = self.selectedEquip
-		self.market.canReplaceEquip = not hasChildren
-		self.market.canSellEquip = not (self.selectedSlot and self.selectedSlot.required or hasChildren)
+
+		local canBeSold = not self.selectedEquip or self.selectedEquip:CanBeSold(self.ship)
+
+		self.market.canReplaceEquip = not hasChildren and canBeSold
+		self.market.canSellEquip = not (self.selectedSlot and self.selectedSlot.required or hasChildren) and canBeSold
+
 		self.market:refresh()
 	end
 end
@@ -435,6 +440,10 @@ function EquipmentWidget:drawSectionHeader(section, fun)
 
 	ui.setCursorPos(contentsPos)
 
+	-- setCursorPos must be followed by a dummy if used for resizing
+	-- See ImGui::ErrorCheckUsingSetCursorPosToExtendParentBoundaries
+	ui.dummy(Vector2(0, 0))
+
 	if sectionOpen then
 		fun()
 		ui.treePop()
@@ -521,11 +530,11 @@ function EquipmentWidget:drawShipSpinner()
 	ui.group(function ()
 
 		ui.withFont(ui.fonts.orbiteer.large, function()
-
+			shipname = ls[shipDef.i18n_key]
 			if self.showShipNameEdit then
 
 				ui.alignTextToFramePadding()
-				ui.text(shipDef.name)
+				ui.text(shipname)
 				ui.sameLine()
 
 				ui.pushItemWidth(-1.0)
@@ -537,7 +546,7 @@ function EquipmentWidget:drawShipSpinner()
 				end
 
 			else
-				ui.text(shipDef.name)
+				ui.text(shipname)
 			end
 
 		end)

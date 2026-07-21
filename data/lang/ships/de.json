@@ -1,0 +1,350 @@
+{
+  "AC33": {
+    "description": "ship name - base form",
+    "message": "AC-33 Dropstar"
+  },
+  "AC33_DEF": {
+    "description": "ship - definite form",
+    "message": "die AC-33 Dropstar"
+  },
+  "AC33_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine AC-33 Dropstar"
+  },
+  "BLUENOSE": {
+    "description": "ship name - base form",
+    "message": "Bluenose"
+  },
+  "BLUENOSE_DEF": {
+    "description": "ship - definite form",
+    "message": "die Bluenose"
+  },
+  "BLUENOSE_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Bluenose"
+  },
+  "BOWFIN": {
+    "description": "ship name - base form",
+    "message": "Bowfin"
+  },
+  "BOWFIN_DEF": {
+    "description": "ship - definite form",
+    "message": "die Bowfin"
+  },
+  "BOWFIN_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Bowfin"
+  },
+  "CORONATRIX": {
+    "description": "ship name - base form",
+    "message": "Coronatrix"
+  },
+  "CORONATRIX_DEF": {
+    "description": "ship - definite form",
+    "message": "die Coronatrix"
+  },
+  "CORONATRIX_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Coronatrix"
+  },
+  "CORONATRIX_POLICE": {
+    "description": "ship name - base form",
+    "message": "Coronatrix-Polizeischiff"
+  },
+  "CORONATRIX_POLICE_DEF": {
+    "description": "ship - definite form",
+    "message": "das Coronatrix-Polizeischiff"
+  },
+  "CORONATRIX_POLICE_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "ein Polizeimodell der Coronatrix"
+  },
+  "DENEB": {
+    "description": "ship name - base form",
+    "message": "Deneb"
+  },
+  "DENEB_DEF": {
+    "description": "ship - definite form",
+    "message": "die Deneb"
+  },
+  "DENEB_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Deneb"
+  },
+  "DSMINER": {
+    "description": "ship name - base form",
+    "message": "DS Miner"
+  },
+  "DSMINER_DEF": {
+    "description": "ship - definite form",
+    "message": "der DS Miner"
+  },
+  "DSMINER_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "ein DS Miner"
+  },
+  "KANARA": {
+    "description": "ship name - base form, Kanara civilian",
+    "message": "Kanara"
+  },
+  "KANARA_DEF": {
+    "description": "ship - definite form, Kanara civilian",
+    "message": "der Kanara"
+  },
+  "KANARA_INDEF": {
+    "description": "ship name - indefinite form, Kanara civilian",
+    "message": "ein Kanara"
+  },
+  "KANARA_POLICE": {
+    "description": "ship name - base form",
+    "message": "Kanara-Polizeischiff"
+  },
+  "KANARA_POLICE_DEF": {
+    "description": "ship - definite form",
+    "message": "das Kanara-Polizeischiff"
+  },
+  "KANARA_POLICE_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "ein Polizeimodell des Kanara"
+  },
+  "LODOS": {
+    "description": "ship name - base form",
+    "message": "Lodos"
+  },
+  "LODOS_DEF": {
+    "description": "ship - definite form",
+    "message": "die Lodos"
+  },
+  "LODOS_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Lodos"
+  },
+  "LUNARSHUTTLE": {
+    "description": "ship name - base form",
+    "message": "Lunar Shuttle"
+  },
+  "LUNARSHUTTLE_DEF": {
+    "description": "ship - definite form",
+    "message": "das Lunar Shuttle"
+  },
+  "LUNARSHUTTLE_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "ein Lunar Shuttle"
+  },
+  "MALABAR": {
+    "description": "ship name - base form",
+    "message": "Malabar"
+  },
+  "MALABAR_DEF": {
+    "description": "ship - definite form",
+    "message": "die Malabar"
+  },
+  "MALABAR_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Malabar"
+  },
+  "MOLAMOLA": {
+    "description": "ship name - base form",
+    "message": "Mola Mola"
+  },
+  "MOLAMOLA_DEF": {
+    "description": "ship - definite form",
+    "message": "der Mola Mola"
+  },
+  "MOLAMOLA_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "ein Mola Mola"
+  },
+  "MOLARAMSAYI": {
+    "description": "ship name - base form",
+    "message": "Mola Ramsayi"
+  },
+  "MOLARAMSAYI_DEF": {
+    "description": "ship - definite form",
+    "message": "der Mola Ramsayi"
+  },
+  "MOLARAMSAYI_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "ein Mola Ramsayi"
+  },
+  "NATRIX": {
+    "description": "ship name - base form",
+    "message": "Natrix"
+  },
+  "NATRIX_DEF": {
+    "description": "ship - definite form",
+    "message": "die Natrix"
+  },
+  "NATRIX_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Natrix"
+  },
+  "NERODIA": {
+    "description": "ship name - base form",
+    "message": "Nerodia"
+  },
+  "NERODIA_DEF": {
+    "description": "ship - definite form",
+    "message": "die Nerodia"
+  },
+  "NERODIA_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Nerodia"
+  },
+  "POLICE_SHIP": {
+    "description": "ship name - base form",
+    "message": "Polizeischiff"
+  },
+  "POLICE_SHIP_DEF": {
+    "description": "ship - definite form",
+    "message": "das Polizeischiff"
+  },
+  "POLICE_SHIP_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "ein Polizeischiff"
+  },
+  "PUMPKINSEED": {
+    "description": "ship name - base form",
+    "message": "Pumpkinseed"
+  },
+  "PUMPKINSEED_DEF": {
+    "description": "ship - definite form",
+    "message": "die Pumpkinseed"
+  },
+  "PUMPKINSEED_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Pumpkinseed"
+  },
+  "PUMPKINSEED_POLICE": {
+    "description": "ship name - base form",
+    "message": "Pumpkinseed-Polizeischiff"
+  },
+  "PUMPKINSEED_POLICE_DEF": {
+    "description": "ship - definite form",
+    "message": "das Pumpkinseed-Polizeischiff"
+  },
+  "PUMPKINSEED_POLICE_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "ein Polizeimodell der Pumpkinseed"
+  },
+  "SHIP": {
+    "description": "ship name - base form",
+    "message": "Schiff"
+  },
+  "SHIP_DEF": {
+    "description": "ship - definite form",
+    "message": "das Schiff"
+  },
+  "SHIP_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "ein Schiff"
+  },
+  "SINONATRIX": {
+    "description": "ship name - base form",
+    "message": "Sinonatrix"
+  },
+  "SINONATRIX_DEF": {
+    "description": "ship - definite form",
+    "message": "die Sinonatrix"
+  },
+  "SINONATRIX_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Sinonatrix"
+  },
+  "SINONATRIX_POLICE": {
+    "description": "ship name - base form",
+    "message": "Sinonatrix-Polizeischiff"
+  },
+  "SINONATRIX_POLICE_DEF": {
+    "description": "ship - definite form",
+    "message": "das Sinonatrix-Polizeischiff"
+  },
+  "SINONATRIX_POLICE_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "ein Polizeimodell der Sinonatrix"
+  },
+  "SKIPJACK": {
+    "description": "ship name - base form",
+    "message": "Skipjack"
+  },
+  "SKIPJACK_DEF": {
+    "description": "ship - definite form",
+    "message": "die Skipjack"
+  },
+  "SKIPJACK_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Skipjack"
+  },
+  "STORERIA": {
+    "description": "ship name - base form",
+    "message": "Storeria"
+  },
+  "STORERIA_DEF": {
+    "description": "ship - definite form",
+    "message": "die Storeria"
+  },
+  "STORERIA_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Storeria"
+  },
+  "VARADA": {
+    "description": "ship name - base form",
+    "message": "Varada"
+  },
+  "VARADA_DEF": {
+    "description": "ship - definite form",
+    "message": "die Varada"
+  },
+  "VARADA_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Varada"
+  },
+  "VATAKARA": {
+    "description": "ship name - base form",
+    "message": "Vatakara"
+  },
+  "VATAKARA_DEF": {
+    "description": "ship - definite form",
+    "message": "die Vatakara"
+  },
+  "VATAKARA_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Vatakara"
+  },
+  "VENTURESTAR": {
+    "description": "ship name - base form",
+    "message": "Venturestar"
+  },
+  "VENTURESTAR_DEF": {
+    "description": "ship - definite form",
+    "message": "die Venturestar"
+  },
+  "VENTURESTAR_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Venturestar"
+  },
+  "WAVE": {
+    "description": "ship name - base form",
+    "message": "Wave"
+  },
+  "WAVE_DEF": {
+    "description": "ship - definite form",
+    "message": "die Wave"
+  },
+  "WAVE_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Wave"
+  },
+  "XYLOPHIS": {
+    "description": "ship name - base form",
+    "message": "Xylophis"
+  },
+  "XYLOPHIS_DEF": {
+    "description": "ship - definite form",
+    "message": "die Xylophis"
+  },
+  "XYLOPHIS_INDEF": {
+    "description": "ship name - indefinite form",
+    "message": "eine Xylophis"
+  }
+}

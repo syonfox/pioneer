@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef _HUDTRAIL_H
@@ -31,7 +31,6 @@ public:
 
 private:
 	Body *m_body;
-	FrameId m_currentFrame;
 	float m_updateTime;
 	Color m_color;
 	matrix4x4d m_transform;

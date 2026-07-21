@@ -1,7 +1,7 @@
 {
   "ABOUT": {
     "description": "main menu button (implied 'about' the game)",
-    "message": "About"
+    "message": "O grze"
   },
   "ABOVE_AVERAGE": {
     "description": "",
@@ -67,9 +67,13 @@
     "description": "",
     "message": "Przystąpić do naprawy kadłuba"
   },
+  "AUDIO_BACKEND": {
+    "description": "Audio backend label in settings menu",
+    "message": "Audio Backend"
+  },
   "AUTOMATED_MESSAGE": {
     "description": "For comm messages from bots",
-    "message": "AUTOMATED MESSAGE"
+    "message": "AUTOMATYCZNA WIADOMOŚĆ"
   },
   "AUTO_ROUTE": {
     "description": "Automatically find shortest jump route (measured in time) in star map",
@@ -90,6 +94,14 @@
   "BACKWARD_ACCEL": {
     "description": "",
     "message": "Przyspieszenie wsteczne"
+  },
+  "BINAURAL_RENDERING": {
+    "description": "Label of the binaural rendering checkbox in the audio settings menu",
+    "message": "Binaural Rendering"
+  },
+  "BINAURAL_RENDERING_DESC": {
+    "description": "Tooltip of the binaural rendering checkbox in the audio settings menu",
+    "message": "When enabled, HRTF filters are applied to the audio output. Works best with headphones."
   },
   "BODY_IN_ROUTE": {
     "description": "Label indicating a star is part of a planned hyperjump route",
@@ -622,6 +634,10 @@
   "EQUIPMENT": {
     "description": "",
     "message": "Wyposażenie"
+  },
+  "EQUIPMENT_ALREADY_INSTALLED_HERE": {
+    "description": "Message indicating this equipment item is already installed.",
+    "message": "Ten ekwipunek jest już zamontowany."
   },
   "EQUIPMENT_CAPACITY": {
     "description": "The equipment capacity of a ship",
@@ -2073,19 +2089,19 @@
   },
   "PUMP_DOWN_FROM_CARGO_TOOLTIP": {
     "description": "Tooltip for Info screen",
-    "message": "Pump %i t from cargo"
+    "message": "Przepompuj %i t z luku bagażowego"
   },
   "PUMP_DOWN_FROM_HYPERDRIVE_TOOLTIP": {
     "description": "Tooltip for Info screen",
-    "message": "Pump %i t from hyperdrive to fuel tanks"
+    "message": "Przepompuj %i t z hiper napędu do zbiorników paliwa"
   },
   "PUMP_DOWN_TO_CARGO_TOOLTIP": {
     "description": "Tooltip for Info screen",
-    "message": "Pump %i t to cargo"
+    "message": "Przepompuj %i t do luku bagażowego"
   },
   "PUMP_DOWN_TO_HYPERDRIVE_TOOLTIP": {
     "description": "Tooltip for Info screen",
-    "message": "Pump %i t to hyperdrive from fuel tanks"
+    "message": "Przepompuj %i t do hiper napędu ze zbiorników paliwa"
   },
   "PURCHASE_PAINTJOB": {
     "description": "Paintshop button",
@@ -2349,7 +2365,7 @@
   },
   "SET_AS_TARGET": {
     "description": "",
-    "message": "Ustaw jako cel nawigacyjny."
+    "message": "Ustaw kierunek jako cel nawigacji"
   },
   "SET_JUMP_TARGET": {
     "description": "Button tooltip which sets the jump route to the selected body",
@@ -2539,9 +2555,41 @@
     "description": "Message when restoring savegame",
     "message": "System body index is out of range"
   },
+  "SYSTEM_FACTION": {
+    "description": "Tooltip indicating the faction controlling this system",
+    "message": "Jurysdykcja pod kontrolą frakcji"
+  },
   "SYSTEM_INFORMATION": {
     "description": "Tooltip / label indicating information about a selected star system",
     "message": "Informacja o systemie"
+  },
+  "SYSTEM_NUM_STARS": {
+    "description": "Tooltip indicating the system stellar arrangement",
+    "message": "Liczba gwiazd w systemie"
+  },
+  "SYSTEM_SECURITY_1": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Bezpieczny"
+  },
+  "SYSTEM_SECURITY_2": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Przeważnie nieszkodliwy"
+  },
+  "SYSTEM_SECURITY_3": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Groźny"
+  },
+  "SYSTEM_SECURITY_4": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Bardzo niebezpieczny"
+  },
+  "SYSTEM_SECURITY_5": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Zabójczy"
+  },
+  "SYSTEM_SECURITY_TOOLTIP": {
+    "description": "Tooltip introducing the system security rating",
+    "message": "Ocena bezpieczeństwa"
   },
   "TECH_CERTIFIED": {
     "description": "Lobby screen shows the tech level (an integer number) of the station",
@@ -2641,7 +2689,7 @@
   },
   "TO_PICK_UP": {
     "description": "Mission status",
-    "message": "To pick up"
+    "message": "Do odbioru"
   },
   "TRADING_AT": {
     "description": "Indicates the current system for inspecting commodities.",
@@ -2662,6 +2710,10 @@
   "TRANSFER_FUEL": {
     "description": "Label indicating the ability to transfer fuel between equipment tanks",
     "message": "Przeniesienie paliwa"
+  },
+  "TRANSLATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to translate the camera view with mouse",
+    "message": "Przytrzymaj żeby sterować"
   },
   "TRUSTWORTHY": {
     "description": "For player reputation",
@@ -2754,6 +2806,10 @@
   "VIDEO_RESOLUTION_DESC": {
     "description": "Tooltip for video mode/resultion setting",
     "message": "Wyższe rozdzielczości pokazują więcej informacji przy mniejszych rozmiarach i mogą zmniejszyć wydajność."
+  },
+  "VIEW_DESTINATION": {
+    "description": "Tooltip indicating the button will change the current view to the destination of a route.",
+    "message": "Zobacz punkt docelowy"
   },
   "VISIT_PAINTSHOP": {
     "description": "Ship Repair tab button.",

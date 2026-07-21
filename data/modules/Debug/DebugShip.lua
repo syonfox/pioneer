@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Game        = require 'Game'
@@ -331,7 +331,7 @@ function DebugShipTool:drawShipDefInfo(shipDef)
 		drawKeyValue("Max. Crew", shipDef.maxCrew)
 
 		drawKeyValue("Angular Thrust", shipDef.angularThrust)
-		drawKeyValue("Foward Thrust", shipDef.linearThrust.FORWARD)
+		drawKeyValue("Forward Thrust", shipDef.linearThrust.FORWARD)
 		drawKeyValue("Reverse Thrust", shipDef.linearThrust.REVERSE)
 		drawKeyValue("Up Thrust", shipDef.linearThrust.UP)
 		drawKeyValue("Down Thrust", shipDef.linearThrust.DOWN)

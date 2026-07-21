@@ -511,9 +511,25 @@
     "description": "like wheat or barley",
     "message": "Tahıl"
   },
+  "GRID_DISPLAY_MODE": {
+    "description": "Label for grid display modes",
+    "message": "Izgara Görüntüleme Modu"
+  },
+  "GRID_DISPLAY_MODE_GRID_AND_LEGS": {
+    "description": "Combobox option for Grid with Legs",
+    "message": "Bacaklı Izgara"
+  },
+  "GRID_DISPLAY_MODE_GRID_ONLY": {
+    "description": "Combobox option for Grid Only",
+    "message": "Yalnızca Izgara"
+  },
+  "GRID_DISPLAY_MODE_OFF": {
+    "description": "Combobox option for Grid display off.",
+    "message": "Izgara Kapalı"
+  },
   "GRID_DISPLAY_MODE_TOGGLE": {
-    "description": "Switch show no grid",
-    "message": "Izgara görüntüleme modları arasında geçiş yap"
+    "description": "Tooltip for toggle grid display button.",
+    "message": "Izgaranın görünürlüğünü değiştir."
   },
   "HAND_WEAPONS": {
     "description": "",
@@ -585,15 +601,35 @@
   },
   "HYPERSPACE_ARRIVAL_CLOUD": {
     "description": "",
-    "message": "Üstuzay varış bulutu"
+    "message": "Arrival"
   },
   "HYPERSPACE_ARRIVAL_CLOUD_REMNANT": {
     "description": "",
-    "message": "Üstuzay varış bulutu kalıntısı"
+    "message": "Arrival (Remnant)"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE": {
+    "description": "Label for hyperspace cloud display modes.",
+    "message": "Hiperuzay Bulutu Görüntüleme Modu"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_ALL": {
+    "description": "Combobox option for all hyperspace clouds.",
+    "message": "Bütün Hiperuzay Bulutları"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_ARRIVAL_ONLY": {
+    "description": "Combobox option for arrival hyperspace clouds.",
+    "message": "Varış Hiperuzay Bulutları"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_DEPARTURE_ONLY": {
+    "description": "Combobox option for departure hyperspace clouds.",
+    "message": "Ayrılış Hiperuzay Bulutları"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for the button which toggles the display mode of hyperspace clouds.",
+    "message": "Hiperuzay Bulutlarının görünürlüğünü değiştir."
   },
   "HYPERSPACE_DEPARTURE_CLOUD": {
     "description": "",
-    "message": "Üstuzay ayrılış bulutu"
+    "message": "Departure"
   },
   "HYPERSPACE_JUMP_ABORT": {
     "description": "Mouse over text for hyperdrive button on ship control panel",
@@ -683,9 +719,25 @@
     "description": "",
     "message": "Joystick"
   },
+  "L4L5_DISPLAY_MODE": {
+    "description": "Label for the lagrange point display modes.",
+    "message": "Lagrange Noktası Görüntüleme Modu"
+  },
+  "L4L5_DISPLAY_MODE_ICONS_AND_TEXT": {
+    "description": "Combobox option for lagrange point display as icons only.",
+    "message": "İkon ve Etiketler"
+  },
+  "L4L5_DISPLAY_MODE_ICONS_ONLY": {
+    "description": "Combobox option for lagrange point display as icons only.",
+    "message": "Yalnızca İkonlar"
+  },
+  "L4L5_DISPLAY_MODE_OFF": {
+    "description": "Combobox option for lagrange point display off.",
+    "message": "Kapalı"
+  },
   "L4L5_DISPLAY_MODE_TOGGLE": {
-    "description": "Either show L4/L5 points or don't",
-    "message": "Lagrange noktaları L4/L5 gösterim şeklini değiştir."
+    "description": "Tooltip for the L4/L5 Lagrange points toggle button.",
+    "message": "L4/L5 lagrange noktalarının görünürlüğünü değiştir."
   },
   "LANDED": {
     "description": "",
@@ -982,6 +1034,10 @@
   "NO_ESTABLISHED_ORDER": {
     "description": "",
     "message": "Bir düzen yok"
+  },
+  "NO_HYPERCLOUD_ANALYZER_INSTALLED": {
+    "description": "",
+    "message": "No hypercloud analyzer installed"
   },
   "NO_HYPERDRIVE": {
     "description": "",
@@ -1349,7 +1405,7 @@
   },
   "SET_HYPERSPACE_TARGET_TO_FOLLOW_THIS_DEPARTURE": {
     "description": "",
-    "message": "Üstuzay bulutu inceleyici: Bu ayrılışı takip için üstuzay hedefini ayarlayın."
+    "message": "Hypercloud analyzer: Set hyperspace target to follow this departure"
   },
   "SET_LOW_THRUST_POWER_LEVEL_TO_X_PERCENT": {
     "description": "",
@@ -1387,9 +1443,21 @@
     "description": "",
     "message": "Gemi"
   },
+  "SHIPS_DISPLAY_MODE": {
+    "description": "Label for ship display modes.",
+    "message": "Gemi Görüntüleme Modu"
+  },
+  "SHIPS_DISPLAY_MODE_SHIPS_ONLY": {
+    "description": "Combobox option for ships only.",
+    "message": "Yalnızca Gemiler"
+  },
+  "SHIPS_DISPLAY_MODE_SHIPS_ORBITS": {
+    "description": "Combobox option for ships with orbits.",
+    "message": "Gemiler ve Yörüngeler"
+  },
   "SHIPS_DISPLAY_MODE_TOGGLE": {
-    "description": "Either show no ships, show ships, or show ships + their orbits",
-    "message": "Gemi ekran biçimleri arasında geçiş yap."
+    "description": "Tooltip for ship display toggle button.",
+    "message": "Gemilerin görünürlüğünü değiştir."
   },
   "SHIP_DETECTED_NEARBY": {
     "description": "",
@@ -1602,6 +1670,10 @@
   "SURFACE_GRAVITY": {
     "description": "",
     "message": "Yüzey yerçekimi"
+  },
+  "SURFACE_PRESSURE": {
+    "description": "",
+    "message": "Yüzey basıncı"
   },
   "SURFACE_TEMPERATURE": {
     "description": "",
@@ -1850,6 +1922,18 @@
   "UNIT_SQUARE_METERS": {
     "description": "Area unit: square meter (m²)",
     "message": "m²"
+  },
+  "UNIT_TEMPERATURE_CELSIUS": {
+    "description": "Temperature unit: degrees Celsius (°C)",
+    "message": "°C"
+  },
+  "UNIT_TEMPERATURE_FAHRENHEIT": {
+    "description": "Temperature unit: Fahrenheit (°F)",
+    "message": "°F"
+  },
+  "UNIT_TEMPERATURE_KELVIN": {
+    "description": "Temperature unit: degrees Kelvin (K)",
+    "message": "K"
   },
   "UNIT_TERATONNES": {
     "description": "Mass unit: one teratonne",

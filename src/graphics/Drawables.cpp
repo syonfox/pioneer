@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Drawables.h"
@@ -525,7 +525,7 @@ namespace Graphics {
 		{
 			subdivs = Clamp(subdivs, 0, 10);
 			scale = fabs(scale);
-			matrix4x4f trans = matrix4x4f::Identity();
+			matrix4x4f trans = matrix4x4f::Identity;
 			trans.Scale(scale, scale, scale);
 
 			// Reserve space for vertices and indices
@@ -953,11 +953,11 @@ namespace Graphics {
 		};
 
 		GridSphere::GridSphere(Graphics::Renderer *r, uint32_t num_subdivs) :
+			m_sphereMesh(Icosphere::Generate(r, num_subdivs, 1.f, Graphics::ATTRIB_POSITION)),
 			m_minorColor(Color(160, 160, 160)),
 			m_majorColor(Color(255, 255, 255)),
 			m_lineWidth(2.0f),
-			m_numSubdivs(num_subdivs),
-			m_sphereMesh(Icosphere::Generate(r, num_subdivs, 1.f, Graphics::ATTRIB_POSITION))
+			m_numSubdivs(num_subdivs)
 		{
 			Graphics::RenderStateDesc rsd = {};
 			rsd.blendMode = Graphics::BLEND_ALPHA;

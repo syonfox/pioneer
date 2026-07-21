@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef _SHIP_H
@@ -85,6 +85,7 @@ public:
 	int GetDockingPort() const { return m_dockedWithPort; }
 	bool IsDocked() const { return GetFlightState() == Ship::DOCKED; }
 	bool IsLanded() const { return GetFlightState() == Ship::LANDED; }
+	bool IsOnSurface() const;
 
 	virtual void OnDocked(SpaceStation *, int port);
 	virtual void OnUndocked(SpaceStation *, int port);

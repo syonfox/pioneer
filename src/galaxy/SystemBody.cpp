@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "SystemBody.h"
@@ -23,6 +23,7 @@ SystemBodyData::SystemBodyData() :
 	m_averageTemp(0),
 	m_heightMapFractal(0)
 {
+	m_starColor = Color(255, 0, 255, 255);
 }
 
 void SystemBodyData::SaveToJson(Json &out)
@@ -98,6 +99,7 @@ void SystemBodyData::LoadFromJson(const Json &obj)
 	m_inclination = obj.value<fixed>("inclination", 0);
 	m_argOfPeriapsis = obj.value<fixed>("argOfPeriapsis", 0);
 	m_averageTemp = obj.value<uint32_t>("averageTemp", 0);
+	GenerateStarColor();
 
 	m_metallicity = obj.value<fixed>("metallicity", 0);
 	m_volcanicity = obj.value<fixed>("volcanicity", 0);
@@ -127,6 +129,108 @@ void SystemBodyData::LoadFromJson(const Json &obj)
 	m_heightMapFractal = obj.value<uint32_t>("heightMapFractal", 0);
 
 	m_heightMapFractal = std::min(m_heightMapFractal, uint32_t(1));
+}
+
+double GetPlanckBrightness(const double wavelength_nm, const int temperature)
+{
+	// Planck's constant
+	const double h = 6.62607015e-34; // kg*m^2*s^-1 (J*s)
+
+	// speed of light
+	const double c = 299792458; // m*s^2
+
+	// Boltzmann's constant
+	const double k = 1.380649e-23; // J/K
+
+	double wavelength = wavelength_nm * 1e-9;
+
+	double exponent = exp((h*c) / (wavelength * k * temperature));
+	return 2 * h * pow(c, 2) / (pow(wavelength, 5) * exponent);
+}
+
+const vector3d nm_to_rgb[48] = {
+    vector3d( 0.000000f, 0.000000f, 0.000001f ),    // 360 nm
+    vector3d( 0.000006f, 0.000001f, 0.000026f ),    // 370 nm
+    vector3d( 0.000160f, 0.000017f, 0.000705f ),    // 380 nm
+    vector3d( 0.002362f, 0.000253f, 0.010482f ),    // 390 nm
+    vector3d( 0.019110f, 0.002004f, 0.086011f ),    // 400 nm
+    vector3d( 0.084736f, 0.008756f, 0.389366f ),    // 410 nm
+    vector3d( 0.204492f, 0.021391f, 0.972542f ),    // 420 nm
+    vector3d( 0.314679f, 0.038676f, 1.553480f ),    // 430 nm
+    vector3d( 0.383734f, 0.062077f, 1.967280f ),    // 440 nm
+    vector3d( 0.370702f, 0.089456f, 1.994800f ),    // 450 nm
+    vector3d( 0.302273f, 0.128201f, 1.745370f ),    // 460 nm
+    vector3d( 0.195618f, 0.185190f, 1.317560f ),    // 470 nm
+    vector3d( 0.080507f, 0.253589f, 0.772125f ),    // 480 nm
+    vector3d( 0.016172f, 0.339133f, 0.415254f ),    // 490 nm
+    vector3d( 0.003816f, 0.460777f, 0.218502f ),    // 500 nm
+    vector3d( 0.037465f, 0.606741f, 0.112044f ),    // 510 nm
+    vector3d( 0.117749f, 0.761757f, 0.060709f ),    // 520 nm
+    vector3d( 0.236491f, 0.875211f, 0.030451f ),    // 530 nm
+    vector3d( 0.376772f, 0.961988f, 0.013676f ),    // 540 nm
+    vector3d( 0.529826f, 0.991761f, 0.003988f ),    // 550 nm
+    vector3d( 0.705224f, 0.997340f, 0.000000f ),    // 560 nm
+    vector3d( 0.878655f, 0.955552f, 0.000000f ),    // 570 nm
+    vector3d( 1.014160f, 0.868934f, 0.000000f ),    // 580 nm
+    vector3d( 1.118520f, 0.777405f, 0.000000f ),    // 590 nm
+    vector3d( 1.123990f, 0.658341f, 0.000000f ),    // 600 nm
+    vector3d( 1.030480f, 0.527963f, 0.000000f ),    // 610 nm
+    vector3d( 0.856297f, 0.398057f, 0.000000f ),    // 620 nm
+    vector3d( 0.647467f, 0.283493f, 0.000000f ),    // 630 nm
+    vector3d( 0.431567f, 0.179828f, 0.000000f ),    // 640 nm
+    vector3d( 0.268329f, 0.107633f, 0.000000f ),    // 650 nm
+    vector3d( 0.152568f, 0.060281f, 0.000000f ),    // 660 nm
+    vector3d( 0.081261f, 0.031800f, 0.000000f ),    // 670 nm
+    vector3d( 0.040851f, 0.015905f, 0.000000f ),    // 680 nm
+    vector3d( 0.019941f, 0.007749f, 0.000000f ),    // 690 nm
+    vector3d( 0.009577f, 0.003718f, 0.000000f ),    // 700 nm
+    vector3d( 0.004553f, 0.001768f, 0.000000f ),    // 710 nm
+    vector3d( 0.002175f, 0.000846f, 0.000000f ),    // 720 nm
+    vector3d( 0.001045f, 0.000407f, 0.000000f ),    // 730 nm
+    vector3d( 0.000508f, 0.000199f, 0.000000f ),    // 740 nm
+    vector3d( 0.000251f, 0.000098f, 0.000000f ),    // 750 nm
+    vector3d( 0.000126f, 0.000050f, 0.000000f ),    // 760 nm
+    vector3d( 0.000065f, 0.000025f, 0.000000f ),    // 770 nm
+    vector3d( 0.000033f, 0.000013f, 0.000000f ),    // 780 nm
+    vector3d( 0.000018f, 0.000007f, 0.000000f ),    // 790 nm
+    vector3d( 0.000009f, 0.000004f, 0.000000f ),    // 800 nm
+    vector3d( 0.000005f, 0.000002f, 0.000000f ),    // 810 nm
+    vector3d( 0.000003f, 0.000001f, 0.000000f ),    // 820 nm
+    vector3d( 0.000002f, 0.000001f, 0.000000f )     // 830 nm
+};
+
+void SystemBodyData::GenerateStarColor()
+{
+	// https://www.shadertoy.com/view/NlGXzz
+
+	// [360-830 nm]
+	vector3d rgb = vector3d(0.f);
+
+	const matrix3x3d xyz2rgb = matrix3x3d::FromVectors(
+		vector3d( 3.2404542,-0.9692660, 0.0556434),
+		vector3d(-1.5371385, 1.8760108,-0.2040259),
+		vector3d(-0.4985314, 0.0415560, 1.0572252)
+	);
+
+	for (int i = 0; i < 48; i++) {
+		double wavelength = 360 + (10 * i);
+
+		rgb += GetPlanckBrightness(wavelength, m_averageTemp) * (xyz2rgb * nm_to_rgb[i]);
+	}
+
+	// normalize
+	double max = std::max(std::max(rgb.x, rgb.y), rgb.z);
+	// black color
+	if (max == 0.f) {
+		rgb = vector3d(0.f);
+	} else {
+		rgb /= (max / 255);
+	}
+	rgb.x = std::max(rgb.x, 0.0);
+	rgb.y = std::max(rgb.y, 0.0);
+	rgb.z = std::max(rgb.z, 0.0);
+
+	m_starColor = Color(rgb.x, rgb.y, rgb.z, 255);
 }
 
 SystemBody::SystemBody(const SystemPath &path, StarSystem *system) :
@@ -188,6 +292,8 @@ double GetMolarMass(SystemBody::BodySuperType superType)
 {
 	if (superType == SystemBody::SUPERTYPE_GAS_GIANT)
 		return 0.0023139903; // molar mass, for a combination of hydrogen and helium
+	else if (superType == SystemBody::SUPERTYPE_STAR)
+		return 0.00125;	// approximation of the sun's molar mass (in kg/mol) - mostly hydrogen
 	else
 		// XXX using earth's molar mass of air...
 		return 0.02897;
@@ -223,6 +329,25 @@ double SystemBody::GetAtmAverageTemp(double altitude) const
 void SystemBody::SetAtmFromParameters()
 {
 	double gasMolarMass = GetMolarMass(GetSuperType());
+	double surfaceGravity_g = CalcSurfaceGravity();
+
+	if ((GetSuperType() == SUPERTYPE_STAR) && (m_volatileGas == 0))
+	{
+		// This is a star, and there is no value for the gas density specified.
+		// Calculate one now based on the star's data so we can display something sensible.
+
+		double temperature = m_averageTemp;
+		if (temperature < 250) temperature = 250;
+
+		// We don't have a good way of determining a star's surface pressure, but the surface
+		// pressure for our Sun is about 0.01 atm, so divide that by its surface gravity value
+		// (274) to get a number that we can use to scale target pressure by star's gravity.
+		// This gives us the result that more dense or bigger stars have higher surface pressure.
+		double target_pressure = (0.01 / 274.0) * surfaceGravity_g;
+
+		double density = target_pressure * gasMolarMass / (GAS_CONSTANT_R * PA_2_ATMOS * temperature);
+		m_volatileGas = fixed::FromDouble(density);
+	}
 
 	double surfaceDensity = GetAtmSurfaceDensity() / gasMolarMass; // kg / m^3, convert to moles/m^3
 	double surfaceTemperature_T0 = GetAverageTemp(); //K
@@ -231,7 +356,6 @@ void SystemBody::SetAtmFromParameters()
 	//P = density*R*T=(n/V)*R*T
 	m_atmosPressure = PA_2_ATMOS * ((surfaceDensity) * GAS_CONSTANT_R * surfaceTemperature_T0); // in atmospheres
 
-	double surfaceGravity_g = CalcSurfaceGravity();
 	const double lapseRate_L = surfaceGravity_g / GetSpecificHeat(GetSuperType()); // deg/m
 
 	if (m_atmosPressure < 0.002)
@@ -240,7 +364,7 @@ void SystemBody::SetAtmFromParameters()
 		//*outPressure = p0*(1-l*h/T0)^(g*M/(R*L);
 		// want height for pressure 0.001 atm:
 		// h = (1 - exp(RL/gM * log(P/p0))) * T0 / l
-		double RLdivgM = (GAS_CONSTANT_R * lapseRate_L) / (surfaceGravity_g * GetMolarMass(GetSuperType()));
+		double RLdivgM = (GAS_CONSTANT_R * lapseRate_L) / (surfaceGravity_g * gasMolarMass);
 		m_atmosRadius = (1.0 - exp(RLdivgM * log(0.001 / m_atmosPressure))) * surfaceTemperature_T0 / lapseRate_L;
 	}
 }
@@ -657,13 +781,38 @@ const char *SystemBody::GetIcon() const
 	switch (m_type) {
 	case TYPE_BROWN_DWARF: return "icons/object_brown_dwarf.png";
 	case TYPE_WHITE_DWARF: return "icons/object_white_dwarf.png";
+	case TYPE_STAR_M_GIANT:
+	case TYPE_STAR_M_SUPER_GIANT:
+	case TYPE_STAR_M_HYPER_GIANT:
 	case TYPE_STAR_M: return "icons/object_star_m.png";
+	case TYPE_STAR_K_GIANT:
+	case TYPE_STAR_K_SUPER_GIANT:
+	case TYPE_STAR_K_HYPER_GIANT:
 	case TYPE_STAR_K: return "icons/object_star_k.png";
+	case TYPE_STAR_G_GIANT:
+	case TYPE_STAR_G_SUPER_GIANT:
+	case TYPE_STAR_G_HYPER_GIANT:
 	case TYPE_STAR_G: return "icons/object_star_g.png";
+	case TYPE_STAR_F_GIANT:
+	case TYPE_STAR_F_SUPER_GIANT:
+	case TYPE_STAR_F_HYPER_GIANT:
 	case TYPE_STAR_F: return "icons/object_star_f.png";
+	case TYPE_STAR_A_GIANT:
+	case TYPE_STAR_A_SUPER_GIANT:
+	case TYPE_STAR_A_HYPER_GIANT:
 	case TYPE_STAR_A: return "icons/object_star_a.png";
+	case TYPE_STAR_B_GIANT:
+	case TYPE_STAR_B_SUPER_GIANT:
+	case TYPE_STAR_B_HYPER_GIANT:
 	case TYPE_STAR_B: return "icons/object_star_b.png";
+	case TYPE_STAR_O_GIANT:
+	case TYPE_STAR_O_SUPER_GIANT:
+	case TYPE_STAR_O_HYPER_GIANT:
 	case TYPE_STAR_O: return "icons/object_star_b.png"; //shares B graphic for now
+
+/*
+	TODO: If we ever get circular icons for giant type stars, replace the above giant cases with the ones below
+
 	case TYPE_STAR_M_GIANT: return "icons/object_star_m_giant.png";
 	case TYPE_STAR_K_GIANT: return "icons/object_star_k_giant.png";
 	case TYPE_STAR_G_GIANT: return "icons/object_star_g_giant.png";
@@ -685,6 +834,8 @@ const char *SystemBody::GetIcon() const
 	case TYPE_STAR_A_HYPER_GIANT: return "icons/object_star_a_hyper_giant.png";
 	case TYPE_STAR_B_HYPER_GIANT: return "icons/object_star_b_hyper_giant.png";
 	case TYPE_STAR_O_HYPER_GIANT: return "icons/object_star_b_hyper_giant.png"; // uses B type graphic for now
+*/
+
 	case TYPE_STAR_M_WF: return "icons/object_star_m_wf.png";
 	case TYPE_STAR_B_WF: return "icons/object_star_b_wf.png";
 	case TYPE_STAR_O_WF: return "icons/object_star_o_wf.png";

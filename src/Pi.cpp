@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "buildopts.h"
@@ -121,7 +121,6 @@ int Pi::statSceneTris = 0;
 int Pi::statNumPatches = 0;
 GameConfig *Pi::config;
 DetailLevel Pi::detail;
-bool Pi::navTunnelDisplayed = false;
 bool Pi::speedLinesDisplayed = false;
 bool Pi::hudTrailsDisplayed = false;
 bool Pi::bRefreshBackgroundStars = true;
@@ -376,7 +375,6 @@ void Pi::App::OnStartup()
 	Pi::pigui = StartupPiGui();
 
 	// FIXME: move these into the appropriate class!
-	navTunnelDisplayed = (config->Int("DisplayNavTunnel")) ? true : false;
 	speedLinesDisplayed = (config->Int("SpeedLines")) ? true : false;
 	hudTrailsDisplayed = (config->Int("HudTrails")) ? true : false;
 
@@ -447,10 +445,12 @@ void Pi::App::OnShutdown()
 	Graphics::Uninit();
 
 	PiGui::Lua::Uninit();
-	ShutdownPiGui();
-	Pi::pigui = nullptr;
 	Lua::UninitModules();
 	Lua::Uninit();
+
+	// Lua can keep PiGui objects alive, need to wait until it's uninited to tear down PiGui
+	Pi::pigui = nullptr;
+	ShutdownPiGui();
 
 	delete Pi::modelCache;
 
@@ -534,14 +534,8 @@ void StartupScreen::Start()
 		if (Pi::GetApp()->HeadlessMode() || Pi::config->Int("DisableSound"))
 			return;
 
-		Sound::Init();
-		Sound::SetMasterVolume(Pi::config->Float("MasterVolume"));
-		Sound::SetSfxVolume(Pi::config->Float("SfxVolume"));
+		Sound::Init(Pi::config->String("AudioBackend"));
 		Pi::GetMusicPlayer().SetVolume(Pi::config->Float("MusicVolume"));
-
-		Sound::Pause(0);
-		if (Pi::config->Int("MasterMuted")) Sound::Pause(1);
-		if (Pi::config->Int("SfxMuted")) Sound::SetSfxVolume(0.f);
 		if (Pi::config->Int("MusicMuted")) Pi::GetMusicPlayer().SetEnabled(false);
 	});
 
@@ -715,6 +709,7 @@ void MainMenu::Update(float deltaTime)
 
 	Pi::renderer->ClearDepthBuffer();
 	Pi::pigui->Render();
+	Sound::Update(deltaTime);
 
 	if (Pi::game) {
 		RequestEndLifecycle();
@@ -804,13 +799,7 @@ void Pi::HandleKeyDown(SDL_Keysym *key)
 
 #if WITH_OBJECTVIEWER
 	case SDLK_F10: {
-		if (!Pi::game)
-			break;
-
-		if (Pi::GetView() == Pi::game->GetObjectViewerView())
-			Pi::SetView(Pi::game->GetWorldView());
-		else if (Pi::player->GetNavTarget())
-			Pi::SetView(Pi::game->GetObjectViewerView());
+		ToggleObjectViewer();
 		break;
 	}
 #endif
@@ -1027,7 +1016,7 @@ void GameLoop::Update(float deltaTime)
 		}
 	}
 
-	Pi::renderer->SetTransform(matrix4x4f::Identity());
+	Pi::renderer->SetTransform(matrix4x4f::Identity);
 
 	/* Calculate position for this rendered frame (interpolated between two physics ticks */
 	// XXX should this be here? what is this anyway?
@@ -1097,6 +1086,7 @@ void GameLoop::Update(float deltaTime)
 	}
 
 	Pi::GetMusicPlayer().Update();
+	Sound::Update(deltaTime);
 
 	perfInfoDisplay->Update(deltaTime);
 	perfInfoDisplay->UpdateCounter(PiGui::PerfInfo::COUNTER_PHYS, phys_time);
@@ -1283,6 +1273,17 @@ static void OnPlayerDockOrUndock()
 {
 	Pi::game->RequestTimeAccel(Game::TIMEACCEL_1X);
 	Pi::game->SetTimeAccel(Game::TIMEACCEL_1X);
+}
+
+void Pi::ToggleObjectViewer()
+{
+	if (!Pi::game)
+		return;
+
+	if (Pi::GetView() == Pi::game->GetObjectViewerView())
+		Pi::SetView(Pi::game->GetWorldView());
+	else if (Pi::player->GetNavTarget())
+		Pi::SetView(Pi::game->GetObjectViewerView());
 }
 
 // This absolutely ought not to be part of the Pi class

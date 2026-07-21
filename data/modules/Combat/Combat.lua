@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Engine = require 'Engine'
@@ -161,7 +161,9 @@ local onChat = function (form, ref, option)
 			bonus       = -(math.ceil(ad.dedication * 3) - 1),
 			due         = ad.due,
 		}
-		table.insert(missions,Mission.New(mission))
+		mission = Mission.New(mission)
+		table.insert(missions, mission)
+		MissionUtils.SetupOverdueTimer(mission)
 		form:SetMessage(l["ACCEPTED_" .. Engine.rand:Integer(1, getNumberOfFlavours("ACCEPTED"))])
 		return
 
@@ -282,8 +284,8 @@ local makeAdvert = function (station)
 end
 
 local onCreateBB = function (station)
-	local num = Engine.rand:Integer(0, math.ceil(Game.system.population * 2 * Game.system.lawlessness) + 1)
-	for i = 1, num do
+	local num = Engine.rand:Integer(math.ceil(Game.system.population * Game.system.lawlessness))
+	for _ = 1, num do
 		makeAdvert(station)
 	end
 end
@@ -407,9 +409,6 @@ local onFrameChanged = function (player)
 				Comms.ImportantMessage(l.TARGET_AREA_REACHED)
 			end
 		end
-		if mission.status == "ACTIVE" and Game.time > mission.due then
-			mission.status = "FAILED"
-		end
 	end
 end
 
@@ -502,6 +501,7 @@ local onGameStart = function ()
 		loaded_data = nil
 
 		for _, mission in pairs(missions) do
+			MissionUtils.SetupOverdueTimer(mission)
 			if mission.duration then
 				missionTimer(mission)
 			end

@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "PlayerShipController.h"
@@ -10,7 +10,7 @@
 #include "Json.h"
 #include "Pi.h"
 #include "Player.h"
-#include "SDL_keycode.h"
+#include <SDL_keycode.h>
 #include "Ship.h"
 #include "Space.h"
 #include "SystemView.h"
@@ -150,7 +150,7 @@ REGISTER_INPUT_BINDING(PlayerShipController)
 	input->AddAxisBinding("BindAxisYaw", flightGroup, Axis({}, { SDLK_j }, { SDLK_l }));
 	input->AddAxisBinding("BindAxisRoll", flightGroup, Axis({}, { SDLK_q }, { SDLK_e }));
 	input->AddActionBinding("BindKillRot", flightGroup, Action({ SDLK_p }, { SDLK_x }));
-	input->AddActionBinding("BindToggleRotationDamping", flightGroup, Action({ SDLK_v }));
+	input->AddActionBinding("BindToggleRotationDamping", flightGroup, Action({ SDLK_c }));
 
 	auto thrustGroup = controlsPage->GetBindingGroup("ManualControl");
 	input->AddAxisBinding("BindAxisThrustForward", thrustGroup, Axis({}, { SDLK_w }, { SDLK_s }));
@@ -205,7 +205,7 @@ PlayerShipController::PlayerShipController() :
 
 	m_toggleSpeedLimiter = InputBindings.toggleSpeedLimiter->onPressed.connect(
 		[this]() {
-			this->SetSpeedLimiterActive(not this->IsSpeedLimiterActive());
+			this->SetSpeedLimiterActive(!this->IsSpeedLimiterActive());
 		});
 
 	m_selectTarget = InputBindings.targetObject->onPressed.connect (

@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Player.h"
@@ -306,7 +306,7 @@ void Player::StaticUpdate(const float timeStep)
 
 	if (playCreak) {
 		if (!m_creakSound.IsPlaying()) {
-			float creakVol = fmin(float((m_atmosJerk.Length() - 50) * 0.05f), 0.3f);
+			float creakVol = fmax(0.f, fmin(float((m_atmosJerk.Length() - 50) * 0.05f), 0.3f));
 			m_creakSound.Play("metal_creaking", creakVol, creakVol, Sound::OP_REPEAT);
 			m_creakSound.VolumeAnimate(creakVol, creakVol, 0.3f, 0.3f);
 		}
@@ -323,7 +323,7 @@ void Player::StaticUpdate(const float timeStep)
 
 int Player::GetManeuverTime() const
 {
-	if (Pi::planner->GetOffsetVel().ExactlyEqual(vector3d(0, 0, 0))) {
+	if (Pi::planner->GetOffsetVel().ExactlyEqual(vector3d::Zero)) {
 		return 0;
 	}
 	return Pi::planner->GetStartTime();
@@ -336,8 +336,8 @@ vector3d Player::GetManeuverVelocity() const
 		frame = Frame::GetFrame(frame->GetNonRotFrame());
 	const SystemBody *systemBody = frame->GetSystemBody();
 
-	if (Pi::planner->GetOffsetVel().ExactlyEqual(vector3d(0, 0, 0))) {
-		return vector3d(0, 0, 0);
+	if (Pi::planner->GetOffsetVel().ExactlyEqual(vector3d::Zero)) {
+		return vector3d::Zero;
 	} else if (systemBody) {
 		Orbit playerOrbit = ComputeOrbit();
 		if (!is_zero_exact(playerOrbit.GetSemiMajorAxis())) {
@@ -347,7 +347,7 @@ vector3d Player::GetManeuverVelocity() const
 			return velocity;
 		}
 	}
-	return vector3d(0, 0, 0);
+	return vector3d::Zero;
 }
 
 void Player::DoFixspeedTakeoff(SpaceStation *from)

@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Game = require 'Game'
@@ -131,7 +131,7 @@ local onGameStart = function ()
 	sectorView:SetDrawOutRangeLabels(settings.draw_out_range_labels)
 	sectorView:GetMap():SetDrawUninhabitedLabels(settings.draw_uninhabited_labels)
 	sectorView:GetMap():SetDrawVerticalLines(settings.draw_vertical_lines)
-	sectorView:GetMap():SetLabelParams("orbiteer", font.size, 2.0, svColor.LABEL_HIGHLIGHT, svColor.LABEL_SHADE)
+	sectorView:GetMap():SetLabelParams("sector-map", font.size, 2.0, svColor.LABEL_HIGHLIGHT, svColor.LABEL_SHADE)
 
 	-- allow hyperjump planner to register its events:
 	hyperJumpPlanner.onGameStart()
@@ -327,6 +327,9 @@ local infoView = {
 			[0] = lui.AN_ERROR_HAS_OCCURRED
 		}
 
+		local securityIdx = math.ceil(system.lawlessness * 5)
+		securityIdx = math.max(1, securityIdx)
+
 		ui.textWrapped(system.shortDescription)
 
 		if #system.other_names > 0 then
@@ -359,11 +362,21 @@ local infoView = {
 			textIcon(icons.maneuver)
 			ui.text(lc.SECTOR_X_Y_Z % path)
 
-			textIcon(icons.shield, lui.FACTION)
-			ui.text(system.faction.name)
+			ui.withTooltip(lui.SYSTEM_FACTION, function()
+				textIcon(icons.gavel, lui.FACTION)
+				ui.text(system.faction.name)
+			end)
 
-			textIcon(icons.galaxy_map)
-			ui.text(numstarsText[system.numberOfStars])
+			ui.withTooltip(lui.SYSTEM_SECURITY_TOOLTIP, function()
+				textIcon(icons.shield)
+				local color = (securityIdx == 5 and colors.alertRed) or (securityIdx == 4) and colors.alertYellow or colors.font
+				ui.textColored(color, lui["SYSTEM_SECURITY_" .. securityIdx])
+			end)
+
+			ui.withTooltip(lui.SYSTEM_NUM_STARS, function()
+				textIcon(icons.galaxy_map)
+				ui.text(numstarsText[system.numberOfStars])
+			end)
 
 			ui.withTooltip(lc.GOVERNMENT_TYPE, function()
 				textIcon(icons.language)
@@ -545,16 +558,19 @@ local function drawRouteList(route)
 			ui.text(i)
 			ui.tableNextColumn()
 
-			ui.textColored(jump.color, jump.path:GetSystemBody().name)
+			ui.withStyleColors({ Text = jump.color }, function()
+				ui.textAligned(ui.get_icon_glyph(jump.reachable and icons.map_checkmark or icons.fuel), 0.0)
+			end)
+
+			ui.setItemTooltip(jump.reachable and lui.JUMP_REACHABLE or lui.INSUFFICIENT_FUEL)
+
+			ui.sameLine()
+
+			ui.textColored(colors.font, jump.path:GetSystemBody().name)
 			ui.tableNextColumn()
 
 			ui.withFont(pionillium.details, function()
 				ui.text(ui.get_icon_glyph(icons.route_dist) .. ui.Format.Number(jump.distance, 2) .. " " .. lc.UNIT_LY)
-				if not jump.reachable then
-					ui.sameLine()
-					textIcon(icons.alert_generic, lui.INSUFFICIENT_FUEL)
-				end
-
 				ui.tableNextColumn()
 				ui.text(ui.get_icon_glyph(icons.fuel) .. ui.Format.Number(jump.fuel, 1) .. " " .. lc.UNIT_TONNES)
 			end)
@@ -814,12 +830,29 @@ local function drawEdgeButtons()
 
 end
 
+local function hasActiveExclusiveLeftModule()
+	for _, module in ipairs(leftSidebar.modules) do
+		if module.exclusive and module.active and not module.closing then
+			return true
+		end
+	end
+	return false
+end
+
 ui.registerModule("game", { id = 'map-sector-view', draw = function()
 	player = Game.player
 	if Game.CurrentView() == "SectorView" then
 
 		if shouldRefresh then
 			shouldRefresh = false
+
+			-- Always show system info when entering SectorView, if we can. This helps the player find the hyperspace routing.
+			if not hasActiveExclusiveLeftModule() and not infoView.active then
+				infoView.active = true
+				infoView.closing = false
+				infoView.alpha = nil
+			end
+
 			leftSidebar:Refresh()
 			rightSidebar:Refresh()
 			hyperJumpPlanner.updateRouteList()
@@ -850,7 +883,7 @@ ui.registerModule("game", { id = 'map-sector-view', draw = function()
 		end
 
 		if ui.ctrlHeld() and ui.isKeyReleased(ui.keys.delete) then
-			systemEconView = package.reimport('pigui.modules.system-econ-view').New()
+			package.reimport('pigui.modules.system-econ-view')
 			bookmarkView:debugReload()
 			package.reimport('pigui.modules.hyperjump-planner')
 			package.reimport()

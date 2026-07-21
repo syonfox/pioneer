@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Event = require 'Event'
@@ -666,6 +666,15 @@ Event.Register("onShipTypeChanged", function(ship)
 
 	if scanMgr then
 		scanMgr:SetupShipEquipListener()
+	end
+end)
+
+---@param ship Ship
+Event.Register("onLeaveSystem", function(ship)
+	local scanMgr = ship:GetComponent("ScanManager")
+
+	if scanMgr and scanMgr:GetActiveScan() then
+		scanMgr:ClearActiveScan()
 	end
 end)
 

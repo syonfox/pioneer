@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef INPUT_H
@@ -6,7 +6,7 @@
 
 #include "InputBindings.h"
 
-#include "SDL_joystick.h"
+#include <SDL_joystick.h>
 #include <algorithm>
 #include <array>
 #include <vector>
@@ -69,6 +69,9 @@ namespace Input {
 
 		Action *AddAction(const std::string &id);
 		Axis *AddAxis(const std::string &id);
+
+		Action *AddAction(Action *action);
+		Axis *AddAxis(Axis *axis);
 	};
 
 	struct JoystickInfo {
@@ -164,6 +167,10 @@ public:
 	// Call EnableBindings() to temporarily disable handling input bindings while
 	// you're recording a new input binding or are in a modal window.
 	void EnableBindings(bool enabled) { m_enableBindings = enabled; }
+
+	// Save the given action or axis bindings back to the config
+	void SaveActionBinding(InputBindings::Action *action, const std::string &id);
+	void SaveAxisBinding(InputBindings::Axis *axis, const std::string &id);
 
 	bool KeyState(SDL_Keycode k) { return IsKeyDown(k); }
 

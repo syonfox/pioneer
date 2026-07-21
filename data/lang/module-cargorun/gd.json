@@ -97,7 +97,7 @@
   },
   "ALUMINIUM_TUBES": {
     "description": "custom cargo",
-    "message": "Pìoban almain"
+    "message": "aluminium tubes"
   },
   "AMOUNT": {
     "description": "Shown in mission summary. The amount of cargo",
@@ -105,7 +105,19 @@
   },
   "ART_OBJECTS": {
     "description": "custom cargo",
-    "message": "Obair-ealain"
+    "message": "art objects"
+  },
+  "ART_OBJECTS_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Unless you consider art critics a risk, no."
+  },
+  "ART_OBJECTS_RISK_MESSAGE_2": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Between you and me... Don't look at the art and you'll be fine."
+  },
+  "ART_OBJECTS_RISK_MESSAGE_3": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "The only danger of 25th century impressionism was to the original artist, you should be safe."
   },
   "CARGO": {
     "description": "",
@@ -129,7 +141,7 @@
   },
   "CLUS": {
     "description": "custom cargo",
-    "message": "Bogsaichean-fuirich"
+    "message": "containerized living units"
   },
   "COULD_YOU_REPEAT_THE_ORIGINAL_REQUEST": {
     "description": "",
@@ -185,11 +197,11 @@
   },
   "DIAMONDS": {
     "description": "custom cargo",
-    "message": "Daoimeanan"
+    "message": "diamonds"
   },
   "DIGESTERS": {
     "description": "custom cargo",
-    "message": "Innealan-meirbhidh"
+    "message": "digesters"
   },
   "DISTANCE": {
     "description": "distance in space, between two locations",
@@ -197,7 +209,7 @@
   },
   "ELECTRICAL_APPLIANCES": {
     "description": "custom cargo",
-    "message": "Innealan leatronach"
+    "message": "electrical appliances"
   },
   "ESCORT_CHATTER_1": {
     "description": "",
@@ -221,7 +233,11 @@
   },
   "EXPLOSIVES": {
     "description": "custom cargo",
-    "message": "Stuth-spreadhaidh"
+    "message": "explosives"
+  },
+  "EXPLOSIVES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "No. Well, it's explosives, just don't drop it."
   },
   "FAILUREMSG_1": {
     "description": "",
@@ -245,7 +261,7 @@
   },
   "FURNITURE": {
     "description": "custom cargo",
-    "message": "Àirneis"
+    "message": "furniture"
   },
   "GO_BACK": {
     "description": "Shown on a button in a sub-menu, to move back, to previous menu",
@@ -253,7 +269,7 @@
   },
   "GREENHOUSES": {
     "description": "custom cargo",
-    "message": "Seòmraichean-glainne"
+    "message": "greenhouses"
   },
   "GUNS_GUNS_GUNS": {
     "description": "Military radio call to avoid friendly fire. It indicates that the cannon has been activated and should ensure that other friendly pilots do not maneuver into the path of harm.",
@@ -261,7 +277,11 @@
   },
   "HAZARDOUS_SUBSTANCES": {
     "description": "custom cargo",
-    "message": "Stuthan cunnartach"
+    "message": "hazardous substances"
+  },
+  "HAZARDOUS_SUBSTANCES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "I guess you shouldn't open the containers."
   },
   "HOWMUCH_1": {
     "description": "regarding mass, always more than 1t",
@@ -383,9 +403,13 @@
     "description": "",
     "message": "Tha mi a’ fulang dochann. Feumaidh mi cobhair."
   },
+  "LOAD_CARGO": {
+    "description": "UI button label",
+    "message": "Load cargo"
+  },
   "MACHINE_TOOLS": {
     "description": "custom cargo",
-    "message": "Beart-innealan"
+    "message": "machine tools"
   },
   "NEGOTIABLE_1": {
     "description": "regarding mass, always more than 1t",
@@ -409,7 +433,7 @@
   },
   "NEPTUNIUM": {
     "description": "custom cargo",
-    "message": "Neiptiunium"
+    "message": "neptunium"
   },
   "OFFER": {
     "description": "",
@@ -469,11 +493,19 @@
   },
   "PLUTONIUM": {
     "description": "custom cargo",
-    "message": "Plutonium"
+    "message": "plutonium"
   },
   "QUIBBLES": {
     "description": "custom cargo, also used in the NewsEventCommodity module, a nod to Star Trek's Tribble (check wikipedia)",
-    "message": "Quibbles"
+    "message": "quibbles"
+  },
+  "QUIBBLES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "No. Just don't get them wet and never feed them after midnight."
+  },
+  "QUIBBLES_RISK_MESSAGE_2": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Of course not! Look at them, they're so fluffy!"
   },
   "RISK_1": {
     "description": "",
@@ -529,15 +561,7 @@
   },
   "SEMI_FINISHED_PRODUCTS": {
     "description": "custom cargo",
-    "message": "Batharan leth-dhèanta"
-  },
-  "SET_AS_TARGET": {
-    "description": "",
-    "message": "Cuir ceann-uidhe na seòladaireachd air"
-  },
-  "SET_RETURN_ROUTE": {
-    "description": "",
-    "message": "Suidhich cùrsa tillidh"
+    "message": "semi-finished products"
   },
   "SPACEPORT": {
     "description": "",
@@ -545,11 +569,11 @@
   },
   "SPACESHIP_PARTS": {
     "description": "custom cargo",
-    "message": "Co-phàirtean soithich-fhànais"
+    "message": "spaceship parts"
   },
   "STEM_BOLTS": {
     "description": "custom cargo, used in Star Trek DS9 as something with unclear usefulness",
-    "message": "Boltaichean fèin-sheulaidh gun staim orra"
+    "message": "self-sealing stem bolts"
   },
   "SUCCESSMSG_1": {
     "description": "",
@@ -581,7 +605,7 @@
   },
   "TITANIUM": {
     "description": "custom cargo",
-    "message": "Titanium"
+    "message": "titanium"
   },
   "TOO_LATE_TO_PICK_UP": {
     "description": "",
@@ -589,11 +613,11 @@
   },
   "TUNGSTEN": {
     "description": "custom cargo",
-    "message": "Tungstan"
+    "message": "tungsten"
   },
   "URANIUM": {
     "description": "custom cargo",
-    "message": "Uranium"
+    "message": "uranium"
   },
   "URGENCY_1": {
     "description": "",
@@ -625,11 +649,15 @@
   },
   "WEDDING_DRESSES": {
     "description": "custom cargo",
-    "message": "Trusganan bainnse"
+    "message": "wedding dresses"
+  },
+  "WEDDING_DRESSES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Over wedding dresses?"
   },
   "WE_HAVE_LOADED_UP_THE_CARGO_ON_YOUR_SHIP": {
     "description": "",
-    "message": "Tha sinn air an carago a luchdadh dhan t-soitheach agad."
+    "message": "We have loaded the cargo onto your ship."
   },
   "WHAT_IS_THIS": {
     "description": "",
@@ -717,6 +745,6 @@
   },
   "YOU_DO_NOT_HAVE_ENOUGH_EMPTY_CARGO_SPACE": {
     "description": "",
-    "message": "Till nuair a bhios rùm carago gu leòr agad."
+    "message": "Please contact me when you have sufficient cargo space."
   }
 }

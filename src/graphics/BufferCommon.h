@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #pragma once
@@ -61,9 +61,16 @@ namespace Graphics {
 
 	template <typename T>
 	struct BufferBinding {
-		T *buffer;
-		uint32_t offset;
-		uint32_t size;
+		BufferBinding() = default;
+		BufferBinding(T *_buf, uint32_t _off = 0, uint32_t _size = 0) :
+			buffer(_buf),
+			offset(_off),
+			size(_size)
+		{}
+
+		T *buffer = nullptr;
+		uint32_t offset = 0;
+		uint32_t size = 0;
 
 		bool operator!=(const BufferBinding &rhs) const { return !(*this == rhs); }
 		bool operator==(const BufferBinding &rhs) const

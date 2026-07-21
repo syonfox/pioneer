@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local EquipType = require 'EquipType'
@@ -344,6 +344,20 @@ function CabinType:OnRemove(ship, slot)
 	end
 end
 
+function CabinType:CanBeSold(ship)
+	return (not self.passengers or #self.passengers == 0) and EquipType.CanBeSold(self)
+end
+
+--==============================================================================
+
+---@class Equipment.CargoHoldType : EquipType
+local CargoHoldType = EquipType:NewType("Equipment.CargoHoldType")
+
+---@param ship Ship
+function CargoHoldType:CanBeSold(ship)
+	return (ship.cargo_cap - ship.usedCargo) >= self.capabilities.cargo
+end
+
 --==============================================================================
 
 ---@class Equipment.ThrusterType : EquipType
@@ -400,6 +414,7 @@ end
 return {
 	EquipType		= EquipType,
 	CargoScoopType	= CargoScoopType,
+	CargoHoldType	= CargoHoldType,
 	LaserType		= LaserType,
 	HyperdriveType	= HyperdriveType,
 	SensorType		= SensorType,

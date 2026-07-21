@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "SystemEditor.h"
@@ -32,6 +32,7 @@
 #include "imgui/imgui.h"
 
 #include "portable-file-dialogs/pfd.h"
+#include "utils.h"
 // PFD pulls in windows headers sadly
 #undef RegisterClass
 #undef min
@@ -129,14 +130,20 @@ SystemEditor::SystemEditor(EditorApp *app) :
 	m_galaxy = GalaxyGenerator::Create();
 	m_systemLoader.reset(new CustomSystemsDatabase(m_galaxy.Get(), "systems"));
 
-	m_viewport.reset(new SystemEditorViewport(m_app, this));
-	m_viewport->SetCanBeClosed(false);
-
 	m_random.seed({
 		// generate random values not dependent on app runtime
 		uint32_t(std::chrono::system_clock::now().time_since_epoch().count()),
 		UNIVERSE_SEED
 	});
+
+	// In headless mode, we will not run the usual application lifecycle methods.
+	// We will only dump systems from the galaxy to disk, and do not need any UI.
+	if (m_app->IsHeadless()) {
+		return;
+	}
+
+	m_viewport.reset(new SystemEditorViewport(m_app, this));
+	m_viewport->SetCanBeClosed(false);
 
 	ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
@@ -254,7 +261,7 @@ bool SystemEditor::LoadSystemFromFile(const FileSystem::FileInfo &file)
 
 bool SystemEditor::WriteSystem(const std::string &filepath)
 {
-	Log::Info("Writing to path: {}/{}", FileSystem::GetDataDir(), filepath);
+	Log::Info("Writing to path: {}", filepath);
 	// FIXME: need better file-saving interface for the user
 	// FileSystem::FileSourceFS(FileSystem::GetDataDir()).OpenWriteStream(filepath, FileSystem::FileSourceFS::WRITE_TEXT);
 
@@ -285,11 +292,18 @@ bool SystemEditor::WriteSystem(const std::string &filepath)
 	else
 		systemdef["explored"] = m_systemInfo.explored == CustomSystemInfo::EXPLORE_ExploredAtStart;
 
+	if (m_systemInfo.overrideRandom) {
+		systemdef["overrideRandom"] = true;
+		systemdef["index"] = m_system->GetPath().systemIndex;
+	}
+
 	systemdef["comment"] = m_systemInfo.comment;
 
 	std::string jsonData = systemdef.dump(1, '\t');
 
 	fwrite(jsonData.data(), 1, jsonData.size(), f);
+	fwrite("\n", 1, 1, f); // write trailing newline
+
 	fclose(f);
 
 	OnSaveComplete(true);
@@ -306,8 +320,13 @@ bool SystemEditor::LoadCustomSystem(const CustomSystem *csys)
 	auto customStage = std::make_unique<StarSystemCustomGenerator>();
 
 	if (!customStage->ApplyToSystem(rng, system, csys)) {
-		Log::Error("System is fully random, cannot load from file");
-		return false;
+		Log::Error("System is fully random, cannot load from file. Loading from galaxy instead.");
+
+		// Fall back to loading from random galaxy generation.
+		LoadSystemFromGalaxy(m_galaxy->GetStarSystem(path));
+		m_systemInfo.overrideRandom = false;
+
+		return true;
 	}
 
 	// NOTE: we don't run the PopulateSystem generator here, due to its
@@ -329,6 +348,7 @@ bool SystemEditor::LoadCustomSystem(const CustomSystem *csys)
 	m_systemInfo.explored = csys->want_rand_explored ? CustomSystemInfo::EXPLORE_Random : explored;
 	m_systemInfo.randomLawlessness = csys->want_rand_lawlessness;
 	m_systemInfo.randomFaction = csys->faction == nullptr;
+	m_systemInfo.overrideRandom = csys->override_random_system;
 	m_systemInfo.faction = csys->faction ? csys->faction->name : "";
 
 	return true;
@@ -352,8 +372,23 @@ void SystemEditor::LoadSystemFromGalaxy(RefCountedPtr<StarSystem> system)
 
 	m_systemInfo.explored = explored ? CustomSystemInfo::EXPLORE_ExploredAtStart : CustomSystemInfo::EXPLORE_Unexplored;
 	m_systemInfo.randomLawlessness = false;
-	m_systemInfo.randomFaction = system->GetFaction();
+	m_systemInfo.randomFaction = !system->GetFaction();
+	m_systemInfo.overrideRandom = true;
 	m_systemInfo.faction = system->GetFaction() ? system->GetFaction()->name : "";
+}
+
+Json SystemEditor::DumpSystemFromGalaxy(SystemPath path)
+{
+	RefCountedPtr<StarSystem> system = m_galaxy->GetStarSystem(path);
+	Json out_obj = Json {};
+
+	if (!system) {
+		Log::Error("No system at path {} to dump");
+		return out_obj;
+	}
+
+	system->DumpToJson(out_obj);
+	return out_obj;
 }
 
 bool SystemEditor::RegenerateSystem(uint32_t newSeed)
@@ -362,6 +397,7 @@ bool SystemEditor::RegenerateSystem(uint32_t newSeed)
 	uint32_t _init[5] = { newSeed, uint32_t(path.sectorX), uint32_t(path.sectorY), uint32_t(path.sectorZ), UNIVERSE_SEED };
 	Random rng(_init, 5);
 
+	RefCountedPtr<const Sector> sec = m_galaxy->GetSector(path);
 	RefCountedPtr<StarSystem::GeneratorAPI> system(new StarSystem::GeneratorAPI(path, m_galaxy, nullptr, rng));
 
 	GalaxyGenerator::StarSystemConfig config;
@@ -370,7 +406,7 @@ bool SystemEditor::RegenerateSystem(uint32_t newSeed)
 	auto stage3 = std::make_unique<StarSystemRandomGenerator>();
 	auto stage4 = std::make_unique<PopulateStarSystemGenerator>();
 
-	if (!stage1->Apply(rng, m_galaxy, system, &config)) {
+	if (!stage1->Apply(rng, m_galaxy, sec.Get(), system, &config)) {
 		Log::Error("Cannot apply stage1 generator");
 		return false;
 	}
@@ -378,17 +414,17 @@ bool SystemEditor::RegenerateSystem(uint32_t newSeed)
 	// Stage1 uses the seed created by sector generation
 	system->SetSeed(newSeed);
 
-	if (!stage2->Apply(rng, m_galaxy, system, &config)) {
+	if (!stage2->Apply(rng, m_galaxy, sec.Get(), system, &config)) {
 		Log::Error("Cannot apply stage2 generator");
 		return false;
 	}
 
-	if (!stage3->Apply(rng, m_galaxy, system, &config)) {
+	if (!stage3->Apply(rng, m_galaxy, sec.Get(), system, &config)) {
 		Log::Error("Cannot apply stage3 generator");
 		return false;
 	}
 
-	if (!stage4->Apply(rng, m_galaxy, system, &config)) {
+	if (!stage4->Apply(rng, m_galaxy, sec.Get(), system, &config)) {
 		Log::Error("Cannot apply stage4 generator");
 		return false;
 	}
@@ -424,6 +460,15 @@ void SystemEditor::ClearSystem()
 // Here to avoid needing to drag in the Galaxy header in SystemEditor.h
 RefCountedPtr<Galaxy> SystemEditor::GetGalaxy() { return m_galaxy; }
 
+std::string SystemEditor::GetFileDialogPath() const
+{
+	if (m_filedir.empty()) {
+		return FileSystem::JoinPath(FileSystem::GetDataDir(), "systems");
+	} else {
+		return FileSystem::JoinPath(FileSystem::GetDataDir(), m_filedir);
+	}
+}
+
 void SystemEditor::SetSelectedBody(SystemBody *body)
 {
 	// note: using const_cast here to work with Projectables which store a const pointer
@@ -448,7 +493,7 @@ void SystemEditor::RegisterMenuActions()
 	m_menuBinder->BeginMenu("File");
 
 	m_menuBinder->AddAction("New", {
-		"New System", ImGuiKey_N | ImGuiKey_ModCtrl,
+		"New System", ImGuiKey_N | ImGuiMod_Ctrl,
 		[&]() {
 			if (HasUnsavedChanges()) {
 				m_unsavedFileModal = m_app->PushModal<UnsavedFileModal>();
@@ -461,7 +506,7 @@ void SystemEditor::RegisterMenuActions()
 	});
 
 	m_menuBinder->AddAction("Open", {
-		"Open File", ImGuiKey_O | ImGuiKey_ModCtrl,
+		"Open File", ImGuiKey_O | ImGuiMod_Ctrl,
 		[&]() {
 			if (HasUnsavedChanges()) {
 				m_unsavedFileModal = m_app->PushModal<UnsavedFileModal>();
@@ -474,19 +519,19 @@ void SystemEditor::RegisterMenuActions()
 	});
 
 	m_menuBinder->AddAction("Save", {
-		"Save", ImGuiKey_S | ImGuiKey_ModCtrl,
+		"Save", ImGuiKey_S | ImGuiMod_Ctrl,
 		[&]() { return m_system.Valid(); },
 		sigc::mem_fun(this, &SystemEditor::SaveCurrentFile)
 	});
 
 	m_menuBinder->AddAction("SaveAs", {
-		"Save As", ImGuiKey_S | ImGuiKey_ModCtrl | ImGuiKey_ModShift,
+		"Save As", ImGuiKey_S | ImGuiMod_Ctrl | ImGuiMod_Shift,
 		[&]() { return m_system.Valid(); },
 		sigc::mem_fun(this, &SystemEditor::ActivateSaveDialog)
 	});
 
 	m_menuBinder->AddAction("Quit", {
-		"Quit", ImGuiKey_Q | ImGuiKey_ModCtrl,
+		"Quit", ImGuiKey_Q | ImGuiMod_Ctrl,
 		[this]() {
 			if (HasUnsavedChanges()) {
 				m_unsavedFileModal = m_app->PushModal<UnsavedFileModal>();
@@ -516,7 +561,7 @@ void SystemEditor::RegisterMenuActions()
 	});
 
 	m_menuBinder->AddAction("RegenerateNewSeed", {
-		"Generate from new Seed", ImGuiKey_ModCtrl | ImGuiKey_ModShift | ImGuiKey_R, hasNonCustomSystem,
+		"Generate from new Seed", ImGuiMod_Ctrl | ImGuiMod_Shift | ImGuiKey_R, hasNonCustomSystem,
 		[&]() {
 			uint32_t seed = Random(m_system->GetSeed()).Int32();
 
@@ -545,7 +590,7 @@ void SystemEditor::RegisterMenuActions()
 	});
 
 	m_menuBinder->AddAction("AddChild", {
-		"Add Child", ImGuiKey_A | ImGuiKey_ModCtrl, hasSelectedBody,
+		"Add Child", ImGuiKey_A | ImGuiMod_Ctrl, hasSelectedBody,
 		[&]() {
 			m_pendingOp.type = BodyRequest::TYPE_Add;
 			m_pendingOp.parent = m_contextBody ? m_contextBody : m_system->GetRootBody().Get();
@@ -554,7 +599,7 @@ void SystemEditor::RegisterMenuActions()
 	});
 
 	m_menuBinder->AddAction("AddSibling", {
-		"Add Sibling", ImGuiKey_A | ImGuiKey_ModCtrl | ImGuiKey_ModShift, hasParentBody,
+		"Add Sibling", ImGuiKey_A | ImGuiMod_Ctrl | ImGuiMod_Shift, hasParentBody,
 		[&]() {
 			m_pendingOp.type = BodyRequest::TYPE_Add;
 			m_pendingOp.parent = m_contextBody->GetParent();
@@ -564,7 +609,7 @@ void SystemEditor::RegisterMenuActions()
 	});
 
 	m_menuBinder->AddAction("Delete", {
-		"Delete Body", ImGuiKey_W | ImGuiKey_ModCtrl, hasParentBody,
+		"Delete Body", ImGuiKey_W | ImGuiMod_Ctrl, hasParentBody,
 		[&]() {
 			m_pendingOp.type = BodyRequest::TYPE_Delete;
 			m_pendingOp.body = m_contextBody;
@@ -627,7 +672,7 @@ void SystemEditor::ActivateOpenDialog()
 	// FIXME: need to handle loading files outside of game data dir
 	m_openFile.reset(new pfd::open_file(
 		"Open Custom System File",
-		FileSystem::JoinPath(FileSystem::GetDataDir(), m_filedir),
+		GetFileDialogPath(),
 		{
 			"All System Definition Files", "*.lua *.json",
 			"Lua System Definition (.lua)", "*.lua",
@@ -642,7 +687,7 @@ void SystemEditor::ActivateSaveDialog()
 {
 	m_saveFile.reset(new pfd::save_file(
 		"Save Custom System File",
-		FileSystem::JoinPath(FileSystem::GetDataDir(), m_filedir),
+		GetFileDialogPath(),
 		{
 			"JSON System Definition (.json)", "*.json"
 		})
@@ -905,7 +950,7 @@ void SystemEditor::DrawInterface()
 	m_viewport->Update(m_app->DeltaTime());
 
 	if (ImGui::Begin(OUTLINE_WND_ID)) {
-		ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium", 14));
+		ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium"), 14);
 
 		DrawOutliner();
 
@@ -916,7 +961,7 @@ void SystemEditor::DrawInterface()
 	if (ImGui::Begin(PROPERTIES_WND_ID)) {
 		// Adjust default item label position
 		ImGui::PushItemWidth(ImFloor(ImGui::GetWindowSize().x * 0.6f));
-		ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium", 13));
+		ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium"), 13);
 
 		if (m_selectedBody)
 			DrawBodyProperties();
@@ -976,7 +1021,7 @@ void SystemEditor::DrawMenuBar()
 
 void SystemEditor::DrawOutliner()
 {
-	ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium", 16));
+	ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium"), 16);
 
 	std::string name = m_system.Valid() ? m_system->GetName() : "<None>";
 	std::string label = fmt::format("System: {}", name);
@@ -1085,7 +1130,7 @@ bool SystemEditor::DrawBodyNode(SystemBody *body, bool isRoot)
 
 void SystemEditor::DrawBodyProperties()
 {
-	ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium", 16));
+	ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium"), 16);
 	ImGui::Text("Body: %s (%d)", m_selectedBody->GetName().c_str(), m_selectedBody->GetPath().bodyIndex);
 	ImGui::PopFont();
 
@@ -1109,7 +1154,7 @@ void SystemEditor::DrawSystemProperties()
 
 	SystemPath path = m_system->GetPath();
 
-	ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium", 16));
+	ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium"), 16);
 	ImGui::Text("%s (%d, %d, %d : %d)",
 		m_system->GetName().c_str(),
 		path.sectorX, path.sectorY, path.sectorZ, path.systemIndex);
@@ -1126,7 +1171,7 @@ void SystemEditor::DrawSystemProperties()
 void SystemEditor::DrawBodyContextMenu(SystemBody *body)
 {
 	if (ImGui::BeginPopupContextItem()) {
-		ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium", 15));
+		ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium"), 15);
 
 		m_contextBody = body;
 		m_menuBinder->DrawGroup("Edit.Body");

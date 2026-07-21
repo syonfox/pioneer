@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Engine = require 'Engine'
@@ -150,13 +150,6 @@ onChat = function (form, ref, option)
 				local cur = Engine.rand:Integer(2, (commodity == Commodities.military_fuel and 25 or 50)) + Engine.rand:Integer(3, 25)
 				ad.stock[commodity.name] = cur
 				return cur
-			end,
-			getDemand = function (market, commodity)
-				if commodity == Commodities.radioactives then
-					return math.max(membership.milrads, 0)
-				else
-					return Game.player:GetDockedWith():GetCommodityDemand(commodity)
-				end
 			end,
 			getBuyPrice = function (market, commodity)
 				return ad.station:GetCommodityPrice(commodity) * saleables[commodity]

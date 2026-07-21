@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "SystemEditorViewport.h"
@@ -8,12 +8,15 @@
 
 #include "Background.h"
 #include "SystemView.h"
+#include "core/StringUtils.h"
 #include "galaxy/StarSystem.h"
 
 #include "editor/EditorApp.h"
 #include "editor/ViewportWindow.h"
 #include "pigui/PiGui.h"
 #include "system/SystemEditor.h"
+
+#include "fmt/format.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_internal.h"
@@ -103,7 +106,7 @@ void SystemEditorViewport::OnDraw()
 	// Depth sort groups (further groups drawn first / under closer groups)
 	std::sort(groups.begin(), groups.end(), [](const auto &a, const auto &b){ return a.screenpos.z > b.screenpos.z; });
 
-	ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium", 16));
+	ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium"), 16);
 
 	ImRect screen_rect = ImRect(ImVec2(0, 0), ImGui::GetWindowSize());
 
@@ -153,52 +156,75 @@ void SystemEditorViewport::OnDraw()
 	split.Merge(ImGui::GetWindowDrawList());
 }
 
+bool IconButton(ImFont *font, float size, const char *icon, const char *tooltip)
+{
+	ImGui::PushFont(font, size);
+	bool ret = ImGui::Button(icon);
+	ImGui::PopFont();
+
+	ImGui::SetItemTooltip("%s", tooltip);
+	return ret;
+}
+
 void SystemEditorViewport::DrawTimelineControls()
 {
 	double timeAccel = 0.0;
 
-	ImGui::PushFont(m_app->GetPiGui()->GetFont("icons", ImGui::GetFrameHeight()));
+	ImFont *iconfont = m_app->GetPiGui()->GetFont("icons");
+	float iconSize = ImGui::GetFrameHeight();
+
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0.f, 0.f));
 	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImGui::GetStyle().ItemInnerSpacing);
 
-	ImGui::Button(EICON_REWIND3);
+	if (IconButton(iconfont, iconSize, EICON_TIMERESET, "Set map time to Epoch (Jan 1 3200)")) {
+		m_map->SetRealTime();
+		m_map->SetReferenceTime(0);
+	}
+
+	if (IconButton(iconfont, iconSize, EICON_TIMECURRENT, "Set map time to current time")) {
+		m_map->SetRealTime();
+
+		time_t now;
+		time(&now);
+
+		// Friday, 31 December 1999 23:59:59 GMT+00:00 as UNIX epoch time in seconds
+		// Copied from LuaUtil.cpp
+		m_map->SetReferenceTime(difftime(now, 946684799));
+	}
+
+	IconButton(iconfont, iconSize, EICON_REWIND3, "Reverse time by 2 years / second");
 	if (ImGui::IsItemActive())
 		timeAccel = -3600.0 * 24.0 * 730.0; // 2 years per second
 
-	ImGui::Button(EICON_REWIND2);
+	IconButton(iconfont, iconSize, EICON_REWIND2, "Reverse time by 2 months / second");
 	if (ImGui::IsItemActive())
 		timeAccel = -3600.0 * 24.0 * 60.0; // 2 months per second
 
-	ImGui::Button(EICON_REWIND1);
+	IconButton(iconfont, iconSize, EICON_REWIND1, "Reverse time by 5 days / second");
 	if (ImGui::IsItemActive())
 		timeAccel = -3600.0 * 24.0 * 5.0; // 5 days per second
 
-	bool timeStop = ImGui::ButtonEx(EICON_TIMESTOP, ImVec2(0,0), ImGuiButtonFlags_PressedOnClick);
-
-	ImGui::Button(EICON_FORWARD1);
+	IconButton(iconfont, iconSize, EICON_FORWARD1, "Advance time by 5 days / second");
 	if (ImGui::IsItemActive())
 		timeAccel = 3600.0 * 24.0 * 5.0; // 5 days per second
 
-	ImGui::Button(EICON_FORWARD2);
+	IconButton(iconfont, iconSize, EICON_FORWARD2, "Advance time by 2 months / second");
 	if (ImGui::IsItemActive())
 		timeAccel = 3600.0 * 24.0 * 60.0; // 2 months per second
 
-	ImGui::Button(EICON_FORWARD3);
+	IconButton(iconfont, iconSize, EICON_FORWARD3, "Advance time by 2 years / second");
 	if (ImGui::IsItemActive())
 		timeAccel = 3600.0 * 24.0 * 730.0; // 2 years per second
 
 	ImGui::PopStyleVar(2);
-	ImGui::PopFont();
 
 	ImGui::AlignTextToFramePadding();
 
 	if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
 		timeAccel *= 0.1;
 
-	if (!timeStop)
+	if (timeAccel != 0.f || !m_map->IsRealTime())
 		m_map->AccelerateTime(timeAccel);
-	else
-		m_map->SetRealTime();
 
 	ImGui::Text("%s", format_date(m_map->GetTime()).c_str());
 }
@@ -213,7 +239,7 @@ bool SystemEditorViewport::DrawIcon(ImGuiID id, const ImVec2 &icon_pos, const Im
 	ImRect hover_rect = ImRect(draw_pos, draw_pos + icon_size);
 
 	if (label) {
-		ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium", 12));
+		ImGui::PushFont(m_app->GetPiGui()->GetFont("pionillium"), 12);
 		ImVec2 text_pos = ImGui::GetWindowPos() + icon_pos + ImVec2(icon_size.x, -ImGui::GetFontSize() * 0.5f);
 		ImVec2 text_size = ImGui::CalcTextSize(label);
 		// label shadow

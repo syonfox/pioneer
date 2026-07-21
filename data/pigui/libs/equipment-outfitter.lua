@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Economy   = require 'Economy'
@@ -51,7 +51,7 @@ local customButton = function(label, icon, infoText, variant)
 
 	local iconOffset = framePadding + Vector2(rounding, 0)
 	local textOffset = iconOffset   + Vector2(icon_size.x + framePadding.x, pionillium.heading.size * 0.25)
-	local fontCol = ui.theme.colors.font
+	local fontCol = variant == ui.theme.buttonColors.disabled and colors.fontDisabled or colors.font
 
 	local startPos = ui.getCursorScreenPos()
 
@@ -96,11 +96,26 @@ end
 local EquipCardAvailable = EquipCard.New()
 EquipCardAvailable.tooltipStats = false
 
+---@param data UI.EquipmentOutfitter.EquipData
+function EquipCardAvailable:tooltipContents(data, isSelected)
+	EquipCard.tooltipContents(self, data, isSelected)
+	ui.spacing()
+
+	if data.installed then
+		ui.withStyleColors({ Text = colors.fontDim }, function()
+			ui.withFont(pionillium.details, function()
+				ui.textWrapped(l.EQUIPMENT_ALREADY_INSTALLED_HERE)
+			end)
+		end)
+	end
+end
+
 ---@class UI.EquipmentOutfitter.EquipData : UI.EquipCard.Data
 ---@field canInstall boolean
 ---@field canReplace boolean
 ---@field outOfStock boolean
 ---@field available boolean
+---@field installed boolean
 ---@field price number
 ---@field techLevel number
 
@@ -212,7 +227,7 @@ function Outfitter:getAvailableEquipment()
 
 	return utils.map_table(Equipment.new, function(id, equip)
 
-		if not equip.purchasable or not self:stationHasTech(equip.tech_level) then
+		if not equip.purchasable or not self.station:GetEquipmentStock(equip) then
 			return id, nil
 		end
 
@@ -269,7 +284,7 @@ local function fmt_number(val) return ui.Format.Number(val, 0) end
 -- Prepend information about the current station's stocking information to an equipment item's detailed stats
 ---@param data UI.EquipCard.Data
 function Outfitter:modifyEquipmentStats(data)
-	local stock = self:getStock(data.equip)
+	local stock = self:getStock(data.equip) or 0
 
 	table.insert(data.stats, 1, { l.AVAILABLE_STOCK, icons.cargo_crate, stock, fmt_number })
 	table.insert(data.stats, 2, { l.TECH_LEVEL, icons.station_orbital_large, data.equip.tech_level, fmt_number })
@@ -323,6 +338,7 @@ function Outfitter:buildEquipmentList()
 
 		if equip:GetPrototype() == currentProto then
 			data.type = l.INSTALLED
+			data.installed = true
 		end
 
 		return data
@@ -439,7 +455,11 @@ function Outfitter:drawBuyButton(data)
 	local icon = icons.autopilot_dock
 	local price_text = ui.Format.Money(self:getInstallPrice(data.equip))
 
-	local variant = data.available and ui.theme.buttonColors.dark or ui.theme.buttonColors.disabled
+	-- TODO: currently, you are prevented from buying a duplicate item
+	-- This does not take into account per-item information like item condition (when implemented)
+	local can_buy = data.available and not data.installed
+	local variant = can_buy and ui.theme.buttonColors.dark or ui.theme.buttonColors.disabled
+
 	if customButton(l.BUY_EQUIP % data, icon, price_text, variant) and data.available then
 		self:message("onBuyItem", data.equip)
 	end
@@ -494,41 +514,42 @@ function Outfitter:renderCompareRow(label, stat_a, stat_b)
 	ui.text(label)
 
 	local icon_size = Vector2(ui.getTextLineHeight())
-	local cmp_a, cmp_b = "", ""
+	local default = type((stat_a or stat_b)[3]) == "number" and 0 or ""
+	local cmp_a, cmp_b = default, default
+
 	if stat_a then
 		cmp_a = stat_a[3] == "MILITARY" and 11 or stat_a[3]
 	end
 	if stat_b then
 		cmp_b = stat_b[3] == "MILITARY" and 11 or stat_b[3]
 	end
-	local color = stat_a and stat_b
-		and compare(cmp_a, cmp_b, stat_a[5])
+	local color = compare(cmp_a, cmp_b, (stat_a or stat_b)[5])
 		or colors.font
 
-	ui.tableNextColumn()
-	if stat_a then
-		ui.icon(stat_a[2], icon_size, colors.font)
-		ui.sameLine()
+	local icon = (stat_a or stat_b)[2]
+	local format = (stat_a or stat_b)[4]
 
-		local val, format = stat_a[3], stat_a[4]
-		if val ~= "MILITARY" then
-			ui.textColored(color, format(val))
-		else
-			ui.icon(icons.shield_other, icon_size, color)
-		end
+	local val_a = stat_a and format(stat_a[3]) or format(default)
+	local val_b = stat_b and format(stat_b[3]) or format(default)
+
+	ui.tableNextColumn()
+	ui.icon(icon, icon_size, colors.font)
+	ui.sameLine()
+
+	if stat_a and stat_a[3] == "MILITARY" then
+		ui.icon(icons.shield_other, icon_size, color)
+	else
+		ui.textColored(color, val_a)
 	end
 
 	ui.tableNextColumn()
-	if stat_b then
-		ui.icon(stat_b[2], icon_size, colors.font)
-		ui.sameLine()
+	ui.icon(icon, icon_size, colors.font)
+	ui.sameLine()
 
-		local val, format = stat_b[3], stat_b[4]
-		if val ~= "MILITARY" then
-			ui.textColored(color, format(val))
-		else
-			ui.icon(icons.shield_other, icon_size, color)
-		end
+	if stat_b and stat_b[3] == "MILITARY" then
+		ui.icon(icons.shield_other, icon_size, color)
+	else
+		ui.textColored(color, val_b)
 	end
 end
 

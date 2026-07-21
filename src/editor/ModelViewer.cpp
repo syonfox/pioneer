@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "ModelViewer.h"
@@ -13,7 +13,9 @@
 #include "collider/BVHTree.h"
 #include "collider/GeomTree.h"
 #include "core/Log.h"
+#include "core/macros.h"
 
+#include "core/StringUtils.h"
 #include "editor/EditorApp.h"
 #include "editor/ModelViewerWidget.h"
 #include "editor/EditorDraw.h"
@@ -489,7 +491,7 @@ void ModelViewer::OnPostRender()
 void ModelViewer::DrawModelSelector()
 {
 	if (!m_modelName.empty()) {
-		ImGui::PushFont(m_pigui->GetFont("pionillium", 14));
+		ImGui::PushFont(m_pigui->GetFont("pionillium"), 14);
 		ImGui::AlignTextToFramePadding();
 		ImGui::Text("Model: %s", m_modelName.c_str());
 		ImGui::PopFont();
@@ -538,7 +540,7 @@ void ModelViewer::DrawTagNames()
 		return;
 
 	auto size = ImGui::GetWindowSize();
-	m_renderer->SetTransform(matrix4x4f::Identity());
+	m_renderer->SetTransform(matrix4x4f::Identity);
 
 	vector3f point = m_modelWindow->GetModelViewMat() * m_selectedTag->GetGlobalTransform().GetTranslate();
 	point = Graphics::ProjectToScreen(m_renderer, point);
@@ -578,7 +580,7 @@ void ModelViewer::BuildGeomTreeVisualizer(Graphics::VertexArray &va, SingleBVHTr
 			stack[stackLevel++] = node->kids[0];
 		}
 
-		Graphics::Drawables::AABB::DrawVertices(va, matrix4x4fIdentity, Aabb(node->aabb.min, node->aabb.max, 0.1), get_color(colIndexBase));
+		Graphics::Drawables::AABB::DrawVertices(va, matrix4x4f::Identity, Aabb(node->aabb.min, node->aabb.max, 0.1), get_color(colIndexBase));
 	}
 }
 
@@ -833,7 +835,7 @@ void ModelViewer::DrawPiGui()
 		return;
 	}
 
-	ImGui::PushFont(m_pigui->GetFont("pionillium", 13));
+	ImGui::PushFont(m_pigui->GetFont("pionillium"), 13);
 
 	if (ImGui::Begin(SELECTOR_WND_NAME))
 		DrawModelSelector();

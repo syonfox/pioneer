@@ -136,7 +136,7 @@ The Pioneer Developers are:
 Licensing
 =========
 
-Copyright © 2008-2025 Pioneer Developers
+Copyright © 2008-2026 Pioneer Developers
 Portions copyright © 2013-2014 Meteoric Games Ltd.
 
 Pioneer's core code and extension modules are licensed under the terms of the
@@ -189,7 +189,7 @@ Pioneer includes the following third-party software:
     (see contrib/PicoDDS/PicoDDS.h)
 
   JSON for Modern C++
-  Copyright © 2013-2018 Niels Lohmann.
+  Copyright © 2013-2025 Niels Lohmann.
   Licensed under the MIT License (see contrib/json/json.hpp)
 
   Base64 Encode / Decode
@@ -224,6 +224,11 @@ Pioneer includes the following third-party software:
   pcg-cpp
   Copyright 2014 Melissa O'Neill <oneill@pcg-random.org>
   Licensed under the Apache License, Version 2.0
+
+  fast_float
+  Copyright (c) 2021 The fast_float authors
+  Licensed under the MIT license. (See contrib/fast_float/fast_float.h)
+  https://github.com/fastfloat/fast_float
 
   Pionillium Text font
   Copyright (c) 2015, Pioneer Developers

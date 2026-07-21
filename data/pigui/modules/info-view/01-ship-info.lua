@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Event = require 'Event'
@@ -56,7 +56,7 @@ local function shipStats()
 		false,
 		{ l.WEIGHT_EMPTY..":",     string.format("%d t", player.staticMass - player.loadedMass) },
 		{ l.CAPACITY_USED..":",    string.format("%s (%s "..l.MAX..")", ui.Format.Volume(player.equipVolume), ui.Format.Volume(player.totalVolume) ) },
-		{ l.CARGO_SPACE_USED..":", string.format("%d cu (%d cu "..l.MAX..")", player.usedCargo, player.totalCargo) },
+		{ l.CARGO_SPACE_USED..":", string.format("%d cu (%d cu "..l.MAX..")", player.usedCargo, player.cargo_cap) },
 		{ l.FUEL_WEIGHT..":",      string.format("%.1f t (%.1f t "..l.MAX..")", player.fuelMassLeft, shipDef.fuelTankMass ) },
 		{ l.ALL_UP_WEIGHT..":",    string.format("%d t", mass_with_fuel ) },
 		false,

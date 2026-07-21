@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Engine = require 'Engine'
@@ -31,9 +31,26 @@ local spawnShips = function ()
 	local num_bulk_ships = math.min(#stations*2, math.floor((math.ceil(population)+2)/3))
 
 	for i=1, num_bulk_ships do
-		local station = stations[Engine.rand:Integer(1,#stations)]
-		local ship = Space.SpawnShipParked(shipdefs[Engine.rand:Integer(1,#shipdefs)].id, station)
-		ship:SetLabel(Ship.MakeRandomLabel())
+		local ship = nil
+		local shipId = shipdefs[Engine.rand:Integer(1,#shipdefs)].id
+		local attempts = #stations
+
+		-- Try a bounded number of random stations to avoid a nil ship when
+		-- static parking slots are already full on the chosen station.
+		for _ = 1, attempts do
+			local station = stations[Engine.rand:Integer(1,#stations)]
+			ship = Space.SpawnShipParked(shipId, station)
+			if ship then
+				break
+			end
+		end
+
+		if ship then
+			ship:SetLabel(Ship.MakeRandomLabel())
+		else
+			-- No station had free static slots, stop trying to spawn more.
+			break
+		end
 	end
 end
 

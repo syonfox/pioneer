@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 -- This file implements type information about C++ classes for Lua static analysis
@@ -34,7 +34,7 @@
 ---@field totalVolume number
 ---
 ---@field usedCargo number
----@field totalCargo number
+---@field cargo_cap number
 ---
 ---@field loadedMass number Mass of the equipment and cargo onboard the ship
 ---@field staticMass number Hull mass + loaded mass

@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "GuiApplication.h"
@@ -6,8 +6,9 @@
 #include "Input.h"
 #include "OS.h"
 
-#include "SDL.h"
-#include "SDL_video.h"
+#include <SDL.h>
+#include <SDL_video.h>
+#include "core/Log.h"
 #include "graphics/Drawables.h"
 #include "graphics/Graphics.h"
 #include "graphics/RenderState.h"

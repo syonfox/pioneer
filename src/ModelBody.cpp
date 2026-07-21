@@ -1,10 +1,11 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "ModelBody.h"
 
 #include "Camera.h"
 #include "Frame.h"
+#include "Game.h"
 #include "GameSaveError.h"
 #include "JsonUtils.h"
 #include "Pi.h"
@@ -47,7 +48,7 @@ public:
 
 	virtual void ApplyMatrixTransform(SceneGraph::MatrixTransform &m)
 	{
-		matrix4x4f matrix = matrix4x4f::Identity();
+		matrix4x4f matrix = matrix4x4f::Identity;
 		if (!m_matrixStack.empty()) matrix = m_matrixStack.back();
 
 		m_matrixStack.push_back(matrix * m.GetTransform());
@@ -168,7 +169,7 @@ void ModelBody::RebuildCollisionMesh()
 	//dynamic geoms
 	for (auto it = m_collMesh->GetDynGeomTrees().begin(); it != m_collMesh->GetDynGeomTrees().end(); ++it) {
 		Geom *dynG = new Geom(*it, GetOrient(), GetPosition(), this);
-		dynG->m_animTransform = matrix4x4d::Identity();
+		dynG->m_animTransform = matrix4x4d::Identity;
 		SceneGraph::CollisionGeometry *cg = dgf.GetCgForTree(*it);
 		if (cg)
 			cg->SetGeom(dynG);
@@ -295,6 +296,11 @@ void ModelBody::MoveGeoms(const matrix4x4d &m, const vector3d &p)
 
 void ModelBody::RenderModel(Graphics::Renderer *r, const Camera *camera, const vector3d &viewCoords, const matrix4x4d &viewTransform)
 {
+	// HACK: this uses the global application time as a "render clock". This should be accessible through the Camera instead.
+	double renderTime = Pi::GetApp()->GetTime();
+	if (Pi::game)
+		renderTime = Pi::game->GetTime() + (Pi::GetGameTickAlpha() * Pi::game->GetTimeStep());
+	m_model->SetRenderTime(renderTime);
 	m_model->Render(matrix4x4f(viewTransform * GetInterpMatrix()));
 }
 

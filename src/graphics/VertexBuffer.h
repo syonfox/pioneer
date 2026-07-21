@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #pragma once
@@ -109,11 +109,17 @@ namespace Graphics {
 		}
 
 		// Map the given range of the buffer and return a pointer to it.
-		// Note that all values are in bytes not vertices.
+		// Note that all values to MapRange are in element counts, not bytes.
 		template <typename T>
 		T *MapRange(size_t start, size_t size, BufferMapMode mode)
 		{
 			return reinterpret_cast<T *>(MapRangeInternal(mode, start * sizeof(T), size * sizeof(T)));
+		}
+
+		template <typename T>
+		T *MapRange(Graphics::BufferBinding<VertexBuffer> binding, BufferMapMode mode)
+		{
+			return reinterpret_cast<T *>(MapRangeInternal(mode, binding.offset * sizeof(T), binding.size * sizeof(T)));
 		}
 
 		// Unmap the last-mapped range and flush data to GPU

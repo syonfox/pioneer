@@ -57,7 +57,7 @@
   },
   "FLAVOUR_0_FAILUREMSG": {
     "description": "",
-    "message": "Огорчен съм да разбера, че {target} е все още на този свят. Излишно е да казвам, че няма да получите заплащане."
+    "message": "Незадоволително е да разбера, че {target} е все още на този свят. Излишно е да казвам, че няма да получите заплащане."
   },
   "FLAVOUR_0_FAILUREMSG2": {
     "description": "",
@@ -137,7 +137,7 @@
   },
   "FLAVOUR_3_INTROTEXT": {
     "description": "",
-    "message": "{target} must be reduced to space dust. I'll award you {cash} to do this."
+    "message": "{target} трябва да стане на космически прах. Ще платя {cash} за тази цел."
   },
   "FLAVOUR_3_SUCCESSMSG": {
     "description": "",
@@ -165,7 +165,7 @@
   },
   "FLAVOUR_4_SUCCESSMSG": {
     "description": "",
-    "message": "С възхищение получих новините за очистването на {target}. Ето заплащането Ви."
+    "message": "С възхищение получих новините за очистването на {target}. Ето го заплащането."
   },
   "FLAVOUR_5_ADTEXT": {
     "description": "",
@@ -205,11 +205,11 @@
   },
   "IT_MUST_BE_DONE_AFTER_FEMALE": {
     "description": "",
-    "message": "It must be done after she leaves {spaceport}. Do not miss this opportunity."
+    "message": "Трябва да се направи след като тя напусне {spaceport}. Не изпускайте тази възможност."
   },
   "IT_MUST_BE_DONE_AFTER_MALE": {
     "description": "",
-    "message": "It must be done after he leaves {spaceport}. Do not miss this opportunity."
+    "message": "Трябва да се направи след като той напусне {spaceport}. Не изпускайте тази възможност."
   },
   "OK_AGREED": {
     "description": "",
@@ -218,14 +218,6 @@
   "RETURN_HERE_ON_THE_COMPLETION_OF_THE_CONTRACT_AND_YOU_WILL_BE_PAID": {
     "description": "",
     "message": "Върнете се тук след приключването на мисията и ще Ви бъде платено."
-  },
-  "SET_AS_TARGET": {
-    "description": "",
-    "message": "Задаване за навигационна цел"
-  },
-  "SET_RETURN_ROUTE": {
-    "description": "",
-    "message": "Задаване на маршрут за връщане"
   },
   "SHIP": {
     "description": "",
@@ -353,18 +345,18 @@
   },
   "WHERE_CAN_I_FIND_X": {
     "description": "",
-    "message": "Where can I find the target?"
+    "message": "Къде мога да намеря целта?"
   },
   "X_WILL_BE_LEAVING": {
-    "description": "",
-    "message": "{target} will be leaving {spaceport} in the {system} system ({sectorX}, {sectorY}, {sectorZ}), distance {dist} ly, at {date}. The ship is a {shipname} and has registration id {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} ще напусне {spaceport} в системата {system} ({sectorX}, {sectorY}, {sectorZ}), на разстояние от {dist} сг, на {date}. Корабът е {ship_indef} с регистрационен номер {shipregid}."
   },
   "X_WILL_BE_LEAVING_FEMALE": {
-    "description": "",
-    "message": "{target} will be leaving {spaceport} in the {system} system ({sectorX}, {sectorY}, {sectorZ}), distance {dist} ly, at {date}. Her ship is a {shipname} and has registration id {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} ще напусне {spaceport} в системата {system} ({sectorX}, {sectorY}, {sectorZ}), на разстояние от {dist} сг, на {date}. Нейният кораб е {ship_indef} с регистрационен номер {shipregid}."
   },
   "X_WILL_BE_LEAVING_MALE": {
-    "description": "",
-    "message": "{target} will be leaving {spaceport} in the {system} system ({sectorX}, {sectorY}, {sectorZ}), distance {dist} ly, at {date}. His ship is a {shipname} and has registration id {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} ще напусне {spaceport} в системата {system} ({sectorX}, {sectorY}, {sectorZ}), на разстояние от {dist} сг, на {date}. Неговият кораб е {ship_indef} с регистрационен номер {shipregid}."
   }
 }

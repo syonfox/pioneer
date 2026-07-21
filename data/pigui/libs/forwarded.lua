@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 -- Stuff from the C++ side that we want available directly in Lua
@@ -39,9 +39,11 @@ ui.getTime = pigui.GetTime
 
 ui.dummy = pigui.Dummy
 ui.newLine = pigui.NewLine
+ui.sameLine = pigui.SameLine
 ui.spacing = pigui.Spacing
 ui.bulletText = pigui.BulletText
-ui.text = pigui.Text
+ui.text = pigui.Text ---@type fun(label: string)
+ui.textShadowed = pigui.TextShadowed ---@type fun(label: string, offset: Vector2?, shadow: Color?)
 ui.combo = pigui.Combo ---@type fun(label: string, selected: integer, items: string[]): changed: boolean, selected: integer
 ui.listBox = pigui.ListBox
 ui.textWrapped = pigui.TextWrapped ---@type fun(text: string)
@@ -69,6 +71,7 @@ ui.addRectFilled = pigui.AddRectFilled ---@type fun(a: Vector2, b: Vector2, col:
 ui.addRectFaded = pigui.AddRectFaded ---@type fun(a: Vector2, b: Vector2, col: Color, fadeToAlpha: number, draw_flags: integer)
 ui.addLine = pigui.AddLine ---@type fun(a: Vector2, b: Vector2, col: Color, thickness: number)
 ui.addText = pigui.AddText ---@type fun(pos: Vector2, col: Color, text: string, wrapWidth: number?)
+ui.addTextShadowed = pigui.AddTextShadowed ---@type fun(pos: Vector2, col: Color, text: string, shadow: Color?, offset: Vector2?, wrapWidth: number?)
 ui.pathArcTo = pigui.PathArcTo
 ui.pathStroke = pigui.PathStroke
 ui.setCursorPos = pigui.SetCursorPos ---@type fun(pos: Vector2)

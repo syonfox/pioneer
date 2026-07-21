@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 ---@class Ship
@@ -42,6 +42,8 @@ end
 function Ship:OnShipTypeChanged()
 	-- immediately update any needed components or properties
 	self:GetComponent('EquipSet'):OnShipTypeChanged()
+	-- Reinitialize cargo-related ship properties when changing ship type
+	self:GetComponent('CargoManager'):OnShipTypeChanged()
 
 	self:UpdateWeaponSlots()
 end
@@ -361,6 +363,11 @@ end
 ---@param quantity integer
 ---@param lifetime float
 function Ship:Jettison(cargoType, quantity, lifetime)
+	-- basic sanity checking
+	if cargoType == nil or quantity == nil or lifetime == nil then
+		return false
+	end
+	-- state checking
 	if self.flightState ~= "FLYING" and self.flightState ~= "DOCKED" and self.flightState ~= "LANDED" then
 		return false
 	end
@@ -661,17 +668,10 @@ local onShipDestroyed = function (ship, attacker)
 	end
 end
 
--- Reinitialize cargo-related ship properties when changing ship type
----@param ship Ship
-local onShipTypeChanged = function (ship)
-	ship:GetComponent('CargoManager'):OnShipTypeChanged()
-end
-
 Event.Register("onShipEnterSystem", onShipEnterSystem)
 Event.Register("onShipDestroyed", onShipDestroyed)
 Event.Register("onGameStart", onGameStart)
 Event.Register("onGameEnd", onGameEnd)
-Event.Register("onShipTypeChanged", onShipTypeChanged)
 Serializer:Register("ShipClass", serialize, unserialize)
 
 return Ship

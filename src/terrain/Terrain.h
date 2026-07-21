@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef _TERRAIN_H
@@ -8,6 +8,7 @@
 #include "../Random.h"
 #include "../RefCounted.h"
 #include "../vector3.h"
+#include "../Quaternion.h"
 #include "../galaxy/SystemPath.h"
 
 #include <memory>
@@ -43,7 +44,7 @@ public:
 		return m_fracdef[index];
 	}
 
-	virtual double GetHeight(const vector3d &p) const = 0;
+	virtual void GetHeights(const vector3d *vP, double *heightsOut, const size_t count) const = 0;
 	virtual vector3d GetColor(const vector3d &p, double height, const vector3d &norm) const = 0;
 
 	virtual const char *GetHeightFractalName() const = 0;
@@ -91,7 +92,7 @@ protected:
 	double m_invPlanetRadius;
 	double m_planetEarthRadii;
 
-	double m_entropy[12];
+	double m_entropy;
 
 	vector3d m_rockColor[8];
 	vector3d m_darkrockColor[8];
@@ -109,10 +110,12 @@ protected:
 	   using more than 10 then things will be slow as hell */
 	static const Uint32 MAX_FRACDEFS = 10;
 	fracdef_t m_fracdef[MAX_FRACDEFS];
+	Quaterniond m_quatDefs[MAX_FRACDEFS];
 
 	struct MinBodyData {
 		MinBodyData(const SystemBody *body);
 		double m_radius;
+		double m_radiusEarthRatio;
 		double m_aspectRatio;
 		SystemPath m_path;
 		std::string m_name;
@@ -124,26 +127,22 @@ template <typename HeightFractal>
 class TerrainHeightFractal : virtual public Terrain {
 public:
 	TerrainHeightFractal() = delete;
-	virtual double GetHeight(const vector3d &p) const;
-	virtual const char *GetHeightFractalName() const;
+	void GetHeights(const vector3d *vP, double *heightsOut, const size_t count) const final;
+	const char *GetHeightFractalName() const final;
 
 protected:
 	TerrainHeightFractal(const SystemBody *body);
-
-private:
 };
 
 template <typename ColorFractal>
 class TerrainColorFractal : virtual public Terrain {
 public:
 	TerrainColorFractal() = delete;
-	virtual vector3d GetColor(const vector3d &p, double height, const vector3d &norm) const;
-	virtual const char *GetColorFractalName() const;
+	vector3d GetColor(const vector3d &p, double height, const vector3d &norm) const final;
+	const char *GetColorFractalName() const final;
 
 protected:
 	TerrainColorFractal(const SystemBody *body);
-
-private:
 };
 
 template <typename HeightFractal, typename ColorFractal>

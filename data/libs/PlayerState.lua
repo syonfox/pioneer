@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Event      = require 'Event'
@@ -49,14 +49,18 @@ local finances = {
 ---@field clone fun(): CrimeRecord
 local CrimeRecord = utils.proto("CrimeRecord")
 
+local crimetype_mt = {
+	__index = function(self, crime)
+		local crimetype = { count = 0 }
+		rawset(self, crime, crimetype)
+		return crimetype
+	end
+}
+
 function CrimeRecord:__clone()
 	-- automagically create empty crimetype records on access
 	-- This would be entirely unnecessary if crimetype records weren't tables with a single value set :(
-	self.crimetype = setmetatable({}, { __index = function(t, crime)
-		local crimetype = { count = 0 }
-		rawset(t, crime, crimetype)
-		return crimetype
-	end})
+	self.crimetype = setmetatable({}, crimetype_mt)
 	self.fine = 0
 end
 
@@ -366,15 +370,22 @@ end
 
 ---@param data table
 local function unserialize(data)
-	-- SAVEBUMP: compatibility with v91 save before PlayerStateDB merge
-	if next(data) == nil then return end
-
 	bookmarkIdx = data.bookmarkIdx
 	bookmarks = data.bookmarks
 	finances = data.finances
 
 	crime_record = setmetatable(data.crime_record, automagic_record)
 	past_record = setmetatable(data.past_record, automagic_record)
+
+	local fix_record = function(records)
+		for faction, record in pairs(records) do
+			setmetatable(record.crimetype, crimetype_mt)
+		end
+	end
+
+	fix_record(crime_record)
+	fix_record(past_record)
+
 end
 
 Event.Register("onGameStart", onGameStart)
@@ -382,21 +393,5 @@ Event.Register("onGameEnd", onGameEnd)
 
 Serializer:Register("PlayerStateDB", serialize, unserialize)
 Serializer:RegisterClass("CrimeRecord", CrimeRecord)
-
--- SAVEBUMP: remove when >v91
-if Game.CurrentSaveVersion() == 91 then
-
-	local function unserialize_player(data)
-		if data.record then
-			crime_record = setmetatable(data.record, automagic_record)
-			past_record = setmetatable(data.record_old, automagic_record)
-		end
-	end
-
-	local function _serialize() return nil end
-
-	Serializer:Register("Player", _serialize, unserialize_player)
-
-end
 
 return PlayerState

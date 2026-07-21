@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #pragma once
@@ -25,7 +25,7 @@ namespace Graphics {
 
 		RendererDummy() :
 			Renderer(0, 0, 0),
-			m_identity(matrix4x4f::Identity())
+			m_identity(matrix4x4f::Identity)
 		{}
 
 		const char *GetName() const final { return "Dummy"; }
@@ -38,7 +38,11 @@ namespace Graphics {
 
 		bool BeginFrame() final { return true; }
 		bool EndFrame() final { return true; }
-		bool SwapBuffers() final { return true; }
+		bool SwapBuffers() final
+		{
+			m_tempVtxBuffers.clear();
+			return true;
+		}
 
 		RenderTarget *GetRenderTarget() final { return m_rt; }
 		bool SetRenderTarget(RenderTarget *rt) final { m_rt = rt; return true; }
@@ -54,11 +58,11 @@ namespace Graphics {
 		ViewportExtents GetViewport() const final { return {}; }
 
 		bool SetTransform(const matrix4x4f &m) final { return true; }
-		matrix4x4f GetTransform() const final { return matrix4x4f::Identity(); }
+		matrix4x4f GetTransform() const final { return matrix4x4f::Identity; }
 		bool SetPerspectiveProjection(float fov, float aspect, float near_, float far_) final { return true; }
 		bool SetOrthographicProjection(float xmin, float xmax, float ymin, float ymax, float zmin, float zmax) final { return true; }
 		bool SetProjection(const matrix4x4f &m) final { return true; }
-		matrix4x4f GetProjection() const final { return matrix4x4f::Identity(); }
+		matrix4x4f GetProjection() const final { return matrix4x4f::Identity; }
 
 		bool SetWireFrameMode(bool enabled) final { return true; }
 
@@ -70,9 +74,8 @@ namespace Graphics {
 		bool FlushCommandBuffers() final { return true; }
 
 		bool DrawBuffer(const VertexArray *, Material *) final { return true; }
-		bool DrawBufferDynamic(VertexBuffer *, uint32_t, IndexBuffer *, uint32_t, uint32_t, Material *) final { return true; }
 		bool DrawMesh(MeshObject *, Material *) final { return true; }
-		void Draw(Span<VertexBuffer *const>, IndexBuffer *, Material *, uint32_t, uint32_t) final {}
+		void Draw(Span<const BufferBinding<VertexBuffer>>, BufferBinding<IndexBuffer>, Material *, uint32_t, uint32_t) final {}
 
 		Texture *CreateTexture(const TextureDescriptor &d) final { return new Graphics::TextureDummy(d); }
 		RenderTarget *CreateRenderTarget(const RenderTargetDesc &d) final { return new Graphics::Dummy::RenderTarget(d); }
@@ -86,6 +89,8 @@ namespace Graphics {
 			auto *vb = static_cast<Dummy::VertexBuffer *>(CreateVertexBuffer(u, v->GetNumVerts(), desc.bindings[0].stride));
 			return new Graphics::Dummy::MeshObject(desc, vb, static_cast<Dummy::IndexBuffer *>(i));
 		}
+
+		BufferBinding<VertexBuffer> CreateTempVertexBuffer(uint32_t sz, uint32_t st) final { return BufferBinding<VertexBuffer>{ m_tempVtxBuffers.emplace_back(new Dummy::VertexBuffer(BUFFER_USAGE_DYNAMIC, sz, st)).get(), 0, sz }; }
 
 		Material *CreateMaterial(const std::string &s, const MaterialDescriptor &d, const RenderStateDesc &rsd, const VertexFormatDesc &vfmt) final { return new Graphics::Dummy::Material(rsd); }
 		Material *CloneMaterial(const Material *m, const MaterialDescriptor &d, const RenderStateDesc &rsd, const VertexFormatDesc &vfmt) final { return new Graphics::Dummy::Material(rsd); }
@@ -101,6 +106,8 @@ namespace Graphics {
 	private:
 		const matrix4x4f m_identity;
 		Graphics::RenderTarget *m_rt;
+		// scratch-buffer storage for temporary uploads; deleted at end-of-frame
+		std::vector<std::unique_ptr<Graphics::Dummy::VertexBuffer>> m_tempVtxBuffers;
 	};
 
 } // namespace Graphics

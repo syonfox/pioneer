@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Serializer = require 'Serializer'
@@ -9,6 +9,7 @@ local Equipment = {}
 ---@type table<string, EquipType>
 Equipment.new = {}
 
+-- Get an new instance of an registered equipment
 function Equipment.Get(id)
 	return Equipment.new[id]
 end

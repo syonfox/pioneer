@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "SystemEditorHelpers.h"
@@ -113,7 +113,7 @@ namespace ImGui {
 void Draw::SubtractItemWidth()
 {
 	ImGuiWindow *window = ImGui::GetCurrentWindow();
-	float used_width = window->DC.CursorPos.x - IM_FLOOR(window->Pos.x + window->DC.Indent.x + window->DC.ColumnsOffset.x);
+	float used_width = window->DC.CursorPos.x - floor(window->Pos.x + window->DC.Indent.x + window->DC.ColumnsOffset.x);
 	ImGui::SetNextItemWidth(ImGui::CalcItemWidth() - used_width);
 }
 

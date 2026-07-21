@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef _UTILS_H
@@ -38,5 +38,11 @@ private:
 // Use this function for automatic template parameter deduction
 template <typename T>
 reverse_container_t<T> reverse_container(T &ref) { return reverse_container_t<T>(ref); }
+
+template <typename T, typename V = typename T::mapped_type>
+void erase_mapped_val(T &container, const V &value)
+{
+	for (auto iter = container.cbegin(); iter != container.cend(); iter = iter->second == value ? container.erase(iter) : ++iter);
+}
 
 #endif /* _UTILS_H */

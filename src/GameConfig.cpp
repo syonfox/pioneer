@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "GameConfig.h"
@@ -25,11 +25,13 @@ GameConfig::GameConfig(const map_string &override_)
 	map["DisplayNavTunnel"] = "0";
 	map["CompactRadar"] = "1";
 	map["ConfirmQuit"] = "1";
+	map["AudioBackend"] = "";
 	map["MasterVolume"] = "0.8";
 	map["MusicVolume"] = "0.8";
 	map["MasterMuted"] = "0";
 	map["SfxMuted"] = "0";
 	map["MusicMuted"] = "0";
+	map["BinauralRendering"] = "0";
 	map["SectorViewXRotation"] = "-10.0";
 	map["SectorViewZRotation"] = "0";
 	map["SectorViewZoom"] = "2.0";

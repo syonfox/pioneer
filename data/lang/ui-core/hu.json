@@ -67,9 +67,13 @@
     "description": "",
     "message": "Kíséreld meg a hajótest javítását"
   },
+  "AUDIO_BACKEND": {
+    "description": "Audio backend label in settings menu",
+    "message": "Audio Backend"
+  },
   "AUTOMATED_MESSAGE": {
     "description": "For comm messages from bots",
-    "message": "AUTOMATED MESSAGE"
+    "message": "AUTOMATIKUS ÜZENET"
   },
   "AUTO_ROUTE": {
     "description": "Automatically find shortest jump route (measured in time) in star map",
@@ -90,6 +94,14 @@
   "BACKWARD_ACCEL": {
     "description": "",
     "message": "Gyorsulás hátra"
+  },
+  "BINAURAL_RENDERING": {
+    "description": "Label of the binaural rendering checkbox in the audio settings menu",
+    "message": "Binaural Rendering"
+  },
+  "BINAURAL_RENDERING_DESC": {
+    "description": "Tooltip of the binaural rendering checkbox in the audio settings menu",
+    "message": "When enabled, HRTF filters are applied to the audio output. Works best with headphones."
   },
   "BODY_IN_ROUTE": {
     "description": "Label indicating a star is part of a planned hyperjump route",
@@ -622,6 +634,10 @@
   "EQUIPMENT": {
     "description": "",
     "message": "Felszerelés"
+  },
+  "EQUIPMENT_ALREADY_INSTALLED_HERE": {
+    "description": "Message indicating this equipment item is already installed.",
+    "message": "Ez az alkatrész már be van szerelve"
   },
   "EQUIPMENT_CAPACITY": {
     "description": "The equipment capacity of a ship",
@@ -2349,7 +2365,7 @@
   },
   "SET_AS_TARGET": {
     "description": "",
-    "message": "Cél megjelőlése uticélnak."
+    "message": "Set destination as navigation target"
   },
   "SET_JUMP_TARGET": {
     "description": "Button tooltip which sets the jump route to the selected body",
@@ -2539,9 +2555,41 @@
     "description": "Message when restoring savegame",
     "message": "Égitest index tarományon kívül"
   },
+  "SYSTEM_FACTION": {
+    "description": "Tooltip indicating the faction controlling this system",
+    "message": "Frakció"
+  },
   "SYSTEM_INFORMATION": {
     "description": "Tooltip / label indicating information about a selected star system",
     "message": "Rendszer információ"
+  },
+  "SYSTEM_NUM_STARS": {
+    "description": "Tooltip indicating the system stellar arrangement",
+    "message": "Rendszerben található csillagok száma"
+  },
+  "SYSTEM_SECURITY_1": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Biztonságos"
+  },
+  "SYSTEM_SECURITY_2": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Jobbára ártalmatlan"
+  },
+  "SYSTEM_SECURITY_3": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Veszélyes"
+  },
+  "SYSTEM_SECURITY_4": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Nagyon veszélyes"
+  },
+  "SYSTEM_SECURITY_5": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Halálos"
+  },
+  "SYSTEM_SECURITY_TOOLTIP": {
+    "description": "Tooltip introducing the system security rating",
+    "message": "Rendszer biztonsági besorolása"
   },
   "TECH_CERTIFIED": {
     "description": "Lobby screen shows the tech level (an integer number) of the station",
@@ -2663,6 +2711,10 @@
     "description": "Label indicating the ability to transfer fuel between equipment tanks",
     "message": "Üzemanyag átemelése"
   },
+  "TRANSLATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to translate the camera view with mouse",
+    "message": "Nézet mozgatása"
+  },
   "TRUSTWORTHY": {
     "description": "For player reputation",
     "message": "Felelős"
@@ -2754,6 +2806,10 @@
   "VIDEO_RESOLUTION_DESC": {
     "description": "Tooltip for video mode/resultion setting",
     "message": "Nagyobb felbontású képernyőkön több információ fér el, nagyobb erőforrásigénnyel."
+  },
+  "VIEW_DESTINATION": {
+    "description": "Tooltip indicating the button will change the current view to the destination of a route.",
+    "message": "Úticél megjelenítése"
   },
   "VISIT_PAINTSHOP": {
     "description": "Ship Repair tab button.",

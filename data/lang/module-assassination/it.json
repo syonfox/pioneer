@@ -219,14 +219,6 @@
     "description": "",
     "message": "Torni qui a contratto completato e verrà pagato."
   },
-  "SET_AS_TARGET": {
-    "description": "",
-    "message": "Imposta come destinazione di navigazione"
-  },
-  "SET_RETURN_ROUTE": {
-    "description": "",
-    "message": "Imposta rotta di ritorno"
-  },
   "SHIP": {
     "description": "",
     "message": "Astronave:"
@@ -356,15 +348,15 @@
     "message": "Dove posso trovare il bersaglio?"
   },
   "X_WILL_BE_LEAVING": {
-    "description": "",
-    "message": "{target} lascerà {spaceport} nel sistema {system} ({sectorX}, {sectorY}, {sectorZ}), distanza {dist} AL, alle {date}. L'astronave è una {shipname} ed ha codice di registrazione {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} lascerà {spaceport} nel sistema {system} ({sectorX}, {sectorY}, {sectorZ}), distanza {dist} AL, alle {date}. L'astronave è {ship_indef} ed ha codice di registrazione {shipregid}."
   },
   "X_WILL_BE_LEAVING_FEMALE": {
-    "description": "",
-    "message": "{target} lascerà {spaceport} nel sistema {system} ({sectorX}, {sectorY}, {sectorZ}), distanza {dist} AL, alle {date}. La sua astronave è una {shipname} ed ha codice di registrazione {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} lascerà {spaceport} nel sistema {system} ({sectorX}, {sectorY}, {sectorZ}), distanza {dist} AL, alle {date}. La sua astronave è {ship_indef} ed ha codice di registrazione {shipregid}."
   },
   "X_WILL_BE_LEAVING_MALE": {
-    "description": "",
-    "message": "{target} lascerà {spaceport} nel sistema {system} ({sectorX}, {sectorY}, {sectorZ}), distanza {dist} AL, alle {date}. La sua astronave è una {shipname} ed ha codice di registrazione {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} lascerà {spaceport} nel sistema {system} ({sectorX}, {sectorY}, {sectorZ}), distanza {dist} AL, alle {date}. La sua astronave è {ship_indef} ed ha codice di registrazione {shipregid}."
   }
 }

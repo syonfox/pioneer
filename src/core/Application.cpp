@@ -1,16 +1,16 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Application.h"
 #include "FileSystem.h"
 #include "JobQueue.h"
 #include "OS.h"
-#include "SDL.h"
+#include <SDL.h>
 #include "StringName.h"
 #include "TaskGraph.h"
 #include "profiler/Profiler.h"
 
-#include "SDL_timer.h"
+#include <SDL_timer.h>
 
 #include <stdexcept>
 
@@ -138,6 +138,7 @@ void Application::EndLifecycle()
 	// wait until we've finished the control flow for the lifecycle;
 	// the lifecycle may decide to set the next lifecycle in End()
 	m_priorityLifecycle = m_activeLifecycle->m_nextLifecycle;
+	m_activeLifecycle->m_nextLifecycle.Reset();
 	m_activeLifecycle.Reset();
 }
 

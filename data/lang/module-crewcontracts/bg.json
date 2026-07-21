@@ -21,7 +21,7 @@
   },
   "CREW_FOR_HIRE_DESC": {
     "description": "",
-    "message": "Кандидати, търсещи работа от този космодрум."
+    "message": "Кандидати за екипаж, търсещи работа от този космодрум."
   },
   "CREW_FOR_HIRE_TITLE": {
     "description": "",
@@ -37,7 +37,7 @@
   },
   "IM_SORRY_YOUR_OFFER_ISNT_ATTRACTIVE_TO_ME": {
     "description": "",
-    "message": "Съжалявам, офертата Ви не представлява интерес за мен."
+    "message": "Съжалявам, тази оферта не представлява интерес за мен."
   },
   "MAKE_OFFER_OF_POSITION_ON_SHIP_FOR_STATED_AMOUNT": {
     "description": "",
@@ -49,7 +49,7 @@
   },
   "NO_CREW_AVAILABLE": {
     "description": "",
-    "message": "За съжаление, в момента няма кандидати, търсещи работа от {station}"
+    "message": "За съжаление, в момента няма кандидати търсещи работа от {station}"
   },
   "NO_EXPERIENCE": {
     "description": "",

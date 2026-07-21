@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef _SCENEGRAPH_MODEL_H
@@ -171,6 +171,7 @@ namespace SceneGraph {
 		Graphics::Renderer *GetRenderer() const { return m_renderer; }
 
 		//special for ship model use
+		void SetRenderTime(const double newRenderTime) { m_renderData.renderTime = newRenderTime; }
 		void SetThrust(const vector3f &linear, const vector3f &angular);
 
 		void SetThrusterColor(const vector3f &dir, const Color &color);

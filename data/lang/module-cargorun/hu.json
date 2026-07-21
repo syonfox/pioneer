@@ -97,7 +97,7 @@
   },
   "ALUMINIUM_TUBES": {
     "description": "custom cargo",
-    "message": "Aluminium tubes"
+    "message": "aluminium csövek"
   },
   "AMOUNT": {
     "description": "Shown in mission summary. The amount of cargo",
@@ -105,7 +105,19 @@
   },
   "ART_OBJECTS": {
     "description": "custom cargo",
-    "message": "Art objects"
+    "message": "műalkotások"
+  },
+  "ART_OBJECTS_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Csak ha a műkritikusokat veszélyesnek tartja."
+  },
+  "ART_OBJECTS_RISK_MESSAGE_2": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Maradjon köztük, de ha nem néz rá az alkotásokra, akkor nem lesz semmi gond."
+  },
+  "ART_OBJECTS_RISK_MESSAGE_3": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "A 25. századi Impresszionizmus csak az alkotójára veszélyes, magának nem kell aggódnia."
   },
   "CARGO": {
     "description": "",
@@ -129,7 +141,7 @@
   },
   "CLUS": {
     "description": "custom cargo",
-    "message": "Containerized living units"
+    "message": "lakókonténerek"
   },
   "COULD_YOU_REPEAT_THE_ORIGINAL_REQUEST": {
     "description": "",
@@ -185,11 +197,11 @@
   },
   "DIAMONDS": {
     "description": "custom cargo",
-    "message": "Diamonds"
+    "message": "gyémántok"
   },
   "DIGESTERS": {
     "description": "custom cargo",
-    "message": "Digesters"
+    "message": "emésztőgépek"
   },
   "DISTANCE": {
     "description": "distance in space, between two locations",
@@ -197,7 +209,7 @@
   },
   "ELECTRICAL_APPLIANCES": {
     "description": "custom cargo",
-    "message": "Háztartási gép"
+    "message": "háztartási gépek"
   },
   "ESCORT_CHATTER_1": {
     "description": "",
@@ -221,7 +233,11 @@
   },
   "EXPLOSIVES": {
     "description": "custom cargo",
-    "message": "Robbanóanyag"
+    "message": "robbanóanyag"
+  },
+  "EXPLOSIVES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Ha eltekintünk attól, hogy robbanóanyagot szállít, nem kell félnie. Csak ne ejtse le a konténert."
   },
   "FAILUREMSG_1": {
     "description": "",
@@ -245,7 +261,7 @@
   },
   "FURNITURE": {
     "description": "custom cargo",
-    "message": "Bútor"
+    "message": "bútor"
   },
   "GO_BACK": {
     "description": "Shown on a button in a sub-menu, to move back, to previous menu",
@@ -253,7 +269,7 @@
   },
   "GREENHOUSES": {
     "description": "custom cargo",
-    "message": "Melegházak"
+    "message": "melegházak"
   },
   "GUNS_GUNS_GUNS": {
     "description": "Military radio call to avoid friendly fire. It indicates that the cannon has been activated and should ensure that other friendly pilots do not maneuver into the path of harm.",
@@ -261,7 +277,11 @@
   },
   "HAZARDOUS_SUBSTANCES": {
     "description": "custom cargo",
-    "message": "Veszéles anyagok"
+    "message": "veszélyes anyagok"
+  },
+  "HAZARDOUS_SUBSTANCES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Végülis jobb, ha nem nyitja ki a tartályokat."
   },
   "HOWMUCH_1": {
     "description": "regarding mass, always more than 1t",
@@ -383,9 +403,13 @@
     "description": "",
     "message": "I'm taking damage. I need help."
   },
+  "LOAD_CARGO": {
+    "description": "UI button label",
+    "message": "Load cargo"
+  },
   "MACHINE_TOOLS": {
     "description": "custom cargo",
-    "message": "Szerszámgépek"
+    "message": "szerszámgépek"
   },
   "NEGOTIABLE_1": {
     "description": "regarding mass, always more than 1t",
@@ -409,7 +433,7 @@
   },
   "NEPTUNIUM": {
     "description": "custom cargo",
-    "message": "Neptúnium"
+    "message": "neptunium"
   },
   "OFFER": {
     "description": "",
@@ -469,11 +493,19 @@
   },
   "PLUTONIUM": {
     "description": "custom cargo",
-    "message": "Plutónium"
+    "message": "plutonium"
   },
   "QUIBBLES": {
     "description": "custom cargo, also used in the NewsEventCommodity module, a nod to Star Trek's Tribble (check wikipedia)",
-    "message": "Quibble-ek"
+    "message": "quibble"
+  },
+  "QUIBBLES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Nincs veszély, hacsak víz nem éri őket, vagy éjfél után kapnak enni."
+  },
+  "QUIBBLES_RISK_MESSAGE_2": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Ugyan már! Nézzen rájuk, milyen kis bojhosak!"
   },
   "RISK_1": {
     "description": "",
@@ -529,15 +561,7 @@
   },
   "SEMI_FINISHED_PRODUCTS": {
     "description": "custom cargo",
-    "message": "Félkész termékek"
-  },
-  "SET_AS_TARGET": {
-    "description": "",
-    "message": "Navigációs célnak beállít."
-  },
-  "SET_RETURN_ROUTE": {
-    "description": "",
-    "message": "Visszaút"
+    "message": "félkész termékek"
   },
   "SPACEPORT": {
     "description": "",
@@ -545,11 +569,11 @@
   },
   "SPACESHIP_PARTS": {
     "description": "custom cargo",
-    "message": "Űrhajó alkatrészek"
+    "message": "űrhajó alkatrészek"
   },
   "STEM_BOLTS": {
     "description": "custom cargo, used in Star Trek DS9 as something with unclear usefulness",
-    "message": "Öngyógyító törzscsavar"
+    "message": "öngyógyító törzscsavar"
   },
   "SUCCESSMSG_1": {
     "description": "",
@@ -581,7 +605,7 @@
   },
   "TITANIUM": {
     "description": "custom cargo",
-    "message": "Titánium"
+    "message": "titánium"
   },
   "TOO_LATE_TO_PICK_UP": {
     "description": "",
@@ -589,11 +613,11 @@
   },
   "TUNGSTEN": {
     "description": "custom cargo",
-    "message": "Volfrám"
+    "message": "volfrám"
   },
   "URANIUM": {
     "description": "custom cargo",
-    "message": "Uránium"
+    "message": "uránium"
   },
   "URGENCY_1": {
     "description": "",
@@ -625,11 +649,15 @@
   },
   "WEDDING_DRESSES": {
     "description": "custom cargo",
-    "message": "Esküvői ruhák"
+    "message": "eskűvői ruhák"
+  },
+  "WEDDING_DRESSES_RISK_MESSAGE_1": {
+    "description": "Answer to question: Will I be in any danger?",
+    "message": "Esküvői ruhák miatt?"
   },
   "WE_HAVE_LOADED_UP_THE_CARGO_ON_YOUR_SHIP": {
     "description": "",
-    "message": "We have loaded up the cargo on your ship."
+    "message": "We have loaded the cargo onto your ship."
   },
   "WHAT_IS_THIS": {
     "description": "",
@@ -717,6 +745,6 @@
   },
   "YOU_DO_NOT_HAVE_ENOUGH_EMPTY_CARGO_SPACE": {
     "description": "",
-    "message": "Please come back when you have sufficient cargo space."
+    "message": "Please contact me when you have sufficient cargo space."
   }
 }

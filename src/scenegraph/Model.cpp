@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Model.h"
@@ -582,7 +582,7 @@ namespace SceneGraph {
 		}
 	}
 
-	static void AddAABBVisualizer(const Aabb &aabb, Color color, Graphics::VertexArray &lines, const matrix4x4f &transform = matrix4x4fIdentity)
+	static void AddAABBVisualizer(const Aabb &aabb, Color color, Graphics::VertexArray &lines, const matrix4x4f &transform = matrix4x4f::Identity)
 	{
 		PROFILE_SCOPED()
 
@@ -616,7 +616,7 @@ namespace SceneGraph {
 		ModelAABBVisitor(Graphics::VertexArray &lines) :
 			lines(lines)
 		{
-			matrixStack.push_back(matrix4x4fIdentity);
+			matrixStack.push_back(matrix4x4f::Identity);
 		}
 
 		void ApplyMatrixTransform(MatrixTransform &mt) override

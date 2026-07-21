@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local Lang = require 'Lang'
@@ -77,6 +77,9 @@ bulletinBoard = Table.New("BulletinBoardTable", false, {
 		ui.setColumnWidth(0, self.style.size.x)
 	end,
 	renderItem = function(self, item, key)
+		if key == 1 then	-- Insert padding or Orbiteer gets cut off on the first bbs item.
+			ui.dummy(Vector2(0, 0))
+		end
 		local icon = item.icon or "default"
 		local region = ui.getContentRegion()
 

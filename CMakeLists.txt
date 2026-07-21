@@ -4,18 +4,12 @@ project(pioneer LANGUAGES CXX)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 17)
 
-set(PIONEER_VERSION "20250501-dev"
-    CACHE STRING "Version identifier for current compiled build")
+# Version identifier for current compiled build
+# Do not cache this variable
+set(PIONEER_VERSION "20260203-dev")
 
 set(PROJECT_VERSION_INFO ""
 	CACHE STRING "Additional version information (optional)")
-
-# If both libGL.so and libOpenGL.so are found, default to the latter
-# (former is a legacy name).
-# Set OpenGL_GL_PREFERENCE=LEGACY to force it to use the former.
-if(POLICY CMP0072)
-	cmake_policy(SET CMP0072 NEW)
-endif()
 
 include(cmake/TargetArchitecture.cmake)
 include(cmake/InstallPioneer.cmake)
@@ -206,8 +200,6 @@ else (WIN32)
 	)
 endif (WIN32)
 
-configure_file(buildopts.h.cmakein buildopts.h @ONLY)
-
 LIST(APPEND PIONEER_CXX_FILES ${FILESYSTEM_CXX_FILES})
 
 option(USE_PIONEER_THIRDPARTY "Use pioneer's thirdparty library repository." OFF)
@@ -268,8 +260,19 @@ endif (MSVC)
 find_package(Threads REQUIRED)
 find_package(Freetype REQUIRED)
 find_package(OpenGL REQUIRED COMPONENTS OpenGL)
+if(NOT TARGET OpenAL::OpenAL)
+	find_package(OpenAL)
+endif()
+if (CACHE{BUILD_WITH_OPENAL} AND NOT OpenAL_FOUND)
+	message(FATAL_ERROR "Requested BUILD_WITH_OPENAL=ON, but the library is not found")
+elseif(NOT DEFINED CACHE{BUILD_WITH_OPENAL} AND OpenAL_FOUND)
+	message(STATUS "Found OpenAL, building with support")
+	set(BUILD_WITH_OPENAL ON CACHE BOOL "Enable or disable support for OpenAL")
+endif()
 
 set(FMT_INSTALL OFF CACHE BOOL "Enable install of libfmt" FORCE)
+
+configure_file(buildopts.h.cmakein buildopts.h @ONLY)
 
 add_subdirectory(contrib/lz4)
 add_subdirectory(contrib/fmt)
@@ -363,7 +366,7 @@ find_program(NATURALDOCS NAMES naturaldocs)
 if (NATURALDOCS)
 	add_custom_target(codedoc
 		${CMAKE_COMMAND} -E make_directory codedoc
-		COMMAND naturaldocs -i src/ -i data/libs/ -xi src/data/ -o HTML codedoc/ -p nd/ -do -ro -s Default Local
+		COMMAND naturaldocs -p nd/ -s Default
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 endif()
 
@@ -377,7 +380,16 @@ else()
 	message(WARNING, "Python 3 not found; enums will not be scanned.")
 endif()
 
-target_link_libraries(pioneer-lib PUBLIC lz4 fmt::fmt)
+target_link_libraries(pioneer-lib PUBLIC lz4 fmt::fmt $<$<BOOL:${BUILD_WITH_OPENAL}>:OpenAL::OpenAL>)
+
+# Fallback available on most legacy systems
+set(PIONEER_GL_LINK_TARGET OpenGL::GL)
+
+# If GLVND is available, the OpenGL::OpenGL target will be registered and we should prefer that
+# (it may be the only OpenGL target available on certain systems)
+if (TARGET OpenGL::OpenGL)
+	set(PIONEER_GL_LINK_TARGET OpenGL::OpenGL)
+endif()
 
 list(APPEND pioneerLibs
 	pioneer-core
@@ -385,7 +397,7 @@ list(APPEND pioneerLibs
 	pioneer-lua
 	${ASSIMP_LIBRARIES}
 	${FREETYPE_LIBRARIES}
-	OpenGL::GL
+	${PIONEER_GL_LINK_TARGET}
 	${SDL2_LIBRARIES}
 	${SDL2_IMAGE_LIBRARIES}
 	${SIGCPP_LIBRARIES}

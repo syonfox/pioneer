@@ -31,6 +31,11 @@ file_filter = data/lang/commodity/<lang>.json
 source_file = data/lang/commodity/en.json
 source_lang = en
 
+[o:pioneer:p:pioneer:r:persons]
+file_filter = data/lang/persons/<lang>.json
+source_file = data/lang/persons/en.json
+source_lang = en
+
 [o:pioneer:p:pioneer:r:quitconfirmation-core]
 file_filter = data/lang/quitconfirmation-core/<lang>.json
 source_file = data/lang/quitconfirmation-core/en.json
@@ -164,4 +169,9 @@ source_lang = en
 [o:pioneer:p:pioneer:r:module-taxi]
 file_filter = data/lang/module-taxi/<lang>.json
 source_file = data/lang/module-taxi/en.json
+source_lang = en
+
+[o:pioneer:p:pioneer:r:ships]
+file_filter = data/lang/ships/<lang>.json
+source_file = data/lang/ships/en.json
 source_lang = en

@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 -- This file implements type information about C++ classes for Lua static analysis
@@ -10,6 +10,7 @@
 ---@field name string
 ---@field other_names string[]
 ---@field path SystemPath
+---@field seed integer
 ---
 --- The lawlessness value for the system, 0 for peaceful, 1 for raging hordes of pirates
 ---@field lawlessness number

@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "ViewportWindow.h"
@@ -123,11 +123,11 @@ void ViewportWindow::Update(float deltaTime)
 				OnHandleInput(clicked, wasPressed && !m_viewportActive, mousePos);
 			}
 
-			ImGui::BeginChild("##ViewportContainer", ImVec2(0, 0), false,
+			ImGui::BeginChild("##ViewportContainer", ImVec2(0, 0),
+				ImGuiChildFlags_AlwaysUseWindowPadding,
 				ImGuiWindowFlags_NoBackground |
 				ImGuiWindowFlags_NoScrollbar |
-				ImGuiWindowFlags_NoScrollWithMouse |
-				ImGuiWindowFlags_AlwaysUseWindowPadding);
+				ImGuiWindowFlags_NoScrollWithMouse);
 
 			// set Horizontal layout type since we're using this window effectively as a toolbar
 			ImGui::GetCurrentWindow()->DC.LayoutType = ImGuiLayoutType_Horizontal;

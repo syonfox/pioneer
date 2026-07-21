@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Space.h"
@@ -743,9 +743,12 @@ void Space::UpdateStarSystemCache(const SystemPath *here)
 			for (int z = here_z - sectorRadius; z <= here_z + sectorRadius; z++) {
 				SystemPath path(x, y, z);
 				RefCountedPtr<Sector> sec(m_sectorCache->GetIfCached(path));
-				assert(sec);
-				for (const Sector::System &ss : sec->m_systems)
-					paths.push_back(SystemPath(ss.sx, ss.sy, ss.sz, ss.idx));
+				Log::WarningCond(sec, fmt::format("Not found in SectorCache {}!", to_string(path)).c_str());
+				if (sec) {
+					for (const Sector::System &ss : sec->m_systems) {
+						paths.push_back(SystemPath(ss.sx, ss.sy, ss.sz, ss.idx));
+					}
+				}
 			}
 		}
 	}
@@ -821,11 +824,12 @@ static FrameId MakeFramesFor(const double at_time, SystemBody *sbody, Body *b, F
 		Frame *orbFrame = Frame::GetFrame(orbFrameId);
 		orbFrame->SetBodies(sbody, b);
 		const double bodyRadius = sbody->GetEquatorialRadius();
-		double frameRadius = std::max(10.0 * bodyRadius, sbody->GetMaxChildOrbitalDistance() * 1.1);
+		double frameRadius = 10.0 * bodyRadius;
 		// Respect the frame of other stars in the multi-star system. We still make sure that the frame ends outside
 		// the body. For a minimum separation of 1.236 radii, nothing will overlap (see StarSystem::StarSystem()).
 		if (sbody->GetParent() && frameRadius > AU * 0.11 * sbody->GetOrbMin())
 			frameRadius = std::max(1.1 * bodyRadius, AU * 0.11 * sbody->GetOrbMin());
+		frameRadius = std::max(frameRadius, sbody->GetMaxChildOrbitalDistance() * 1.1);
 		orbFrame->SetRadius(frameRadius);
 		b->SetFrame(orbFrameId);
 		return orbFrameId;
@@ -885,7 +889,7 @@ void Space::GenBody(const double at_time, SystemBody *sbody, FrameId fId, std::v
 			posAccum.clear();
 		}
 		b->SetLabel(sbody->GetName().c_str());
-		b->SetPosition(vector3d(0, 0, 0));
+		b->SetPosition(vector3d::Zero);
 		AddBody(b);
 	}
 	fId = MakeFramesFor(at_time, sbody, b, fId, posAccum);
@@ -1065,8 +1069,10 @@ void Space::TimeStep(float step)
 
 	Frame::CollideFrames(&hitCallback);
 
-	for (Body *b : m_bodies)
+	for (size_t i = 0; i < m_bodies.size(); ++i) {
+		auto b = m_bodies[i];
 		CollideWithTerrain(b, step);
+	}
 
 	// update frames of reference
 	for (Body *b : m_bodies)
@@ -1087,7 +1093,8 @@ void Space::TimeStep(float step)
 	}
 	Frame::UpdateOrbitRails(m_game->GetTime(), m_game->GetTimeStep());
 
-	for (Body *b : m_bodies) {
+	for (size_t i = 0; i < m_bodies.size(); ++i) {
+		auto b = m_bodies[i];
 		b->TimeStepUpdate(step);
 	}
 

@@ -67,6 +67,10 @@
     "description": "",
     "message": "Poging repareren romp"
   },
+  "AUDIO_BACKEND": {
+    "description": "Audio backend label in settings menu",
+    "message": "Audio Backend"
+  },
   "AUTOMATED_MESSAGE": {
     "description": "For comm messages from bots",
     "message": "AUTOMATED MESSAGE"
@@ -90,6 +94,14 @@
   "BACKWARD_ACCEL": {
     "description": "",
     "message": "Achterwaardse versnelling"
+  },
+  "BINAURAL_RENDERING": {
+    "description": "Label of the binaural rendering checkbox in the audio settings menu",
+    "message": "Binaural Rendering"
+  },
+  "BINAURAL_RENDERING_DESC": {
+    "description": "Tooltip of the binaural rendering checkbox in the audio settings menu",
+    "message": "When enabled, HRTF filters are applied to the audio output. Works best with headphones."
   },
   "BODY_IN_ROUTE": {
     "description": "Label indicating a star is part of a planned hyperjump route",
@@ -622,6 +634,10 @@
   "EQUIPMENT": {
     "description": "",
     "message": "Uitrusting"
+  },
+  "EQUIPMENT_ALREADY_INSTALLED_HERE": {
+    "description": "Message indicating this equipment item is already installed.",
+    "message": "This equipment item is already installed here."
   },
   "EQUIPMENT_CAPACITY": {
     "description": "The equipment capacity of a ship",
@@ -2349,7 +2365,7 @@
   },
   "SET_AS_TARGET": {
     "description": "",
-    "message": "Stel bestemming als navigatiedoel in"
+    "message": "Set destination as navigation target"
   },
   "SET_JUMP_TARGET": {
     "description": "Button tooltip which sets the jump route to the selected body",
@@ -2539,9 +2555,41 @@
     "description": "Message when restoring savegame",
     "message": "System body index is out of range"
   },
+  "SYSTEM_FACTION": {
+    "description": "Tooltip indicating the faction controlling this system",
+    "message": "Controlling faction jurisdiction"
+  },
   "SYSTEM_INFORMATION": {
     "description": "Tooltip / label indicating information about a selected star system",
     "message": "System Information"
+  },
+  "SYSTEM_NUM_STARS": {
+    "description": "Tooltip indicating the system stellar arrangement",
+    "message": "Number of stars in system"
+  },
+  "SYSTEM_SECURITY_1": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Safe"
+  },
+  "SYSTEM_SECURITY_2": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Vrijwel ongevaarlijk"
+  },
+  "SYSTEM_SECURITY_3": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Gevaarlijk"
+  },
+  "SYSTEM_SECURITY_4": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Very Dangerous"
+  },
+  "SYSTEM_SECURITY_5": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Dodelijk"
+  },
+  "SYSTEM_SECURITY_TOOLTIP": {
+    "description": "Tooltip introducing the system security rating",
+    "message": "System safety rating"
   },
   "TECH_CERTIFIED": {
     "description": "Lobby screen shows the tech level (an integer number) of the station",
@@ -2663,6 +2711,10 @@
     "description": "Label indicating the ability to transfer fuel between equipment tanks",
     "message": "Transfer Fuel"
   },
+  "TRANSLATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to translate the camera view with mouse",
+    "message": "Hold down to Translate view"
+  },
   "TRUSTWORTHY": {
     "description": "For player reputation",
     "message": "Betrouwbaar"
@@ -2754,6 +2806,10 @@
   "VIDEO_RESOLUTION_DESC": {
     "description": "Tooltip for video mode/resultion setting",
     "message": "Hogere resoluties tonen meer informatie op minder oppervlak en kunnen performance verminderen."
+  },
+  "VIEW_DESTINATION": {
+    "description": "Tooltip indicating the button will change the current view to the destination of a route.",
+    "message": "View Destination"
   },
   "VISIT_PAINTSHOP": {
     "description": "Ship Repair tab button.",

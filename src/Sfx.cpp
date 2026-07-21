@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Sfx.h"
@@ -213,7 +213,7 @@ void SfxManager::AddThrustSmoke(const Body *b, const float speed, const vector3d
 	SfxManager *sfxman = AllocSfxInFrame(b->GetFrame());
 	if (!sfxman) return;
 
-	Sfx sfx(b->GetPosition() + adjustpos, vector3d(0, 0, 0), speed, TYPE_SMOKE);
+	Sfx sfx(b->GetPosition() + adjustpos, vector3d::Zero, speed, TYPE_SMOKE);
 	sfxman->AddInstance(sfx);
 }
 
@@ -300,7 +300,7 @@ void SfxManager::RenderAll(Renderer *renderer, FrameId fId, FrameId camFrameId)
 				pointArray.Add(pos, vector3f(offset, Clamp(speed, 0.1f, FLT_MAX)));
 			}
 
-			renderer->SetTransform(matrix4x4f::Identity());
+			renderer->SetTransform(matrix4x4f::Identity);
 			renderer->DrawBuffer(&pointArray, material);
 		}
 	}

@@ -1,10 +1,11 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local ui = require 'pigui'
 local Lang = require 'Lang'
 local leq = Lang.GetResource("equipment-core")
 local lc = Lang.GetResource("core")
+local ls = Lang.GetResource("ships")
 local lui = Lang.GetResource("ui-core")
 local msgbox = require 'pigui.libs.message-box'
 local utils = require 'utils'
@@ -48,7 +49,7 @@ ShipType.selected = 0
 table.sort(ShipType.shipIDs)
 
 for _, id in ipairs(ShipType.shipIDs) do
-	table.insert(ShipType.shipNames, ShipDef[id].name)
+	table.insert(ShipType.shipNames, ls[ShipDef[id].i18n_key])
 	ShipType.idMap[id] = true
 end
 

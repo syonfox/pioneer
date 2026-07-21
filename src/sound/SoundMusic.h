@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef _MUSIC_H
@@ -18,10 +18,11 @@ namespace Sound {
 		float GetVolume() const;
 		void SetVolume(const float);
 		void Play(const std::string &, const bool repeat = false, const float fadeDelta = 1.f);
+		void PlayAgain();
 		void Stop();
 		void FadeOut(const float fadeDelta);
 		void Update();
-		const std::string& GetCurrentSongName() const;
+		const std::string &GetCurrentSongName() const;
 		const std::vector<std::string> GetSongList() const;
 		bool IsPlaying() const;
 		void SetEnabled(bool);
@@ -37,6 +38,7 @@ namespace Sound {
 		bool m_eventOnePlaying;
 		std::string m_currentSongName;
 		bool m_enabled;
+		bool m_repeating;
 	};
 } // namespace Sound
 

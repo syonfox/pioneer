@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local ui = require 'pigui'
@@ -279,6 +279,7 @@ local function drawPlayerInfo()
 				-- face display has 1:1 aspect ratio, and we need size for a launch button underneath
 				local infoColumnWidth = -math.min(ui.getContentRegion().y - buttonSizeSpacing, widgetSizes.faceSize.x) - widgetSizes.itemSpacing.x
 				ui.child("PlayerShipFuel", Vector2(infoColumnWidth, 0), function()
+					ui.spacing()  -- Extra padding for umlaut and other signs on top of the station label.
 					textTable.withHeading(station.label, orbiteer.title, {
 						{ tech_certified, "" },
 						{ station_docks, "" },

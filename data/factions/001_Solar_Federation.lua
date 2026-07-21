@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local f = Faction:new('Solar Federation')
@@ -17,9 +17,9 @@ f:govtype_weight('EARTHCOLONIAL',		40)
 
 f:illegal_goods_probability('animal_meat',		75)
 f:illegal_goods_probability('live_animals',		75)
-f:illegal_goods_probability('slaves',		100)
+f:illegal_goods_probability('slaves',		    100)
 f:illegal_goods_probability('hand_weapons',		100)
-f:illegal_goods_probability('battle_weapons',		50)
+f:illegal_goods_probability('battle_weapons',	50)
 f:illegal_goods_probability('nerve_gas',		100)
 f:illegal_goods_probability('narcotics',		100)
 

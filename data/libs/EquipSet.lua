@@ -1,4 +1,4 @@
--- Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+-- Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 -- Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 local HullConfig = require 'HullConfig'
@@ -274,7 +274,7 @@ end
 --
 -- Return true if the ship has at least one slot which is compatible with the
 -- equipment item regardless of whether the ship currently has the space to
--- fit the equipemnt.
+-- fit the equipment.
 --
 -- Parameters:
 --

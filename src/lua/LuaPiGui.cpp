@@ -1,6 +1,7 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
+#include "FileSystem.h"
 #include "Input.h"
 #include "InputBindings.h"
 #include "LuaPiGuiInternal.h"
@@ -15,8 +16,8 @@
 #include "LuaVector2.h"
 #include "Pi.h"
 #include "Player.h"
-#include "SDL_keycode.h"
-#include "SDL_scancode.h"
+#include <SDL_keycode.h>
+#include <SDL_scancode.h>
 #include "Space.h"
 #include "WorldView.h"
 #include "graphics/Graphics.h"
@@ -85,8 +86,8 @@ namespace ImGui {
 
 		// Move the cursor to match the new work rect areas
 		// NOTE: this will reset the horizontal position of the cursor!
-		window->DC.CursorPos.x = IM_FLOOR(window->Pos.x + window->DC.Indent.x + window->DC.ColumnsOffset.x);
-		window->DC.CursorPos.y = IM_FLOOR(ImMax(window->DC.CursorPos.y, window->ContentRegionRect.Min.y));
+		window->DC.CursorPos.x = floor(window->Pos.x + window->DC.Indent.x + window->DC.ColumnsOffset.x);
+		window->DC.CursorPos.y = floor(ImMax(window->DC.CursorPos.y, window->ContentRegionRect.Min.y));
 	}
 
 	float GetLineHeight()
@@ -104,6 +105,46 @@ namespace ImGui {
 		return (window != nullptr) ? window->ContentSize : ImVec2(0, 0);
 	}
 } // namespace ImGui
+
+struct DrawListState {
+	DrawListState(ImDrawList *dl) :
+		startVtxCount(dl->VtxBuffer.size()),
+		startIdxCount(dl->IdxBuffer.size())
+	{}
+
+	int startVtxCount;
+	int startIdxCount;
+};
+
+void CreateDuplicateVerts(ImDrawList *dl, const DrawListState &state, ImU32 col_override, const ImVec2 &offset)
+{
+	int numVtxs = dl->VtxBuffer.size() - state.startVtxCount;
+	int numIdxs = dl->IdxBuffer.size() - state.startIdxCount;
+
+	// To achieve text shadows, we're not going to lay out new text or anything like that.
+	// Instead, we're just going to make a copy, then recolor the original black and offset its position slightly.
+	if (numVtxs > 0) {
+		dl->PrimReserve(numIdxs, numVtxs);
+
+		memcpy(dl->_VtxWritePtr, dl->VtxBuffer.Data + state.startVtxCount, sizeof(ImDrawVert) * numVtxs);
+		memcpy(dl->_IdxWritePtr, dl->IdxBuffer.Data + state.startIdxCount, sizeof(ImDrawIdx) * numIdxs);
+
+		// Update position and color of the shadow vertices
+		for (ImDrawVert *vtx = dl->VtxBuffer.Data + state.startVtxCount; vtx < dl->_VtxWritePtr; vtx++) {
+			vtx->col = col_override;
+			vtx->pos += offset;
+		}
+
+		// Update the indices of the copied text to point at the copied vertices.
+		ImDrawIdx idx_offset = numVtxs;
+
+		for (ImDrawIdx *idx = dl->_IdxWritePtr; idx < dl->IdxBuffer.Data + dl->IdxBuffer.size(); idx++) {
+			*idx += idx_offset;
+		}
+
+		dl->_VtxCurrentIdx = dl->_VtxCurrentIdx + numVtxs;
+	}
+}
 
 template <typename Type>
 static Type parse_imgui_flags(lua_State *l, int index, LuaFlags<Type> &lookupTable)
@@ -167,7 +208,7 @@ int PiGui::pushOnScreenPositionDirection(lua_State *l, vector3d position)
 	const int width = Pi::renderer->GetWindowWidth();
 	const int height = Pi::renderer->GetWindowHeight();
 	vector3d direction = (position - vector3d(width / 2.0, height / 2.0, 0)).Normalized();
-	if (vector3d(0, 0, 0) == position || position.x < 0 || position.y < 0 || position.x > width || position.y > height || position.z > 0) {
+	if (vector3d::Zero == position || position.x < 0 || position.y < 0 || position.x > width || position.y > height || position.z > 0) {
 		LuaPush<bool>(l, false);
 		LuaPush<vector2d>(l, vector2d(position.x, position.y));
 		LuaPush<vector3d>(l, direction * (position.z > 0 ? -1 : 1)); // reverse direction if behind camera
@@ -195,7 +236,7 @@ static LuaFlags<ImGuiSelectableFlags_> selectable_flags = {
 	{ "DontClosePopups", ImGuiSelectableFlags_DontClosePopups },
 	{ "SpanAllColumns", ImGuiSelectableFlags_SpanAllColumns },
 	{ "AllowDoubleClick", ImGuiSelectableFlags_AllowDoubleClick },
-	{ "AllowItemOverlap", ImGuiSelectableFlags_AllowItemOverlap }
+	{ "AllowOverlap", ImGuiSelectableFlags_AllowOverlap }
 };
 
 // Can't use ImGuiButtonFlags_ here, as PressedOnClick etc. are in the ImGuiButtonFlagsPrivate_ enum instead
@@ -271,6 +312,7 @@ static LuaFlags<ImGuiCol_> imgui_col_enums = {
 	{ "ScrollbarGrabHovered", ImGuiCol_ScrollbarGrabHovered },
 	{ "ScrollbarGrabActive", ImGuiCol_ScrollbarGrabActive },
 	{ "CheckMark", ImGuiCol_CheckMark },
+	{ "CheckboxSelectedBg", ImGuiCol_CheckboxSelectedBg },
 	{ "SliderGrab", ImGuiCol_SliderGrab },
 	{ "SliderGrabActive", ImGuiCol_SliderGrabActive },
 	{ "Button", ImGuiCol_Button },
@@ -602,14 +644,6 @@ static int l_pigui_lineOnClock(lua_State *l)
 /* ****************************** Lua imgui functions ****************************** */
 /*
  * Function: begin
- *
- * Availability:
- *
- *   2017-04
- *
- * Status:
- *
- *   stable
  */
 static int l_pigui_begin(lua_State *l)
 {
@@ -630,14 +664,6 @@ static int l_pigui_begin(lua_State *l)
  * blocked by a modal window rendering underneath it. To render a window on top
  * of a modal, it must be submitted within that modal's begin()/end() block.
  * (See data/pigui/libs/modal-win.lua).
- *
- * Availability:
- *
- *   2024-07
- *
- * Status:
- *
- *   experimental
  */
 static int l_pigui_bring_window_to_display_front(lua_State *l)
 {
@@ -652,10 +678,6 @@ static int l_pigui_bring_window_to_display_front(lua_State *l)
  * Gets imgui internal time
  *
  * > local currentTime = ui.getTime()
- *
- * Status:
- *
- *   stable
  */
 static int l_pigui_get_time(lua_State *l)
 {
@@ -1153,7 +1175,7 @@ static int l_pigui_path_stroke(lua_State *l)
 	ImU32 color = ImGui::GetColorU32(LuaPull<ImColor>(l, 1).Value);
 	bool closed = LuaPull<bool>(l, 2);
 	double thickness = LuaPull<double>(l, 3);
-	draw_list->PathStroke(color, closed, thickness);
+	draw_list->PathStroke(color, thickness, closed ? ImDrawFlags_Closed : ImDrawFlags_None);
 	return 0;
 }
 
@@ -1212,6 +1234,36 @@ static int l_pigui_text(lua_State *l)
 	PROFILE_SCOPED()
 	std::string text = LuaPull<std::string>(l, 1);
 	ImGui::Text("%s", text.c_str());
+	return 0;
+}
+
+/*
+ * Function: textShadowed
+ *
+ * Draw text to screen
+ *
+ * > ui.textShadowed(text, offset, color)
+ *
+ * Parameters:
+ *
+ *   text - string, text to print
+ *
+ */
+static int l_pigui_text_shadowed(lua_State *l)
+{
+	PROFILE_SCOPED()
+	std::string text = LuaPull<std::string>(l, 1);
+	ImVec2 offset = LuaPull<ImVec2>(l, 2, ImVec2(3, 3));
+	ImU32 color = ImGui::GetColorU32(LuaPull<ImColor>(l, 3, ImColor(0, 0, 0)).Value);
+
+	ImDrawList *dl = ImGui::GetWindowDrawList();
+
+	DrawListState dl_state(dl);
+
+	ImGui::Text("%s", text.c_str());
+
+	CreateDuplicateVerts(dl, dl_state, color, offset);
+
 	return 0;
 }
 
@@ -1431,8 +1483,7 @@ static int l_pigui_text_ellipsis(lua_State *l)
     ImGui::ItemAdd(bb, 0);
 
 	ImGui::RenderTextEllipsis(ImGui::GetWindowDrawList(),
-		textPos, textPos + size,
-		clip_max_x, clip_max_x,
+		textPos, textPos + size, clip_max_x,
 		text.c_str(), text.c_str() + text.size(),
 		&text_size);
 
@@ -1705,6 +1756,24 @@ static int l_pigui_add_text(lua_State *l)
 	return 0;
 }
 
+static int l_pigui_add_text_shadowed(lua_State *l)
+{
+	PROFILE_SCOPED()
+	ImDrawList *draw_list = ImGui::GetWindowDrawList();
+	ImVec2 center = LuaPull<ImVec2>(l, 1);
+	ImU32 color = ImGui::GetColorU32(LuaPull<ImColor>(l, 2).Value);
+	std::string text = LuaPull<std::string>(l, 3);
+	ImU32 shadow = ImGui::GetColorU32(LuaPull<ImColor>(l, 4, ImColor(0, 0, 0)).Value);
+	ImVec2 offset = LuaPull<ImVec2>(l, 5, ImVec2(3, 3));
+	double wrapWidth = LuaPull<double>(l, 6, 0.0);
+
+	DrawListState dl_state(draw_list);
+	draw_list->AddText(nullptr, 0.0f, center, color, text.c_str(), nullptr, wrapWidth);
+	CreateDuplicateVerts(draw_list, dl_state, shadow, offset);
+
+	return 0;
+}
+
 static int l_pigui_add_triangle(lua_State *l)
 {
 	PROFILE_SCOPED()
@@ -1868,8 +1937,8 @@ static int l_pigui_add_rect_faded(lua_State *l)
  */
 static int l_pigui_same_line(lua_State *l)
 {
-	float pos_x = LuaPull<float>(l, 1);
-	float spacing_w = LuaPull<float>(l, 2);
+	float pos_x = LuaPull<float>(l, 1, 0.f);
+	float spacing_w = LuaPull<float>(l, 2, -1.f);
 
 	if (pos_x < 0.0) {
 		ImGuiWindow *window = ImGui::GetCurrentWindow();
@@ -2134,12 +2203,12 @@ static int l_pigui_push_font(lua_State *l)
 	PiGui::Instance *pigui = LuaObject<PiGui::Instance>::CheckFromLua(1);
 	std::string fontname = LuaPull<std::string>(l, 2);
 	int size = LuaPull<int>(l, 3);
-	ImFont *font = pigui->GetFont(fontname, size);
+	ImFont *font = pigui->GetFont(fontname);
 	if (!font) {
 		LuaPush(l, false);
 	} else {
 		LuaPush(l, true);
-		ImGui::PushFont(font);
+		ImGui::PushFont(font, size);
 	}
 	return 1;
 }
@@ -2352,7 +2421,7 @@ PiGui::TScreenSpace lua_world_space_to_screen_space(const Body *body)
 	const int width = Pi::renderer->GetWindowWidth();
 	const int height = Pi::renderer->GetWindowHeight();
 	const vector3d direction = (p - vector3d(width / 2.0, height / 2.0, 0)).Normalized();
-	if (vector3d(0, 0, 0) == p || p.x < 0 || p.y < 0 || p.x > width || p.y > height || p.z > 0) {
+	if (vector3d::Zero == p || p.x < 0 || p.y < 0 || p.x > width || p.y > height || p.z > 0) {
 		return PiGui::TScreenSpace(false, vector2d(0, 0), direction * (p.z > 0 ? -1 : 1));
 	} else {
 		return PiGui::TScreenSpace(true, vector2d(p.x, p.y), direction);
@@ -2470,14 +2539,6 @@ bool PiGui::first_body_is_more_important_than(Body *body, Body *other)
  *   hasFollowTarget - true if group contains the follow target
  *   multiple - true if group consists of more than one body
  *   bodies - array of all <Body> objects in the group, sorted by importance
- *
- * Availability:
- *
- *   2019-12
- *
- * Status:
- *
- *   stable
  */
 static int l_pigui_get_projected_bodies_grouped(lua_State *l)
 {
@@ -3367,8 +3428,7 @@ static int l_pigui_calc_text_alignment(lua_State *l)
 	} else if (anchor_v == 3) {
 		pos.y -= size.y / 2;
 	} else if (anchor_v == 6) {
-		ImFont *font = ImGui::GetFont();
-		pos.y -= font->Ascent;
+		pos.y -= ImGui::GetFontBaked()->Ascent;
 	} else
 		luaL_error(l, "CalcTextAlignment: incorrect vertical anchor %d", anchor_v);
 	LuaPush<vector2d>(l, pos);
@@ -3690,6 +3750,7 @@ void LuaObject<PiGui::Instance>::RegisterClass()
 		{ "AddCircleFilled", l_pigui_add_circle_filled },
 		{ "AddLine", l_pigui_add_line },
 		{ "AddText", l_pigui_add_text },
+		{ "AddTextShadowed", l_pigui_add_text_shadowed },
 		{ "AddTriangle", l_pigui_add_triangle },
 		{ "AddTriangleFilled", l_pigui_add_triangle_filled },
 		{ "AddQuad", l_pigui_add_quad },
@@ -3724,6 +3785,7 @@ void LuaObject<PiGui::Instance>::RegisterClass()
 		{ "GetScrollY", l_pigui_get_scroll_y },
 		{ "BulletText", l_pigui_bullet_text },
 		{ "Text", l_pigui_text },
+		{ "TextShadowed", l_pigui_text_shadowed },
 		{ "TextWrapped", l_pigui_text_wrapped },
 		{ "TextEllipsis", l_pigui_text_ellipsis },
 		{ "TextColored", l_pigui_text_colored },

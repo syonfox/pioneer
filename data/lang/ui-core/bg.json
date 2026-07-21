@@ -1,7 +1,7 @@
 {
   "ABOUT": {
     "description": "main menu button (implied 'about' the game)",
-    "message": "About"
+    "message": "Относно"
   },
   "ABOVE_AVERAGE": {
     "description": "",
@@ -21,7 +21,7 @@
   },
   "AFTER_TRADE_IN": {
     "description": "",
-    "message": "След покупка"
+    "message": "Втора употреба"
   },
   "ALLEGIANCE": {
     "description": "",
@@ -67,9 +67,13 @@
     "description": "",
     "message": "Поправете корпуса"
   },
+  "AUDIO_BACKEND": {
+    "description": "Audio backend label in settings menu",
+    "message": "Аудио бекенд"
+  },
   "AUTOMATED_MESSAGE": {
     "description": "For comm messages from bots",
-    "message": "AUTOMATED MESSAGE"
+    "message": "АВТОМАТИЧНО СЪОБЩЕНИЕ"
   },
   "AUTO_ROUTE": {
     "description": "Automatically find shortest jump route (measured in time) in star map",
@@ -90,6 +94,14 @@
   "BACKWARD_ACCEL": {
     "description": "",
     "message": "Ускорение назад"
+  },
+  "BINAURAL_RENDERING": {
+    "description": "Label of the binaural rendering checkbox in the audio settings menu",
+    "message": "Бинаурално генериране"
+  },
+  "BINAURAL_RENDERING_DESC": {
+    "description": "Tooltip of the binaural rendering checkbox in the audio settings menu",
+    "message": "Прилага HRTF филтри към аудио изхода. Препоръчва се използването на слушалки."
   },
   "BODY_IN_ROUTE": {
     "description": "Label indicating a star is part of a planned hyperjump route",
@@ -593,7 +605,7 @@
   },
   "ENABLE_COCKPIT": {
     "description": "Game settings option: to use a cockpit 3D model",
-    "message": "Тризимерна кабина (ЕКСПЕРИМЕНТАЛНО)"
+    "message": "Триизмерна кабина (ЕКСПЕРИМЕНТАЛНО)"
   },
   "ENABLE_COCKPIT_DESC": {
     "description": "tooltip description in settings menu",
@@ -622,6 +634,10 @@
   "EQUIPMENT": {
     "description": "",
     "message": "Оборудване"
+  },
+  "EQUIPMENT_ALREADY_INSTALLED_HERE": {
+    "description": "Message indicating this equipment item is already installed.",
+    "message": "Този артикул вече е инсталиран."
   },
   "EQUIPMENT_CAPACITY": {
     "description": "The equipment capacity of a ship",
@@ -1165,7 +1181,7 @@
   },
   "HUD_FOLLOW_ORIENTATION_NOT_AVAILABLE_TOO_FAR": {
     "description": "Tooltip for follow mode 'orientation' button, when it's not available for the current object, because it's too far.",
-    "message": "{targetname}: Следването на ориентацията не е възможно – целта е твърде далече."
+    "message": "{targetname}: Следването на ориентацията не е възможно – целта е твърде далеч."
   },
   "HUD_FOLLOW_POSITION": {
     "description": "Tooltip for follow mode 'position' button",
@@ -1177,7 +1193,7 @@
   },
   "HUD_FOLLOW_POSITION_NOT_AVAILABLE_TOO_FAR": {
     "description": "Tooltip for follow mode 'position' button, when it's not available for the current object, because it's too far.",
-    "message": "{targetname}: Следването на позицията не е възможно – целта е твърде далече."
+    "message": "{targetname}: Следването на позицията не е възможно – целта е твърде далеч."
   },
   "HUD_FOLLOW_TARGET": {
     "description": "Tooltip for followed target's name in reticule",
@@ -1293,15 +1309,15 @@
   },
   "HUD_SPEED_OF_APPROACH_TO_FRAME": {
     "description": "Tooltip: The speed of approach towards the frame of reference.",
-    "message": "Скоростта на приближаване към отправната система"
+    "message": "Скорост на приближаване към отправната система"
   },
   "HUD_SPEED_OF_APPROACH_TO_TARGET": {
     "description": "Tooltip: The speed of approach relative to target.",
-    "message": "Скорост на приближаване, спрямо целта"
+    "message": "Скорост на приближаване спрямо целта"
   },
   "HUD_SPEED_RELATIVE_TO_TARGET": {
     "description": "Tooltip: The speed relative to the target.",
-    "message": "Скорост, спрямо целта"
+    "message": "Скорост спрямо целта"
   },
   "HUD_THRUST_INDICATOR": {
     "description": "Tooltip: describe what the thrust/velocity indicator shows",
@@ -1365,7 +1381,7 @@
   },
   "ILLEGAL_JUMP": {
     "description": "A finable crime",
-    "message": "Засечен е безразсъден хиперскок"
+    "message": "Безразсъден хиперскок"
   },
   "IM_TIRED_OF_WORKING_FOR_NOTHING_DONT_YOU_KNOW_WHAT_A_CONTRACT_IS": {
     "description": "",
@@ -1441,7 +1457,7 @@
   },
   "ITS_BEEN_GREAT_WORKING_FOR_YOU_IF_YOU_NEED_ME_AGAIN_ILL_BE_HERE_A_WHILE": {
     "description": "",
-    "message": "Беше удоволствие да работя за Вас. Ако имате нужда от мен отново, може да ме намерите тук."
+    "message": "Беше страхотно да работя за Вас. Ако имате нужда от мен отново, може да ме намерите тук."
   },
   "JETTISON": {
     "description": "",
@@ -1913,7 +1929,7 @@
   },
   "OUTLAW": {
     "description": "Legal status of player",
-    "message": "Разбойник"
+    "message": "Престъпник"
   },
   "OUTSTANDING_FINES": {
     "description": "Unpaid fines for crimes committed",
@@ -1953,7 +1969,7 @@
   },
   "PAINTSHOP_WELCOME_2": {
     "description": "Welcome message to the paintshop.",
-    "message": "При нас, Вашият кораб няма да стане по-бърз, но ще стане по-красив!"
+    "message": "При нас Вашият кораб няма да стане по-бърз, но ще стане по-красив!"
   },
   "PAINTSHOP_WELCOME_3": {
     "description": "Welcome message to the paintshop.",
@@ -2133,7 +2149,7 @@
   },
   "REALISTIC_SCATTERING_DESC": {
     "description": "",
-    "message": "Изберете разсейването при визуализиране на атмосферата. (Рейли/Мие понижава производителността)"
+    "message": "Изберете разсейването при генериране на атмосферата. (Рейли/Мие понижава производителността)"
   },
   "REAR_WEAPON": {
     "description": "",
@@ -2177,7 +2193,7 @@
   },
   "REMOVE_WHEN_COMPLETED": {
     "description": "For UI hyperjump planner, referring to jump target system",
-    "message": "Премахване на хиперскока, след завършването му"
+    "message": "Премахване на хиперскока след завършването му"
   },
   "REPAIR_X_HULL_DAMAGE_FOR_X": {
     "description": "",
@@ -2301,7 +2317,7 @@
   },
   "SELECTED_SAVE_IS_NOT_A_VALID_SAVE": {
     "description": "",
-    "message": "Избраният запис е невалиден"
+    "message": "Избраният запис не е валиден"
   },
   "SELECT_A_FILE_TO_SAVE_TO_OR_ENTER_A_NEW_FILENAME": {
     "description": "",
@@ -2349,7 +2365,7 @@
   },
   "SET_AS_TARGET": {
     "description": "",
-    "message": "Задаване на дестинацията като навигационна цел."
+    "message": "Задаване на дестинацията като навигационна цел"
   },
   "SET_JUMP_TARGET": {
     "description": "Button tooltip which sets the jump route to the selected body",
@@ -2469,11 +2485,11 @@
   },
   "START_AT_NEW_HOPE": {
     "description": "New Hope is an in game location",
-    "message": "Нова надежда"
+    "message": "Нова Надежда"
   },
   "START_AT_NEW_HOPE_DESC": {
     "description": "",
-    "message": "Това е умерен старт от Ицалиян – Нова надежда в системата Епсилон Еридани."
+    "message": "Това е умерен старт от Ицалиян – Нова Надежда в системата Епсилон от Еридан."
   },
   "START_GAME": {
     "description": "Button",
@@ -2481,11 +2497,11 @@
   },
   "START_LOG_ENTRY_1": {
     "description": "First custom log message when starting a new game, giving backstory to the character. Importantly we here hint at what actions the player is best to take: buy fuel, get reputation, ask for take off clearance.",
-    "message": "За съжаление, докато все още беше жив, чичо не ме научи как да управлявам този стар кораб, изглежда сега правя запис в летателния дневник. Странно е, но все още го усещам, сякаш е заедно с мен в кораба. Може би той ще бъде моя втори пилот и заедно ще ковем съдбата си във Вселената. Но, първо, трябва да си купя водород, да помисля за някоя доходоносна възможност за търговия и да се моля Космическият контрол на движението да ми даде разрешение за излитане, тогава ще видим на какво е способна тази таратайка. Време е да се докажа!"
+    "message": "За съжаление, докато все още беше жив, чичо не ме научи как да управлявам този стар кораб, изглежда сега правя запис в летателния дневник. Странно е, но все още го усещам, сякаш е заедно с мен в кораба. Може би той ще бъде моя втори пилот и заедно ще ковем съдбата си в голямата празнота. Но, първо, трябва да си купя водород, да помисля за някоя доходоносна възможност за търговия и да се моля Космическият контрол на движението да ми даде разрешение за излитане, тогава ще видим на какво е способна тази таратайка. Време е да се докажа!"
   },
   "START_LOG_ENTRY_2": {
     "description": "First custom log message when starting a new game, giving backstory to the character, here going for a Blade Runner feeling",
-    "message": "Ботушите ми са още мокри от силния дъжд снощи. Пътната настилка се намокри толкова много, че нощното небе се напълни с отражения от неоновите надписи по мократа улица. Все пак, стигнах до полета ми за космодрума, където ме чакаше новият ми кораб. Охранителят на космодрума ме погледна подигравателно, когато му казах, че съм тук за да взема кораба си. Предполагам, че не приличах на типичен астронавт, след като трябваше да продам всичко за да си купя тази стара таратайка, докато стоях пред него с мокри дрехи и ботуши. Усещам, че оттук нататък бъдещето ми ще е свързано с звездите. Сега просто трябва да си намеря ключа."
+    "message": "Ботушите ми са още мокри от силния дъжд снощи. Пътната настилка се намокри толкова много, че нощното небе се напълни с отражения от неоновите надписи по мократа улица. Все пак, стигнах до полета ми за космодрума, където ме чакаше новият ми кораб. Охранителят на космодрума ме погледна подигравателно, когато му казах, че съм тук за да взема кораба си. Предполагам, че не приличах на типичен астронавт, след като трябваше да продам всичко за да си купя тази стара таратайка, докато стоях пред него с мокри дрехи и ботуши. Усещам, че оттук нататък бъдещето ми ще е свързано със звездите. Сега просто трябва да си намеря ключа."
   },
   "START_LOG_ENTRY_3": {
     "description": "First custom log message when starting a new game, giving backstory to the character. Here explaining why there's no hyperdrive in the ship, and what to do about it.",
@@ -2505,7 +2521,7 @@
   },
   "STATION_DOCKS": {
     "description": "Information shown in the station lobby, for total number of docking pads",
-    "message": "Разполагаме с {total_docking_pads} площадки за скачване."
+    "message": "Тази станция има {total_docking_pads} площадки за скачване."
   },
   "STATION_LOCAL_GRAVITY": {
     "description": "",
@@ -2521,7 +2537,7 @@
   },
   "STATION_ORBIT": {
     "description": "Information shown in the station loby",
-    "message": "Ние сме в {orbit_period} дневен орбитален период около {parent_body}."
+    "message": "Тази станция се намира в орбита около {parent_body} с период на обиколка от {orbit_period} дни."
   },
   "STATION_TECH_TOO_LOW": {
     "description": "",
@@ -2539,9 +2555,41 @@
     "description": "Message when restoring savegame",
     "message": "Индексът на тялото е извън обхвата"
   },
+  "SYSTEM_FACTION": {
+    "description": "Tooltip indicating the faction controlling this system",
+    "message": "Контролираща групировка"
+  },
   "SYSTEM_INFORMATION": {
     "description": "Tooltip / label indicating information about a selected star system",
     "message": "Информация за системата"
+  },
+  "SYSTEM_NUM_STARS": {
+    "description": "Tooltip indicating the system stellar arrangement",
+    "message": "Звезди в системата"
+  },
+  "SYSTEM_SECURITY_1": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Не представлява опасност"
+  },
+  "SYSTEM_SECURITY_2": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Не представлява голяма опасност"
+  },
+  "SYSTEM_SECURITY_3": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Представлява опасност"
+  },
+  "SYSTEM_SECURITY_4": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Представлява голяма опасност"
+  },
+  "SYSTEM_SECURITY_5": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Представлява смъртоносна опасност"
+  },
+  "SYSTEM_SECURITY_TOOLTIP": {
+    "description": "Tooltip introducing the system security rating",
+    "message": "Ниво на опасност в системата"
   },
   "TECH_CERTIFIED": {
     "description": "Lobby screen shows the tech level (an integer number) of the station",
@@ -2561,7 +2609,7 @@
   },
   "THANKS_AND_REMEMBER_TO_BUY_FUEL": {
     "description": "",
-    "message": "Благодарим Ви за покупката. Не забравяйте да монтирате оборудването си и да купите гориво, преди тръгване."
+    "message": "Благодарим за покупката. Не забравяйте да монтирате оборудването си и да купите гориво, преди тръгване."
   },
   "THERE_IS_NOBODY_ELSE_ON_BOARD_ABLE_TO_FLY_THIS_SHIP": {
     "description": "",
@@ -2663,6 +2711,10 @@
     "description": "Label indicating the ability to transfer fuel between equipment tanks",
     "message": "Прехвърляне"
   },
+  "TRANSLATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to translate the camera view with mouse",
+    "message": "Превеждане на изгледа"
+  },
   "TRUSTWORTHY": {
     "description": "For player reputation",
     "message": "Достоен"
@@ -2701,7 +2753,7 @@
   },
   "UNLAWFUL_WEAPONS_DISCHARGE": {
     "description": "",
-    "message": "Незаконно използване на оръжие"
+    "message": "Незаконно използване на оръжия"
   },
   "UNOCCUPIED_PASSENGER_CABINS": {
     "description": "",
@@ -2754,6 +2806,10 @@
   "VIDEO_RESOLUTION_DESC": {
     "description": "Tooltip for video mode/resultion setting",
     "message": "По-голямата резолюция позволява показването повече информация с по-малък размер, но може да намали производителността."
+  },
+  "VIEW_DESTINATION": {
+    "description": "Tooltip indicating the button will change the current view to the destination of a route.",
+    "message": "Преглед на дестинацията"
   },
   "VISIT_PAINTSHOP": {
     "description": "Ship Repair tab button.",
@@ -2817,7 +2873,7 @@
   },
   "YOU_HAVE_X_UNITS_IN_YOUR_CARGOHOLD": {
     "description": "",
-    "message": "Имате {units} единици във Вашето товарно отделение"
+    "message": "Имате {units} единици в товарното отделение"
   },
   "YOU_MUST_FIRST_SELECT_A_COMBAT_TARGET_COMMANDER": {
     "description": "",

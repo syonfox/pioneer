@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef _SECTORMAP_H
@@ -192,7 +192,7 @@ private:
 		Labels(SectorMap &map);
 		// settings and globals for labels
 		// this is not hardcode, these are the defaults
-		std::string fontName = "orbiteer";
+		std::string fontName = "sector-map";
 		int fontSize = 15;
 		float gap = 2.f;
 		ImFont *starLabelFont = nullptr;

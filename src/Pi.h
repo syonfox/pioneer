@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef _PI_H
@@ -145,8 +145,6 @@ public:
 	// FIXME: hacked-in singleton pattern, find a better way to locate the application
 	static App *GetApp() { return m_instance; }
 
-	static bool IsNavTunnelDisplayed() { return navTunnelDisplayed; }
-	static void SetNavTunnelDisplayed(bool state) { navTunnelDisplayed = state; }
 	static bool AreSpeedLinesDisplayed() { return speedLinesDisplayed; }
 	static void SetSpeedLinesDisplayed(bool state) { speedLinesDisplayed = state; }
 	static bool AreHudTrailsDisplayed() { return hudTrailsDisplayed; }
@@ -192,6 +190,8 @@ public:
 		return bRet;
 	}
 
+	static void ToggleObjectViewer();
+
 	/* Only use #if WITH_DEVKEYS */
 	static bool showDebugInfo;
 
@@ -233,7 +233,6 @@ private:
 
 	static Sound::MusicPlayer musicPlayer;
 
-	static bool navTunnelDisplayed;
 	static bool speedLinesDisplayed;
 	static bool hudTrailsDisplayed;
 	static bool bRefreshBackgroundStars;

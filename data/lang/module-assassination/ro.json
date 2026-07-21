@@ -219,14 +219,6 @@
     "description": "",
     "message": "Întoarceți-vă aici la completarea contractului și veți fi plătit."
   },
-  "SET_AS_TARGET": {
-    "description": "",
-    "message": "Selectați ca țintă navigare"
-  },
-  "SET_RETURN_ROUTE": {
-    "description": "",
-    "message": "Setați ruta de retur"
-  },
   "SHIP": {
     "description": "",
     "message": "Navă:"
@@ -356,15 +348,15 @@
     "message": "Where can I find the target?"
   },
   "X_WILL_BE_LEAVING": {
-    "description": "",
-    "message": "{target} will be leaving {spaceport} in the {system} system ({sectorX}, {sectorY}, {sectorZ}), distance {dist} ly, at {date}. The ship is a {shipname} and has registration id {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} will be leaving {spaceport} in the {system} system ({sectorX}, {sectorY}, {sectorZ}), distance {dist} ly, at {date}. The ship is {ship_indef} and has registration id {shipregid}."
   },
   "X_WILL_BE_LEAVING_FEMALE": {
-    "description": "",
-    "message": "{target} will be leaving {spaceport} in the {system} system ({sectorX}, {sectorY}, {sectorZ}), distance {dist} ly, at {date}. Her ship is a {shipname} and has registration id {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} will be leaving {spaceport} in the {system} system ({sectorX}, {sectorY}, {sectorZ}), distance {dist} ly, at {date}. Her ship is {ship_indef} and has registration id {shipregid}."
   },
   "X_WILL_BE_LEAVING_MALE": {
-    "description": "",
-    "message": "{target} will be leaving {spaceport} in the {system} system ({sectorX}, {sectorY}, {sectorZ}), distance {dist} ly, at {date}. His ship is a {shipname} and has registration id {shipregid}."
+    "description": "{ship_indef} is translated in /data/lang/ships/",
+    "message": "{target} will be leaving {spaceport} in the {system} system ({sectorX}, {sectorY}, {sectorZ}), distance {dist} ly, at {date}. His ship is {ship_indef} and has registration id {shipregid}."
   }
 }

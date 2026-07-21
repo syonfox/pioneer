@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #ifndef _SPACESTATION_H
@@ -9,6 +9,7 @@
 #include "SpaceStationType.h"
 
 #define MAX_DOCKING_PORTS 240 //256-(0x10), 0x10 is used because the collision surfaces use it as an identifying flag
+#define DOCKING_CLEARANCE_TIMEOUT (10.0 * 60.0)  // (10 min)
 
 class Body;
 class Camera;

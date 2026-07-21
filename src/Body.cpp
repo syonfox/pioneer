@@ -1,4 +1,4 @@
-// Copyright © 2008-2025 Pioneer Developers. See AUTHORS.txt for details
+// Copyright © 2008-2026 Pioneer Developers. See AUTHORS.txt for details
 // Licensed under the terms of the GPL v3. See licenses/GPL-3.txt
 
 #include "Body.h"
@@ -25,9 +25,9 @@
 Body::Body() :
 	PropertiedObject(),
 	m_interpPos(0.0),
-	m_interpOrient(matrix3x3d::Identity()),
+	m_interpOrient(matrix3x3d::Identity),
 	m_pos(0.0),
-	m_orient(matrix3x3d::Identity()),
+	m_orient(matrix3x3d::Identity),
 	m_frame(FrameId::Invalid),
 	m_dead(false),
 	m_clipRadius(0.0),
@@ -39,7 +39,7 @@ Body::Body() :
 Body::Body(const Json &jsonObj, Space *space) :
 	PropertiedObject(),
 	m_interpPos(0.0),
-	m_interpOrient(matrix3x3d::Identity()),
+	m_interpOrient(matrix3x3d::Identity),
 	m_frame(FrameId::Invalid)
 {
 	try {
@@ -307,8 +307,13 @@ void Body::SwitchToFrame(FrameId newFrameId)
 	const vector3d vel = GetVelocityRelTo(newFrameId); // do this first because it uses position
 	const vector3d fpos = frame->GetPositionRelTo(newFrameId);
 	const matrix3x3d forient = frame->GetOrientRelTo(newFrameId);
+	const vector3d ifpos = frame->GetInterpPositionRelTo(newFrameId);
+	const matrix3x3d iforient = frame->GetInterpOrientRelTo(newFrameId);
+
 	SetPosition(forient * GetPosition() + fpos);
 	SetOrient(forient * GetOrient());
+	m_interpPos = iforient * GetInterpPosition() + ifpos;
+	m_interpOrient = iforient * GetInterpOrient();
 	SetVelocity(vel + newFrame->GetStasisVelocity(GetPosition()));
 	SetFrame(newFrameId);
 
@@ -345,7 +350,7 @@ void Body::UpdateFrame()
 
 vector3d Body::GetTargetIndicatorPosition() const
 {
-	return vector3d(0, 0, 0);
+	return vector3d::Zero;
 }
 
 void Body::SetLabel(const std::string &label)

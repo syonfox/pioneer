@@ -173,7 +173,7 @@
   },
   "CAPITALIST": {
     "description": "",
-    "message": "Капиталистическа"
+    "message": "Капитализъм"
   },
   "CARBON_ORE": {
     "description": "",
@@ -357,7 +357,7 @@
   },
   "DOWNGRADING_ALERT_STATUS": {
     "description": "",
-    "message": "В последните 60 секунди не е открит огън, степента за предупреждения е понижена."
+    "message": "В последните 60 секунди не е открит огън, нивото за предупреждения е понижено."
   },
   "DRAW_OUT_RANGE_LABELS": {
     "description": "",
@@ -511,9 +511,25 @@
     "description": "like wheat or barley",
     "message": "Жито"
   },
+  "GRID_DISPLAY_MODE": {
+    "description": "Label for grid display modes",
+    "message": "Изглед на решетката"
+  },
+  "GRID_DISPLAY_MODE_GRID_AND_LEGS": {
+    "description": "Combobox option for Grid with Legs",
+    "message": "Решетка с етапи"
+  },
+  "GRID_DISPLAY_MODE_GRID_ONLY": {
+    "description": "Combobox option for Grid Only",
+    "message": "Решетка без етапи"
+  },
+  "GRID_DISPLAY_MODE_OFF": {
+    "description": "Combobox option for Grid display off.",
+    "message": "Изключен"
+  },
   "GRID_DISPLAY_MODE_TOGGLE": {
-    "description": "Switch show no grid",
-    "message": "Координатна мрежа"
+    "description": "Tooltip for toggle grid display button.",
+    "message": "Видимост на решетката."
   },
   "HAND_WEAPONS": {
     "description": "",
@@ -521,7 +537,7 @@
   },
   "HARD_CAPITALIST": {
     "description": "",
-    "message": "Изцяло капиталистическа, без намеса от правителството"
+    "message": "Капитализъм, без правителствени социални помощи"
   },
   "HEADING_LOCK_ANTINORMAL": {
     "description": "Autopilot direction (perpendicular, down), relative to plane of orbit",
@@ -585,15 +601,35 @@
   },
   "HYPERSPACE_ARRIVAL_CLOUD": {
     "description": "",
-    "message": "Хиперпространствен облак на пристигане"
+    "message": "Пристигане"
   },
   "HYPERSPACE_ARRIVAL_CLOUD_REMNANT": {
     "description": "",
-    "message": "Останки от хиперпространствен облак на пристигане"
+    "message": "Пристигане (останки)"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE": {
+    "description": "Label for hyperspace cloud display modes.",
+    "message": "Изглед на хиперпространствените облаци"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_ALL": {
+    "description": "Combobox option for all hyperspace clouds.",
+    "message": "Всички"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_ARRIVAL_ONLY": {
+    "description": "Combobox option for arrival hyperspace clouds.",
+    "message": "От пристигане"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_DEPARTURE_ONLY": {
+    "description": "Combobox option for departure hyperspace clouds.",
+    "message": "От тръгване"
+  },
+  "HYPERSPACE_CLOUDS_DISPLAY_MODE_TOGGLE": {
+    "description": "Tooltip for the button which toggles the display mode of hyperspace clouds.",
+    "message": "Видимост на хиперпространствените облаци"
   },
   "HYPERSPACE_DEPARTURE_CLOUD": {
     "description": "",
-    "message": "Хиперпространствен облак на тръгване"
+    "message": "Тръгване"
   },
   "HYPERSPACE_JUMP_ABORT": {
     "description": "Mouse over text for hyperdrive button on ship control panel",
@@ -645,7 +681,7 @@
   },
   "IMPERIAL_RULE": {
     "description": "",
-    "message": "Имперска власт"
+    "message": "Имперско управление"
   },
   "INCREASE_RADAR_RANGE": {
     "description": "",
@@ -683,9 +719,25 @@
     "description": "",
     "message": "Управление с джойстик"
   },
+  "L4L5_DISPLAY_MODE": {
+    "description": "Label for the lagrange point display modes.",
+    "message": "Изглед на точките на Лагранж"
+  },
+  "L4L5_DISPLAY_MODE_ICONS_AND_TEXT": {
+    "description": "Combobox option for lagrange point display as icons only.",
+    "message": "Икони и наименования"
+  },
+  "L4L5_DISPLAY_MODE_ICONS_ONLY": {
+    "description": "Combobox option for lagrange point display as icons only.",
+    "message": "Икони"
+  },
+  "L4L5_DISPLAY_MODE_OFF": {
+    "description": "Combobox option for lagrange point display off.",
+    "message": "Изключен"
+  },
   "L4L5_DISPLAY_MODE_TOGGLE": {
-    "description": "Either show L4/L5 points or don't",
-    "message": "Точки на Лагранж – L4/L5"
+    "description": "Tooltip for the L4/L5 Lagrange points toggle button.",
+    "message": "Видимост на точките на Лагранж L4 и L5."
   },
   "LANDED": {
     "description": "",
@@ -873,51 +925,51 @@
   },
   "MONTH_APR": {
     "description": "",
-    "message": "Апр"
+    "message": "апр"
   },
   "MONTH_AUG": {
     "description": "",
-    "message": "Авг"
+    "message": "авг"
   },
   "MONTH_DEC": {
     "description": "",
-    "message": "Дек"
+    "message": "дек"
   },
   "MONTH_FEB": {
     "description": "",
-    "message": "Фев"
+    "message": "февр"
   },
   "MONTH_JAN": {
     "description": "",
-    "message": "Яну"
+    "message": "ян"
   },
   "MONTH_JUL": {
     "description": "",
-    "message": "Юли"
+    "message": "юли"
   },
   "MONTH_JUN": {
     "description": "",
-    "message": "Юни"
+    "message": "юни"
   },
   "MONTH_MAR": {
     "description": "",
-    "message": "Мар"
+    "message": "март"
   },
   "MONTH_MAY": {
     "description": "",
-    "message": "Май"
+    "message": "май"
   },
   "MONTH_NOV": {
     "description": "",
-    "message": "Ное"
+    "message": "ноем"
   },
   "MONTH_OCT": {
     "description": "",
-    "message": "Окт"
+    "message": "окт"
   },
   "MONTH_SEP": {
     "description": "",
-    "message": "Сеп"
+    "message": "септ"
   },
   "MOON_CONTAINING_LIQUID_WATER": {
     "description": "",
@@ -983,6 +1035,10 @@
     "description": "",
     "message": "Няма установен ред"
   },
+  "NO_HYPERCLOUD_ANALYZER_INSTALLED": {
+    "description": "",
+    "message": "Няма инсталиран анализатор на хипероблаци"
+  },
   "NO_HYPERDRIVE": {
     "description": "",
     "message": "Няма хипердвигател"
@@ -1017,7 +1073,7 @@
   },
   "NUMBER_GROUP_SEP": {
     "description": "For large number, separator used when grouping digits. E.g. 1,000 or 1 000 or 1'000.",
-    "message": "​"
+    "message": "​ "
   },
   "NUMBER_HOURS": {
     "description": "",
@@ -1037,7 +1093,7 @@
   },
   "N_CELSIUS": {
     "description": "",
-    "message": "%temperature ° C"
+    "message": "%temperature °C"
   },
   "N_DAYS": {
     "description": "",
@@ -1101,7 +1157,7 @@
   },
   "OUTDOOR_AGRICULTURAL_WORLD": {
     "description": "",
-    "message": "Селскостопански отворен свят."
+    "message": "Селскостопански свят на открито."
   },
   "OVER_N_BILLION": {
     "description": "",
@@ -1329,7 +1385,7 @@
   },
   "SELECT_LOW_THRUST_POWER_LEVEL": {
     "description": "",
-    "message": "Изберете ниво на ниска тягата"
+    "message": "Изберете ниво на ниска тяга"
   },
   "SEMI_MAJOR_AXIS": {
     "description": "",
@@ -1349,7 +1405,7 @@
   },
   "SET_HYPERSPACE_TARGET_TO_FOLLOW_THIS_DEPARTURE": {
     "description": "",
-    "message": "Анализатор на хиперпространствените облаци: Задайте хиперпространствената цел за да проследите пътуването"
+    "message": "Анализатор на хипероблаци: Задайте хиперпространствената цел за да проследите пътуването"
   },
   "SET_LOW_THRUST_POWER_LEVEL_TO_X_PERCENT": {
     "description": "",
@@ -1387,9 +1443,21 @@
     "description": "",
     "message": "Кораб"
   },
+  "SHIPS_DISPLAY_MODE": {
+    "description": "Label for ship display modes.",
+    "message": "Изглед на корабите"
+  },
+  "SHIPS_DISPLAY_MODE_SHIPS_ONLY": {
+    "description": "Combobox option for ships only.",
+    "message": "Кораби без орбити"
+  },
+  "SHIPS_DISPLAY_MODE_SHIPS_ORBITS": {
+    "description": "Combobox option for ships with orbits.",
+    "message": "Кораби с орбити"
+  },
   "SHIPS_DISPLAY_MODE_TOGGLE": {
-    "description": "Either show no ships, show ships, or show ships + their orbits",
-    "message": "Космически кораби"
+    "description": "Tooltip for ship display toggle button.",
+    "message": "Видимост на корабите."
   },
   "SHIP_DETECTED_NEARBY": {
     "description": "",
@@ -1413,7 +1481,7 @@
   },
   "SHIP_VELOCITY_BY_REFERENCE_OBJECT": {
     "description": "",
-    "message": "Скорост на кораба, спрямо отправния обект"
+    "message": "Скорост на кораба спрямо отправния обект"
   },
   "SIDEREAL_VIEW": {
     "description": "camera view setting",
@@ -1603,13 +1671,17 @@
     "description": "",
     "message": "Повърхностна гравитация"
   },
+  "SURFACE_PRESSURE": {
+    "description": "",
+    "message": "Повърхностно налягане"
+  },
   "SURFACE_TEMPERATURE": {
     "description": "",
     "message": "Повърхностна температура"
   },
   "SWAP_SELECTED_HYPERSPACE_TARGET": {
     "description": "",
-    "message": "Размяна на целта за хисперскок и избраната цел"
+    "message": "Размяна на целта за хиперскок и избраната цел"
   },
   "SWITCHED_TO_PARENT": {
     "description": "Show ship's heading, coordinates are on the celestial sphere (defined by the ecliptic).",
@@ -1665,7 +1737,7 @@
   },
   "THRIVING_OUTDOOR_WORLD": {
     "description": "",
-    "message": "Процъфтяващ отворен свят."
+    "message": "Процъфтяващ свят на открито."
   },
   "THRUSTER_DORSAL": {
     "description": "",
@@ -1761,7 +1833,7 @@
   },
   "UNIT_DAYS": {
     "description": "Duration unit: one 24-hour day",
-    "message": "д"
+    "message": "дн"
   },
   "UNIT_DENSITY": {
     "description": "Density unit: kilos per cubic meter",
@@ -1825,7 +1897,7 @@
   },
   "UNIT_MINUTES": {
     "description": "Duration unit: one 60-second minute",
-    "message": "м"
+    "message": "мин"
   },
   "UNIT_PETATONNES": {
     "description": "Mass unit: one petatonne",
@@ -1837,7 +1909,7 @@
   },
   "UNIT_SECONDS": {
     "description": "Duration unit: one second",
-    "message": "с"
+    "message": "сек"
   },
   "UNIT_SQUARE_KILOMETERS": {
     "description": "Area unit: square kilometer (km²) - 1,000,000 m²",
@@ -1851,6 +1923,18 @@
     "description": "Area unit: square meter (m²)",
     "message": "м²"
   },
+  "UNIT_TEMPERATURE_CELSIUS": {
+    "description": "Temperature unit: degrees Celsius (°C)",
+    "message": "°C"
+  },
+  "UNIT_TEMPERATURE_FAHRENHEIT": {
+    "description": "Temperature unit: Fahrenheit (°F)",
+    "message": "°F"
+  },
+  "UNIT_TEMPERATURE_KELVIN": {
+    "description": "Temperature unit: degrees Kelvin (K)",
+    "message": "K"
+  },
   "UNIT_TERATONNES": {
     "description": "Mass unit: one teratonne",
     "message": "тт"
@@ -1861,7 +1945,7 @@
   },
   "UNIT_WEEKS": {
     "description": "Duration unit: one 7-day week",
-    "message": "с"
+    "message": "седм"
   },
   "UNKNOWN": {
     "description": "",
@@ -1869,7 +1953,7 @@
   },
   "UNSET_NAVTARGET": {
     "description": "",
-    "message": "Премахване навигационната цел."
+    "message": "Премахване на навигационната цел."
   },
   "USE_LOW_THRUST": {
     "description": "",

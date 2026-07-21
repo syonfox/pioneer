@@ -1,7 +1,7 @@
 {
   "ABOUT": {
     "description": "main menu button (implied 'about' the game)",
-    "message": "About"
+    "message": "Σχετικά"
   },
   "ABOVE_AVERAGE": {
     "description": "",
@@ -67,9 +67,13 @@
     "description": "",
     "message": "Απόπειρα επισκευής του κύτους"
   },
+  "AUDIO_BACKEND": {
+    "description": "Audio backend label in settings menu",
+    "message": "Audio Backend"
+  },
   "AUTOMATED_MESSAGE": {
     "description": "For comm messages from bots",
-    "message": "AUTOMATED MESSAGE"
+    "message": "Αυτοματοποιημένο μήνυμα"
   },
   "AUTO_ROUTE": {
     "description": "Automatically find shortest jump route (measured in time) in star map",
@@ -90,6 +94,14 @@
   "BACKWARD_ACCEL": {
     "description": "",
     "message": "Επιτάχυνση προς τα πίσω"
+  },
+  "BINAURAL_RENDERING": {
+    "description": "Label of the binaural rendering checkbox in the audio settings menu",
+    "message": "Binaural Rendering"
+  },
+  "BINAURAL_RENDERING_DESC": {
+    "description": "Tooltip of the binaural rendering checkbox in the audio settings menu",
+    "message": "When enabled, HRTF filters are applied to the audio output. Works best with headphones."
   },
   "BODY_IN_ROUTE": {
     "description": "Label indicating a star is part of a planned hyperjump route",
@@ -623,6 +635,10 @@
     "description": "",
     "message": "Εξοπλισμός"
   },
+  "EQUIPMENT_ALREADY_INSTALLED_HERE": {
+    "description": "Message indicating this equipment item is already installed.",
+    "message": "Το εν λόγω εξάρτημα είναι ήδη εγκατεστημένο εδώ."
+  },
   "EQUIPMENT_CAPACITY": {
     "description": "The equipment capacity of a ship",
     "message": "Χωρητικότητα σε εξοπλισμό"
@@ -913,7 +929,7 @@
   },
   "HUD_ARRIVAL_DATE": {
     "description": "Label for Hyperspace Cloud arrival date",
-    "message": "Arrival Date"
+    "message": "Ημερομηνία Άφιξης"
   },
   "HUD_ATMOSPHERIC_PRESSURE": {
     "description": "Tooltip: Atmospheric Pressure.",
@@ -2073,19 +2089,19 @@
   },
   "PUMP_DOWN_FROM_CARGO_TOOLTIP": {
     "description": "Tooltip for Info screen",
-    "message": "Pump %i t from cargo"
+    "message": "Μεταφορά &i τόνων από το αμπάρι"
   },
   "PUMP_DOWN_FROM_HYPERDRIVE_TOOLTIP": {
     "description": "Tooltip for Info screen",
-    "message": "Pump %i t from hyperdrive to fuel tanks"
+    "message": "Μεταφορά &i τόνων από τον υπερκινητήρα στις εσωτερικές δεξαμενές"
   },
   "PUMP_DOWN_TO_CARGO_TOOLTIP": {
     "description": "Tooltip for Info screen",
-    "message": "Pump %i t to cargo"
+    "message": "Μεταφορά &i τόνων στο αμπάρι"
   },
   "PUMP_DOWN_TO_HYPERDRIVE_TOOLTIP": {
     "description": "Tooltip for Info screen",
-    "message": "Pump %i t to hyperdrive from fuel tanks"
+    "message": "Μεταφορά %i τόνων στον υπερκινητήρα από τις εσωτερικές δεξαμενές"
   },
   "PURCHASE_PAINTJOB": {
     "description": "Paintshop button",
@@ -2349,7 +2365,7 @@
   },
   "SET_AS_TARGET": {
     "description": "",
-    "message": "Ορίστε τον προορισμό ως προορισμό πλοήγησης."
+    "message": "Ορίστε τον προορισμό ως στόχο πλοήγησης."
   },
   "SET_JUMP_TARGET": {
     "description": "Button tooltip which sets the jump route to the selected body",
@@ -2539,9 +2555,41 @@
     "description": "Message when restoring savegame",
     "message": "System body index is out of range"
   },
+  "SYSTEM_FACTION": {
+    "description": "Tooltip indicating the faction controlling this system",
+    "message": "Εξουσιάζεται από"
+  },
   "SYSTEM_INFORMATION": {
     "description": "Tooltip / label indicating information about a selected star system",
     "message": "Πληφορορίες συστήματος"
+  },
+  "SYSTEM_NUM_STARS": {
+    "description": "Tooltip indicating the system stellar arrangement",
+    "message": "Αριθμός αστέρων στο σύστημα"
+  },
+  "SYSTEM_SECURITY_1": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Ασφαλές"
+  },
+  "SYSTEM_SECURITY_2": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Κατά βάση ακίνδυνος"
+  },
+  "SYSTEM_SECURITY_3": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Επικίνδυνος"
+  },
+  "SYSTEM_SECURITY_4": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Πολύ επικίνδυνο"
+  },
+  "SYSTEM_SECURITY_5": {
+    "description": "Security category for systems with low lawlessness. A nod to Elite's pilot ratings.",
+    "message": "Θανάσιμος"
+  },
+  "SYSTEM_SECURITY_TOOLTIP": {
+    "description": "Tooltip introducing the system security rating",
+    "message": "Επίπεδο ασφαλείας συστήματος"
   },
   "TECH_CERTIFIED": {
     "description": "Lobby screen shows the tech level (an integer number) of the station",
@@ -2641,7 +2689,7 @@
   },
   "TO_PICK_UP": {
     "description": "Mission status",
-    "message": "To pick up"
+    "message": "Προς παραλαβή"
   },
   "TRADING_AT": {
     "description": "Indicates the current system for inspecting commodities.",
@@ -2662,6 +2710,10 @@
   "TRANSFER_FUEL": {
     "description": "Label indicating the ability to transfer fuel between equipment tanks",
     "message": "Μεταφορά καυσίμου"
+  },
+  "TRANSLATE_VIEW": {
+    "description": "Indicates that the button must be kept pressed down, to translate the camera view with mouse",
+    "message": "Πατήστε και κρατήστε για αλλαγή οπτικής γωνίας"
   },
   "TRUSTWORTHY": {
     "description": "For player reputation",
@@ -2754,6 +2806,10 @@
   "VIDEO_RESOLUTION_DESC": {
     "description": "Tooltip for video mode/resultion setting",
     "message": "Οι υψηλότερες αναλύσεις εμφανίζουν περισσότερες πληροφορίες σε μικρότερο μέγεθος και μπορεί να μειώσουν την απόδοση."
+  },
+  "VIEW_DESTINATION": {
+    "description": "Tooltip indicating the button will change the current view to the destination of a route.",
+    "message": "Προβολή προορισμού"
   },
   "VISIT_PAINTSHOP": {
     "description": "Ship Repair tab button.",

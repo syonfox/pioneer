@@ -12,10 +12,10 @@
 #include "galaxy/SystemBody.h"
 #include "graphics/Renderer.h"
 
-TerrainBody::TerrainBody(SystemBody *sbody) :
-	Body(),
-	m_sbody(sbody),
-	m_mass(0)
+TerrainBody::TerrainBody(SystemBody *sbody) :	// construct the TerrainBoddy, A manager class for rendering / gernerating the terrain.
+	Body(),										// Initialize the body
+	m_sbody(sbody),								// set m_sbody to the SystemBody
+	m_mass(0)									// default the mass to 0
 {
 	InitTerrainBody();
 }

@@ -152,8 +152,8 @@ private:
 
 	int m_detailLevel;
 	float m_clipRadius;
-	vector3d m_realCentre;
-	vector3d m_gridOrigin;
+	vector3d m_realCentre;		// the offset from the station to the real city center
+	vector3d m_gridOrigin;		//
 
 	CityFlavourType *m_cityType;
 

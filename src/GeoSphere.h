@@ -27,6 +27,12 @@ class SSingleSplitResult;
 
 #define NUM_PATCHES 6
 
+// #5154
+// The basic concept of the terrain is a Quadtrilateralized Spherical Cube, where the heightmaps are generated from noise at runtime.
+// BaseSphere : GeoSphere -> GeoPatch * 6
+// m_patches*[6]
+// m_terrain*
+
 class GeoSphere : public BaseSphere {
 public:
 	GeoSphere(const SystemBody *body);
@@ -52,10 +58,14 @@ public:
 		return h;
 	}
 
+	//constructor destructor
 	static void InitGeoSphere();
 	static void UninitGeoSphere();
+	//update
 	static void UpdateAllGeoSpheres();
+	//change
 	static void OnChangeGeoSphereDetailLevel();
+	//callbacks from patches
 	static bool OnAddQuadSplitResult(const SystemPath &path, SQuadSplitResult *res);
 	static bool OnAddSingleSplitResult(const SystemPath &path, SSingleSplitResult *res);
 
@@ -117,7 +127,7 @@ private:
 	void SetUpMaterials() override;
 	void CreateAtmosphereMaterial();
 
-	RefCountedPtr<Graphics::Texture> m_texHi;
+	RefCountedPtr<Graphics::Texture> m_texHi; // the actual graphics textures
 	RefCountedPtr<Graphics::Texture> m_texLo;
 
 	enum EGSInitialisationStage {

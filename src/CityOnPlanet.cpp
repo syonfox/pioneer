@@ -753,28 +753,190 @@ void CityOnPlanet::Render(Graphics::Renderer *r, const CameraContext *camera, co
 	}
 
 	// Draw debug extents
-/*
-	r->SetTransform(matrix4x4f(viewTransform));
-	Graphics::VertexArray va(Graphics::ATTRIB_POSITION | Graphics::ATTRIB_DIFFUSE);
 
+
+	r->SetTransform(matrix4x4f(viewTransform));
+
+	// Lines to add?
+	Graphics::VertexArray va(Graphics::ATTRIB_POSITION | Graphics::ATTRIB_DIFFUSE);
+	//city boundry
 	vector3f origin = vector3f(m_gridOrigin);
 	vector3f incX = vector3f(station->GetOrient().VectorX() * double(m_citySize * CELLSIZE));
 	vector3f incZ = vector3f(station->GetOrient().VectorZ() * double(m_citySize * CELLSIZE));
-
+	//line 1
 	va.Add(origin, Color(255, 0, 0));
 	va.Add(origin + incX, Color(255, 0, 0));
-
+	//line 2
 	va.Add(origin + incX, Color(0, 255, 0));
 	va.Add(origin + incX + incZ, Color(0, 255, 0));
-
+	//line 3
 	va.Add(origin + incX + incZ, Color(255, 0, 0));
 	va.Add(origin + incZ, Color(255, 0, 0));
-
+	//line 4
 	va.Add(origin + incZ, Color(0, 255, 0));
 	va.Add(origin, Color(0, 255, 0));
 
+
+	// printf("=== CITY DEBUG ===\n");
+	//
+	// printf("m_realCentre: %f %f %f\n",
+	// 	m_realCentre.x,
+	// 	m_realCentre.y,
+	// 	m_realCentre.z);
+	//
+	// printf("origin: %f %f %f\n",
+	// 	origin.x,
+	// 	origin.y,
+	// 	origin.z);
+	// --- Vertical debug lines to terrain ---
+	auto drawVertical = [&](const vector3f &corner) {
+		vector3d c = vector3d(corner);
+		vector3d norm = c.Normalized();
+
+		double height = m_planet->GetTerrainHeight(norm);
+		vector3d terrainPoint = norm * height;
+		// pos = posNorm * height;
+		// printf("terrainPoint: %f %f %f\n",
+		// 	terrainPoint.x,
+		// 	terrainPoint.y,
+		// 	terrainPoint.z);
+
+		va.Add(vector3f(c), Color(0, 0, 255));              // top (grid corner)
+		va.Add(vector3f(terrainPoint), Color(0, 0, 255));  // terrain point
+	};
+
+	// corners
+	vector3f c0 = origin;
+	vector3f c1 = origin + incX;
+	vector3f c2 = origin + incX + incZ;
+	vector3f c3 = origin + incZ;
+
+	drawVertical(c0);
+	drawVertical(c1);
+	drawVertical(c2);
+	drawVertical(c3);
+
+	//above is working
+
+	const Aabb stationAabb = station->GetAabb();
+	// printf("stationPos: %f %f %f\n",
+	// 	stationPos.x,
+	// 	stationPos.y,
+	// 	stationPos.z);
+
+	// printf("AABB min: %f %f %f\n",
+	// 	stationAabb.min.x,
+	// 	stationAabb.min.y,
+	// 	stationAabb.min.z);
+	//
+	// printf("AABB max: %f %f %f\n",
+	// 	stationAabb.max.x,
+	// 	stationAabb.max.y,
+	// 	stationAabb.max.z);
+
+	// === CITY DEBUG ===
+	// m_realCentre: 34.851929 22.895111 68.943848
+	// origin: -329919.093750 -2084741.000000 -404646.375000
+	// terrainPoint: -329920.132546 -2084747.564099 -404647.649086
+	// terrainPoint: -333545.729732 -2084725.247838 -401656.808835
+	// terrainPoint: -330648.168555 -2085863.633709 -398135.743077
+	// terrainPoint: -327015.775757 -2085842.832996 -401118.254031
+	// stationPos: -71.986309 -58.729019 -427.861328
+	// AABB min: -164.000000 -60.000011 -164.000107
+	// AABB max: 164.000107 74.618149 164.000000
+	// corner[0]: -330253.882538 -2085217.593318 -401573.683351
+
+	const vector3d localStationPos =  (station->GetPosition());
+
+	auto localToWorld = [&](const vector3d &p) {
+		return localStationPos +
+			station->GetOrient().VectorX() * p.x +
+			station->GetOrient().VectorY() * p.y +
+			station->GetOrient().VectorZ() * p.z;
+	};
+
+	vector3d corners[8] = {
+		localToWorld({stationAabb.min.x, stationAabb.min.y, stationAabb.min.z}),
+		localToWorld({stationAabb.max.x, stationAabb.min.y, stationAabb.min.z}),
+		localToWorld({stationAabb.max.x, stationAabb.max.y, stationAabb.min.z}),
+		localToWorld({stationAabb.min.x, stationAabb.max.y, stationAabb.min.z}),
+
+		localToWorld({stationAabb.min.x, stationAabb.min.y, stationAabb.max.z}),
+		localToWorld({stationAabb.max.x, stationAabb.min.y, stationAabb.max.z}),
+		localToWorld({stationAabb.max.x, stationAabb.max.y, stationAabb.max.z}),
+		localToWorld({stationAabb.min.x, stationAabb.max.y, stationAabb.max.z})
+	};
+	// printf("corner[0]: %f %f %f\n",
+	// 	corners[0].x,
+	// 	corners[0].y,
+	// 	corners[0].z);
+
+	auto addEdge = [&](int a, int b, Color c) {
+		va.Add(vector3f(corners[a]), c);
+		va.Add(vector3f(corners[b]), c);
+	};
+
+	// bottom
+	addEdge(0,1, Color(255,255,0));
+	addEdge(1,2, Color(255,255,0));
+	addEdge(2,3, Color(255,255,0));
+	addEdge(3,0, Color(255,255,0));
+
+	// top
+	addEdge(4,5, Color(255,255,0));
+	addEdge(5,6, Color(255,255,0));
+	addEdge(6,7, Color(255,255,0));
+	addEdge(7,4, Color(255,255,0));
+
+	// verticals
+	addEdge(0,4, Color(255,255,0));
+	addEdge(1,5, Color(255,255,0));
+	addEdge(2,6, Color(255,255,0));
+	addEdge(3,7, Color(255,255,0));
+	//end code to update section
+
+
+	//todo draw height from top of aabb in to surface.
+	drawVertical(vector3f(corners[2]));
+	drawVertical(vector3f(corners[3]));
+	drawVertical(vector3f(corners[6]));
+	drawVertical(vector3f(corners[7]));
+	//todo in green conect the surface points
+	// what coners are the top?
+	vector3f top[4] = {
+		vector3f(corners[2]),
+		vector3f(corners[3]),
+		vector3f(corners[7]),
+		vector3f(corners[6])
+	};
+
+	for (int i = 0; i < 4; i++) {
+		vector3d c = vector3d(top[i]);
+		vector3d norm = c.Normalized();
+
+		double height = m_planet->GetTerrainHeight(norm);
+		vector3d terrain = norm * height;
+
+		va.Add(vector3f(terrain), Color(0,255,0));
+		va.Add(vector3f(vector3d(top[(i+1)%4]).Normalized() *
+			m_planet->GetTerrainHeight(vector3d(top[(i+1)%4]).Normalized())),
+			Color(0,255,0));
+	}
+
+	//		yellow AABB
+	//	   +---------+
+	//	  /         /           city boundry
+	// - +---------+  - - -----------------/
+	//		| | | |                       /
+	//		| | | |                      /
+	//		v v v v                     /
+	//	 green terrain footprint       /
+	//________________________________/
+	// Here we add our debug lines to the draw buffer?
 	r->DrawBuffer(&va, s_debugMat.get());
-*/
+
+	//end draw debug
+	////////////////////////////////////////////////////////////////////////////////////////////////
 
 	r->GetStats().AddToStatCount(Graphics::Stats::STAT_BUILDINGS, uCount);
 	r->GetStats().AddToStatCount(Graphics::Stats::STAT_CITIES, 1);
